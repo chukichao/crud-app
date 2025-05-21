@@ -18,7 +18,7 @@ export default {
 
   animation: rotate 2s infinite linear;
 
-  margin: 0 auto;
+  margin: 2rem auto;
 
   @keyframes rotate {
     0% {

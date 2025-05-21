@@ -1,32 +1,37 @@
 <template>
-  <div class="post-item">
-    <button-ui @click="$emit('remove', post.id)" class="post-item-delete"
+  <li class="post-item" @click="$router.push(`/posts/${post.id}`)">
+    <button-ui @click.stop="$emit('remove', post.id)" class="post-item-delete"
       >X</button-ui
     >
+
     <div class="post-item-container">
       <div class="post-item-content">
-        <h3>{{ post.title }}</h3>
+        <h3>{{ post.id }}. {{ post.title }}</h3>
         <p>{{ post.body }}</p>
       </div>
       <div class="post-item-edit">
-        <button-ui @click="toggleModalUpdatePost">Edit</button-ui>
+        <button-ui @click.stop="toggleModal">Edit</button-ui>
       </div>
     </div>
-  </div>
+  </li>
 
-  <modal-ui :isOpen="isOpenModalUpdatePost" @toggle="toggleModalUpdatePost">
-    <FormUpdatePost
-      @update="(id, updatePost) => $emit('update', id, updatePost)"
-      @toggle="toggleModalUpdatePost"
-      :title="post.title"
-      :body="post.body"
-      :id="post.id"
-    />
-  </modal-ui>
+  <teleport to="body">
+    <modal-ui :isOpen="isOpenModal" @toggle="toggleModal">
+      <FormUpdatePost
+        @update="(id, updatePost) => $emit('update', id, updatePost)"
+        @toggle="toggleModal"
+        :title="post.title"
+        :body="post.body"
+        :id="post.id"
+      />
+    </modal-ui>
+  </teleport>
 </template>
 
 <script>
 import FormUpdatePost from './FormUpdatePost.vue';
+
+import modalMixin from '../mixins/modalMixin';
 
 export default {
   // props: ['post']
@@ -38,19 +43,9 @@ export default {
     },
   },
 
-  data() {
-    return {
-      isOpenModalUpdatePost: false,
-    };
-  },
+  mixins: [modalMixin],
 
   emits: ['remove', 'update'],
-
-  methods: {
-    toggleModalUpdatePost() {
-      this.isOpenModalUpdatePost = !this.isOpenModalUpdatePost;
-    },
-  },
 
   components: {
     FormUpdatePost,

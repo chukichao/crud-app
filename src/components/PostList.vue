@@ -2,19 +2,23 @@
   <div class="posts">
     <div v-if="posts.length > 0" class="post-list">
       <h2>{{ title }}</h2>
-      <PostItem
-        v-for="post in posts"
-        :key="post.id"
-        :post="post"
-        @remove="$emit('remove', post.id)"
-        @update="(id, updatePost) => $emit('update', id, updatePost)"
-      />
+
+      <TransitionGroup name="list" tag="ul">
+        <PostItem
+          v-for="post in posts"
+          :key="post.id"
+          :post="post"
+          @remove="$emit('remove', post.id)"
+          @update="(id, updatePost) => $emit('update', id, updatePost)"
+        >
+        </PostItem>
+      </TransitionGroup>
     </div>
 
     <!-- v-else-if="" // дополнительное условие -->
 
     <div v-else class="status">
-      <loader-ui v-if="loader" />
+      <loader-ui v-if="isLoadingPosts" />
       <h2 v-else>No posts</h2>
     </div>
   </div>
@@ -36,13 +40,13 @@ export default {
         // return ['...', '...', '...'].includes(value);
       },
     },
-    loader: {
+    isLoadingPosts: {
       type: Boolean,
       required: true,
     },
   },
 
-  inject: ['title'], // provide -> inject
+  inject: ['title'], // получение данных provide -> inject
 
   components: {
     PostItem,
@@ -59,5 +63,21 @@ export default {
     padding: 1.5rem;
     font-size: 30px;
   }
+}
+
+.list-move,
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s ease;
+}
+
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(130px);
+}
+
+.list-enter-from {
+  opacity: 0;
+  transform: translateX(-130px);
 }
 </style>

@@ -1,5 +1,6 @@
 <template>
   <h2>Login</h2>
+
   <form class="form" @submit.prevent="login">
     <input-ui
       v-model.trim="user.username"
@@ -7,12 +8,14 @@
       placeholder="username"
       ref="username"
     />
+
     <input-ui
-      v-model.trim="user.password"
       type="password"
+      v-model.trim="user.password"
       autocomplete="current-password"
       placeholder="password"
     />
+
     <button-ui :disabled="disabledButton">Sign in</button-ui>
   </form>
 </template>
@@ -27,10 +30,12 @@ export default {
       },
     };
   },
+
   emits: ['login', 'toggle'],
+
   methods: {
     login() {
-      this.$emit('login', this.user);
+      this.$emit('login');
 
       this.user = {
         username: '',
@@ -40,17 +45,19 @@ export default {
       this.$emit('toggle');
     },
   },
+
   computed: {
     disabledButton() {
-      if (this.user.username.length >= 1 && this.user.password.length >= 1) {
-        return false;
-      }
+      // if (this.user.username.length >= 1 && this.user.password.length >= 1) {
+      //   return false;
+      // }
 
-      return true;
+      return false;
     },
   },
+
   mounted() {
-    this.$refs.username.getInputRef().focus();
+    this.$refs.username.getInputRef().focus(); // без использования кастомной директивы
   },
 };
 </script>

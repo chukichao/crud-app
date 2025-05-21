@@ -1,121 +1,112 @@
-<!-- <template>
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
-</template> -->
-
-<!-- <script setup>
-import HelloWorld from './components/HelloWorld.vue';
-</script> -->
-
 <template>
+  <Header
+    @login="login"
+    @logout="logout"
+    @register="registerAccount"
+    :auth="auth"
+  />
+
+  <main>
+    <RouterView />
+  </main>
+
+  <Footer />
+
+  <!-- семантическое перемещение DOM элемента (с указанием селектора; disabled - отключено) -->
+  <teleport to="body">
+    <alert-ui v-if="ui.cookieAlert">
+      <h3>Добро пожаловать!</h3>
+      <p style="margin: 1rem 0">
+        Наша платформа использует cookie с целью обеспечения корректной работы
+        сайта и Вашего комфортного взаимодействия с ним.
+      </p>
+      <button-ui
+        @click="ui.cookieAlert = false"
+        style="background-color: white; border-radius: 5px"
+        >Принять</button-ui
+      >
+    </alert-ui>
+  </teleport>
+
   <!-- <keep-alive>
     ...
   </keep-alive> -->
 
-  <Header
-    @setActivePage="setActivePage"
-    @login="login"
-    @logout="logout"
-    :auth="auth"
-    :activePage="ui.activePage"
-  />
-
-  <main>
-    <component
-      v-if="ui.activePage === 'RegistrationPage'"
-      :is="componentName"
-      @register="registerAccount"
-    ></component>
-    <component v-else :is="componentName"></component>
-  </main>
-
-  <Footer></Footer>
-
-  <alert-ui v-if="ui.cookieAlert">
-    <h3>Добро пожаловать!</h3>
-    <p style="margin: 1rem 0">
-      Наша платформа использует cookie с целью обеспечения корректной работы
-      сайта и Вашего комфортного взаимодействия с ним.
-    </p>
-    <button-ui
-      @click="ui.cookieAlert = false"
-      style="background-color: white; border-radius: 5px"
-      >Принять</button-ui
-    >
-  </alert-ui>
+  <!-- <component :is="..."> </component> -->
 </template>
 
 <script>
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
 
-import HomePage from './pages/HomePage.vue';
-import PostsPage from './pages/PostsPage.vue';
-import RegistrationPage from './pages/RegistrationPage.vue';
-
 export default {
   data() {
     return {
-      user: {},
       auth: false,
+      user: {},
       ui: {
-        activePage: 'HomePage', // PostsPage, RegistrationPage
         cookieAlert: true,
       },
     };
   },
 
+  provide() {
+    return {
+      registerAccount: this.registerAccount,
+    };
+  },
+
   methods: {
-    login(userData) {
-      console.log(userData);
+    login() {
       this.auth = true;
 
-      this.ui.activePage = 'HomePage';
+      this.$router.push('/'); // this.$router.replace('/'); - без сохранения истории переходов
     },
+
+    registerAccount(userData) {
+      console.log('lorem');
+      this.auth = true;
+      this.user = userData;
+
+      this.$router.push({
+        path: '/',
+        // query: {
+        //   page: this.$route.path, // обращение к параметрам текущего пути
+        // },
+      });
+    },
+
     logout() {
       this.user = {};
       this.auth = false;
 
-      this.ui.activePage = 'HomePage';
+      this.$router.push('/');
     },
-    setActivePage(page) {
-      this.ui.activePage = page;
-    },
-    registerAccount(user) {
-      this.auth = true;
 
-      this.user = user;
-      this.ui.activePage = 'HomePage';
-    },
+    // this.$forceUpdate(); // принудительное обновление компонента
   },
 
-  computed: {
-    // get() {
-    //   return ...
-    // }
+  // computed: {
+  // get() {
+  //   return ...
+  // }
+  // set(value) {
+  //   this. ... = value;
+  // }
+  // },
 
-    // set(value) {
-    //   this. ... = value;
-    // }
+  // методы взаимодействия компонента с router
+  // beforeRouteEnter(to, from) {
 
-    componentName() {
-      return this.ui.activePage;
-    },
-  },
+  // },
+
+  // beforeRouteLeave(to, from, next) {
+
+  // }
 
   components: {
     Header,
     Footer,
-    HomePage,
-    PostsPage,
-    RegistrationPage,
   },
 };
 </script>
@@ -130,6 +121,8 @@ export default {
 body {
   min-width: 320px;
   min-height: 100vh;
+
+  font-family: Tahoma, Verdana, sans-serif;
 }
 
 #app {
@@ -139,8 +132,6 @@ body {
 
   width: 100%;
   height: 100vh;
-
-  font-family: Tahoma, Verdana, sans-serif;
 }
 
 main {

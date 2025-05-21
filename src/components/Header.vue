@@ -2,23 +2,29 @@
   <header class="header">
     <nav>
       <ul>
-        <async-logo class="header-logo" />
-        <li
-          @click="$emit('setActivePage', 'HomePage')"
-          :class="{
-            active: activePageHome,
-          }"
-        >
-          Home
+        <async-logo />
+        <li>
+          <RouterLink to="/">Home</RouterLink>
         </li>
-        <li
-          v-if="auth"
-          @click="$emit('setActivePage', 'PostsPage')"
-          :class="{
-            active: activePagePosts,
-          }"
-        >
-          Posts
+
+        <li>
+          <RouterLink to="/about">About Us</RouterLink>
+        </li>
+
+        <li>
+          <RouterLink
+            v-if="auth"
+            to="/posts"
+            custom
+            v-slot="{ navigate, href }"
+          >
+            <a
+              href="#"
+              @click="navigate"
+              :class="{ active: $route.path.indexOf(href) !== -1 }"
+              >Posts</a
+            >
+          </RouterLink>
         </li>
       </ul>
     </nav>
@@ -26,17 +32,26 @@
     <div v-if="auth">
       <button-ui @click="$emit('logout')">Logout</button-ui>
     </div>
+
     <div v-else>
-      <button-ui @click="$emit('setActivePage', 'RegistrationPage')"
-        >Sign up</button-ui
-      >
+      <button-ui><RouterLink to="/signup">Sign up</RouterLink></button-ui>
+
       <button-ui @click="toggleModal">Sign in</button-ui>
     </div>
 
-    <modal-ui :isOpen="isOpenModalLogin" @toggle="toggleModal">
-      <FormLogin @login="$emit('login', $event)" @toggle="toggleModal" />
-    </modal-ui>
+    <teleport to="body">
+      <modal-ui :isOpen="isOpenModal" @toggle="toggleModal">
+        <FormLogin @login="$emit('login')" @toggle="toggleModal" />
 
+        <!-- <template #:...> // по наименованию (v-slot: - альт.)
+        ...
+        </template> -->
+
+        <!-- #:...="slotProps" // объект для доступа к передаваемым внутренним пропсам слота (при необходимости) -->
+      </modal-ui>
+    </teleport>
+
+    <!-- $emit('login', $event) -->
     <!-- (userData) => $emit('login', userData) -->
   </header>
 </template>
@@ -44,29 +59,15 @@
 <script>
 import FormLogin from './FormLogin.vue';
 
+import modalMixin from '../mixins/modalMixin';
+
 export default {
-  data() {
-    return {
-      isOpenModalLogin: false,
-    };
-  },
   props: {
     auth: Boolean,
-    activePage: String,
   },
-  methods: {
-    toggleModal() {
-      this.isOpenModalLogin = !this.isOpenModalLogin;
-    },
-  },
-  computed: {
-    activePageHome() {
-      return this.activePage === 'HomePage';
-    },
-    activePagePosts() {
-      return this.activePage === 'PostsPage';
-    },
-  },
+
+  mixins: [modalMixin],
+
   components: {
     FormLogin,
   },
@@ -88,11 +89,16 @@ export default {
 
     li {
       padding: 1.5rem;
+    }
+  }
 
-      &:hover {
-        text-shadow: 1px 1px 1px #333;
-        cursor: pointer;
-      }
+  a {
+    text-decoration: none;
+    color: inherit;
+
+    &:hover {
+      text-shadow: 1px 1px 1px #333;
+      cursor: pointer;
     }
   }
 
@@ -107,22 +113,6 @@ export default {
     transition: 2s linear;
 
     &:hover {
-      transform: scale(1.1);
-    }
-  }
-
-  &-logo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    padding: 1.5rem;
-    margin-right: 1rem;
-
-    transition: 2s linear;
-
-    &:hover {
-      cursor: default;
       transform: scale(1.1);
     }
   }

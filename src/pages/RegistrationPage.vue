@@ -173,7 +173,9 @@ export default {
       errorFeedback: '',
     };
   },
-  emits: ['register'],
+
+  inject: ['registerAccount'],
+
   methods: {
     validate() {
       if (!this.user.username || !this.user.password || !this.user.age) {
@@ -192,21 +194,10 @@ export default {
 
       this.errorFeedback = '';
 
-      // console.group('Form Data');
-      // console.log(this.user.username);
-      // console.log(this.user.age);
-      // console.log(this.user.birthday);
-      // console.log(this.user.password);
-      // console.log(this.user.confirmPassword);
-      // console.log(this.user.country);
-      // console.log(this.user.gender);
-      // console.log(this.user.skills);
-      // console.log(this.user.agree);
-      // console.groupEnd();
-
-      this.$emit('register', this.user);
+      this.registerAccount(this.user);
     },
   },
+
   computed: {
     requiredError() {
       return this.errors.requiredError ? 'requiredError' : '';
