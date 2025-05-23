@@ -1,6 +1,5 @@
 <template>
-  <div class="logo">Logo<span v-blink.hover>_</span></div>
-  <!-- с использованием миксинов -->
+  <div class="logo">crudApp<span v-blink.hover>_</span></div>
 </template>
 
 <script>

@@ -8,6 +8,10 @@
 </template>
 
 <script>
+import { mapStores } from 'pinia';
+import { usePostsStore } from '../store/PostsStore.js';
+import { useUIStore } from '../store/UIStore.js';
+
 export default {
   data() {
     return {
@@ -17,7 +21,7 @@ export default {
       },
     };
   },
-  emits: ['create'],
+
   methods: {
     createPost() {
       if (!this.post.title || !this.post.body) {
@@ -26,7 +30,8 @@ export default {
 
       this.post.id = Date.now();
 
-      this.$emit('create', this.post);
+      this.postsStore.createPost(this.post);
+      this.uiStore.closeModal();
 
       this.post = {
         title: '',
@@ -34,8 +39,13 @@ export default {
       };
     },
   },
+
   mounted() {
     this.$refs.title.getInputRef().focus();
+  },
+
+  computed: {
+    ...mapStores(usePostsStore, useUIStore),
   },
 };
 </script>

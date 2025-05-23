@@ -1,9 +1,10 @@
 <template>
   <h2>Update post</h2>
+
   <form class="form" @submit.prevent="updatePost">
     <div>
       <h3>Title:</h3>
-      <textarea v-model.trim="post.title" placeholder="title" ref="title" />
+      <textarea v-model.trim="post.title" v-focus placeholder="title" />
     </div>
 
     <div>
@@ -16,6 +17,12 @@
 </template>
 
 <script>
+import { mapStores } from 'pinia';
+import { usePostsStore } from '../store/PostsStore';
+import { useUIStore } from '../store/UIStore.js';
+
+import VFocus from '../directives/VFocus.js';
+
 export default {
   props: {
     title: String,
@@ -23,7 +30,9 @@ export default {
     id: Number,
   },
 
-  emits: ['update', 'toggle'],
+  directives: {
+    focus: VFocus,
+  },
 
   data() {
     return {
@@ -40,22 +49,24 @@ export default {
         return;
       }
 
-      this.$emit('update', this.id, this.post);
+      this.postsStore.updatePost(this.id, this.post);
 
       this.post = {
         title: '',
         body: '',
       };
 
-      this.$emit('toggle');
+      this.uiStore.closeModal();
     },
+  },
+
+  computed: {
+    ...mapStores(usePostsStore, useUIStore),
   },
 
   mounted() {
     this.post.title = this.title;
     this.post.body = this.body;
-
-    this.$refs.title.focus();
   },
 };
 </script>
@@ -63,20 +74,20 @@ export default {
 <style scoped lang="scss">
 h2 {
   margin: 1rem 0;
-
   font-size: 30px;
 }
 
 .form {
   display: flex;
   flex-direction: column;
+  justify-content: center;
 
   textarea {
-    margin: 0.5rem;
-    resize: horizontal;
+    margin: 0.5rem auto;
+    font-size: 1rem;
 
-    min-width: 500px;
-    min-height: 100px;
+    width: 100%;
+    height: 200px;
 
     &:focus {
       outline: 1px solid #333;
@@ -85,7 +96,6 @@ h2 {
 
   button {
     align-self: flex-end;
-
     margin-top: 1rem;
 
     &:hover {

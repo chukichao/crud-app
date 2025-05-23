@@ -6,9 +6,3 @@
     minus ipsum ullam neque odio maxime, esse quisquam corrupti ad asperiores!
   </p>
 </template>
-
-<script>
-export default {};
-</script>
-
-<style scoped lang="scss"></style>

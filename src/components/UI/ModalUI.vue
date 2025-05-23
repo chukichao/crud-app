@@ -1,26 +1,20 @@
 <template>
-  <div v-if="isOpen" @click="$emit('toggle')" class="modal">
-    <div @click.stop class="modal-content">
+  <div class="modal" @click="uiStore.closeModal">
+    <div class="modal-body" @click.stop>
       <slot />
-
-      <!-- <slot>...</slot> // в том числе с указанием значения по умолчанию -->
-
-      <!-- <slot name="..."></slot> // по наименованию -->
-      <!-- name="default" // значение по умолчанию -->
-
-      <!-- $slots. ... // обращение к переданным слотам -->
     </div>
   </div>
 </template>
 
 <script>
+import { mapStores } from 'pinia';
+import { useUIStore } from '../../store/UIStore.js';
+
 export default {
   name: 'modal-ui',
-  props: {
-    isOpen: {
-      type: Boolean,
-      default: false,
-    },
+
+  computed: {
+    ...mapStores(useUIStore),
   },
 };
 </script>
@@ -37,7 +31,7 @@ export default {
 
   background: rgba(0, 0, 0, 0.5);
 
-  &-content {
+  &-body {
     min-width: 300px;
     min-height: 50px;
 

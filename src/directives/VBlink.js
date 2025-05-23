@@ -24,32 +24,10 @@ export default {
 
   unmounted(el) {
     if (interval) {
-      clearInterval(interval); // очистка интервала
+      clearInterval(interval);
     }
 
-    el.removeEventListener('mouseover', mouseover); // очистка слушателей событий
+    el.removeEventListener('mouseover', mouseover);
     el.removeEventListener('mouseout', mouseout);
   },
-
-  // mounted(el, binding) { // с принимающим значением директивы v-...="..." (в кавычках)
-  //   console.log(binding.value);
-  // }
-
-  // mounted(el, binding) {
-  //   с принимающим параметром директивы v-...:...="..." (через двоеточие; :[...] - динамический параметр)
-  //   console.log(binding.arg);
-  // },
-
-  //   mounted(el, binding) {
-  //   с принимающим модификатором директивы v-...:...="..." (через точку)
-  //   console.log(binding.modifiers. ...);
-  // },
-
-  // updated() { // при обновлении
-  //   // ...
-  // }
-
-  // unmounted() { // при удалении
-  //   // ...
-  // }
 };

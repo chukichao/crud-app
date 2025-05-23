@@ -2,7 +2,7 @@
   <header class="header">
     <nav>
       <ul>
-        <async-logo />
+        <Logo />
         <li>
           <RouterLink to="/">Home</RouterLink>
         </li>
@@ -13,7 +13,7 @@
 
         <li>
           <RouterLink
-            v-if="auth"
+            v-if="userStore.auth"
             to="/posts"
             custom
             v-slot="{ navigate, href }"
@@ -22,53 +22,53 @@
               href="#"
               @click="navigate"
               :class="{ active: $route.path.indexOf(href) !== -1 }"
-              >Posts</a
-            >
+              >Posts
+            </a>
           </RouterLink>
         </li>
       </ul>
     </nav>
 
-    <div v-if="auth">
-      <button-ui @click="$emit('logout')">Logout</button-ui>
+    <div v-if="userStore.auth">
+      <button-ui @click="logout">Logout</button-ui>
     </div>
 
     <div v-else>
       <button-ui><RouterLink to="/signup">Sign up</RouterLink></button-ui>
 
-      <button-ui @click="toggleModal">Sign in</button-ui>
+      <button-ui @click="uiStore.openModal('login')">Sign in</button-ui>
     </div>
 
-    <teleport to="body">
-      <modal-ui :isOpen="isOpenModal" @toggle="toggleModal">
-        <FormLogin @login="$emit('login')" @toggle="toggleModal" />
-
-        <!-- <template #:...> // по наименованию (v-slot: - альт.)
-        ...
-        </template> -->
-
-        <!-- #:...="slotProps" // объект для доступа к передаваемым внутренним пропсам слота (при необходимости) -->
+    <keep-alive>
+      <modal-ui v-if="uiStore.modal.type === 'login'">
+        <FormLogin />
       </modal-ui>
-    </teleport>
-
-    <!-- $emit('login', $event) -->
-    <!-- (userData) => $emit('login', userData) -->
+    </keep-alive>
   </header>
 </template>
 
 <script>
+import Logo from './Logo.vue';
 import FormLogin from './FormLogin.vue';
 
-import modalMixin from '../mixins/modalMixin';
+import { mapStores } from 'pinia';
+import { useUIStore } from '../store/UIStore.js';
+import { useUserStore } from '../store/UserStore.js';
 
 export default {
-  props: {
-    auth: Boolean,
+  methods: {
+    logout() {
+      this.userStore.logout();
+      this.$router.push('/');
+    },
   },
 
-  mixins: [modalMixin],
+  computed: {
+    ...mapStores(useUIStore, useUserStore),
+  },
 
   components: {
+    Logo,
     FormLogin,
   },
 };
@@ -122,7 +122,7 @@ export default {
   font-weight: bold;
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 600px) {
   .header {
     ul {
       flex-direction: column;

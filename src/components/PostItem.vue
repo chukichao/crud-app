@@ -1,51 +1,47 @@
 <template>
-  <li class="post-item" @click="$router.push(`/posts/${post.id}`)">
-    <button-ui @click.stop="$emit('remove', post.id)" class="post-item-delete"
-      >X</button-ui
-    >
+  <li>
+    <div class="post-item" @click="$router.push(`/posts/${post.id}`)">
+      <button-ui
+        @click.stop="postsStore.removePost(post.id)"
+        class="post-item-delete"
+      >
+        X
+      </button-ui>
 
-    <div class="post-item-container">
       <div class="post-item-content">
-        <h3>{{ post.id }}. {{ post.title }}</h3>
-        <p>{{ post.body }}</p>
-      </div>
-      <div class="post-item-edit">
-        <button-ui @click.stop="toggleModal">Edit</button-ui>
+        <div class="post-item-content-body">
+          <h3>{{ post.id < 100 ? `${post.id}.` : '' }} {{ post.title }}</h3>
+          <p>{{ post.body }}</p>
+        </div>
+        <div class="post-item-content-edit">
+          <button-ui @click.stop="uiStore.openModal('editPost', post.id)">
+            Edit
+          </button-ui>
+        </div>
       </div>
     </div>
-  </li>
 
-  <teleport to="body">
-    <modal-ui :isOpen="isOpenModal" @toggle="toggleModal">
-      <FormUpdatePost
-        @update="(id, updatePost) => $emit('update', id, updatePost)"
-        @toggle="toggleModal"
-        :title="post.title"
-        :body="post.body"
-        :id="post.id"
-      />
+    <modal-ui v-if="uiStore.modal.extra === post.id">
+      <FormUpdatePost :title="post.title" :body="post.body" :id="post.id" />
     </modal-ui>
-  </teleport>
+  </li>
 </template>
 
 <script>
 import FormUpdatePost from './FormUpdatePost.vue';
 
-import modalMixin from '../mixins/modalMixin';
+import { mapStores } from 'pinia';
+import { usePostsStore } from '../store/PostsStore';
+import { useUIStore } from '../store/UIStore.js';
 
 export default {
-  // props: ['post']
-
   props: {
-    post: {
-      type: Object,
-      required: true,
-    },
+    post: Object,
   },
 
-  mixins: [modalMixin],
-
-  emits: ['remove', 'update'],
+  computed: {
+    ...mapStores(usePostsStore, useUIStore),
+  },
 
   components: {
     FormUpdatePost,
@@ -69,31 +65,6 @@ export default {
     box-shadow: 5px 5px 5px #333;
   }
 
-  &-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    margin-top: 2rem;
-  }
-
-  &-content {
-    p {
-      padding: 0.5rem;
-      margin: 1rem 0;
-
-      text-indent: 0.5rem;
-    }
-  }
-
-  &-edit {
-    margin: 1rem;
-
-    button:hover {
-      background: bisque;
-    }
-  }
-
   &-delete {
     align-self: end;
     border: none;
@@ -101,6 +72,31 @@ export default {
     &:hover {
       background-color: #333;
       color: white;
+    }
+  }
+
+  &-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 2rem;
+
+    &-body {
+      p {
+        padding: 0.5rem;
+        margin: 1rem 0;
+
+        text-indent: 0.5rem;
+      }
+    }
+
+    &-edit {
+      margin: 1rem;
+
+      button:hover {
+        background: bisque;
+      }
     }
   }
 }

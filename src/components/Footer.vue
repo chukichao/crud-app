@@ -2,10 +2,6 @@
   <footer class="footer"></footer>
 </template>
 
-<script>
-export default {};
-</script>
-
 <style>
 .footer {
   width: 100%;

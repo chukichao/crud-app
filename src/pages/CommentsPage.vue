@@ -1,9 +1,9 @@
 <template>
   <h1>Comments Page</h1>
 
-  <div v-if="comments.length > 0" class="comments">
+  <div v-if="commentsStore.comments.length" class="comments">
     <ul>
-      <li v-for="comment in comments" :key="comment.id">
+      <li v-for="comment in commentsStore.comments" :key="comment.id">
         <h3>{{ comment.id }}. {{ comment.name }}</h3>
         <p>{{ comment.body }}</p>
         <p>{{ comment.email }}</p>
@@ -13,41 +13,22 @@
   </div>
 
   <div v-else class="status">
-    <loader-ui v-if="isLoadingComments" />
+    <loader-ui v-if="uiStore.isLoading" />
   </div>
 </template>
 
 <script>
-import axios from 'axios';
+import { mapStores } from 'pinia';
+import { useCommentsStore } from '../store/CommentsStore';
+import { useUIStore } from '../store/UIStore';
 
 export default {
-  data() {
-    return {
-      comments: [],
-      isLoadingComments: false,
-    };
-  },
-
-  methods: {
-    async fetchPost() {
-      try {
-        this.isLoadingComments = true;
-
-        const response = await axios.get(
-          `https://jsonplaceholder.typicode.com/posts/${this.$route.params.id}/comments`,
-        );
-
-        this.comments = response.data;
-      } catch (error) {
-        console.error(error);
-      } finally {
-        this.isLoadingPosts = false;
-      }
-    },
-  },
-
   mounted() {
-    this.fetchPost();
+    this.commentsStore.fetchComments(this.$route.params.id);
+  },
+
+  computed: {
+    ...mapStores(useCommentsStore, useUIStore),
   },
 };
 </script>

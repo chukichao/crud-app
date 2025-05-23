@@ -1,16 +1,12 @@
 <template>
-  <div class="notFount">
+  <div class="status">
     <h2>This page was not found</h2>
-    <RouterLink to="/">Go home</RouterLink>
+    <RouterLink to="/">Go home page</RouterLink>
   </div>
 </template>
 
-<script>
-export default {};
-</script>
-
 <style scoped lang="scss">
-.notFount {
+.status {
   text-align: center;
 
   h2 {

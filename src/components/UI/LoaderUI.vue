@@ -13,12 +13,12 @@ export default {
   width: 50px;
   height: 50px;
 
+  margin: 2rem auto;
+
   border: 4px dashed #333;
   border-radius: 50%;
 
   animation: rotate 2s infinite linear;
-
-  margin: 2rem auto;
 
   @keyframes rotate {
     0% {

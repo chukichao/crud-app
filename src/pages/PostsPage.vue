@@ -3,83 +3,54 @@
 
   <input-ui
     type="search"
-    v-model.trim="searchQuery"
-    placeholder="search"
     class="search"
+    v-model.trim="searchQuery"
     v-focus
+    placeholder="search"
   />
 
-  <!-- <pagination-ui :totalPages="totalPages" @setPage="setPage" :page="page" /> -->
+  <PaginationPosts />
 
-  <PostList
-    :posts="sortedAndSearchedPosts"
-    @remove="removePost"
-    @update="updatePost"
-    :isLoadingPosts="isLoadingPosts"
-  />
+  <PostsList :posts="sortedAndSearchedPosts" />
 
-  <div
-    class="observer"
-    v-observer="{
-      loadingMorePosts,
-      page,
-      totalPages,
-    }"
-  ></div>
+  <div class="scroll" v-observer="postsStore.fetchPosts"></div>
 
   <div class="sort">
-    <select-ui
-      :options="[
-        { title: 5, value: 5 },
-        { title: 10, value: 10 },
-        { title: 25, value: 25 },
-      ]"
-      :defaultValue="10"
-      v-model="limit"
-      title="limit"
-    >
-    </select-ui>
-    <select-ui
-      :options="sortOptions"
-      :defaultValue="selectedSort"
-      v-model="selectedSort"
-      title="sort by"
-    >
-    </select-ui>
+    <PagesLimit />
+    <select-ui :options="sortOptions" v-model="selectedSort" title="sort" />
   </div>
 
-  <div class="post-add-button">
-    <button-ui @click="toggleModal" title="Add new post">+</button-ui>
+  <div class="add">
+    <button-ui @click="uiStore.openModal('addPost')" title="Add new post"
+      >+
+    </button-ui>
   </div>
 
-  <teleport to="body">
-    <modal-ui :isOpen="isOpenModal" @toggle="toggleModal">
-      <FormAddPost @create="createPost" />
+  <keep-alive>
+    <modal-ui v-if="uiStore.modal.type === 'addPost'">
+      <FormAddPost />
     </modal-ui>
-  </teleport>
+  </keep-alive>
 </template>
 
 <script>
-import axios from 'axios';
-
+import PostsList from '../components/PostsList.vue';
 import FormAddPost from '../components/FormAddPost.vue';
-import PostList from '../components/PostList.vue';
+import PaginationPosts from '../components/PaginationPosts.vue';
+import PagesLimit from '../components/PagesLimit.vue';
+
+import { mapStores } from 'pinia';
+import { usePostsStore } from '../store/PostsStore.js';
+import { useUIStore } from '../store/UIStore.js';
 
 import VIntersection from '../directives/VIntersection.js';
 import VFocus from '../directives/VFocus.js';
 
-import modalMixin from '../mixins/modalMixin.js';
-
 export default {
   data() {
     return {
-      posts: [],
-      isLoadingPosts: false,
-      selectedSort: '',
       searchQuery: '',
-      page: 1,
-      limit: 10,
-      totalPages: 0,
+      selectedSort: '',
       sortOptions: [
         { title: 'by title', value: 'title' },
         { title: 'by body', value: 'body' },
@@ -92,95 +63,15 @@ export default {
     focus: VFocus,
   },
 
-  mixins: [modalMixin],
-
-  provide() {
-    // передача данных дочерним компонентам (при необходимости)
-    return {
-      title: 'Posts List',
-    };
-  },
-
-  methods: {
-    createPost(newPost) {
-      this.posts.unshift(newPost);
-      this.isOpenModal = false;
-    },
-    removePost(id) {
-      this.posts = this.posts.filter((post) => post.id !== id);
-    },
-    updatePost(id, updatedPost) {
-      const post = this.posts.find((post) => post.id === id);
-
-      const newPost = {
-        ...post,
-        ...updatedPost,
-      };
-
-      this.posts = this.posts.filter((post) => post.id !== id);
-      this.posts.unshift(newPost);
-    },
-    // setPage(pageNumber) {
-    //   this.page = pageNumber;
-    // },
-    async fetchPosts() {
-      try {
-        this.isLoadingPosts = true;
-
-        const response = await axios.get(
-          `https://jsonplaceholder.typicode.com/posts?_limit=${this.limit}&_page=${this.page}`,
-          // {
-          //   _page: this.page,
-          //   _limit: this.limit,
-          // },
-        );
-
-        this.totalPages = Math.ceil(
-          response.headers['x-total-count'] / this.limit,
-        );
-
-        this.posts = response.data;
-      } catch (error) {
-        console.error(error);
-      } finally {
-        this.isLoadingPosts = false;
-      }
-    },
-    async loadingMorePosts() {
-      try {
-        this.page += 1;
-        this.isLoadingPosts = true;
-
-        const response = await axios.get(
-          `https://jsonplaceholder.typicode.com/posts?_limit=${this.limit}&_page=${this.page}`,
-          // {
-          //   _page: this.page,
-          //   _limit: this.limit,
-          // },
-        );
-
-        this.totalPages = Math.ceil(
-          response.headers['x-total-count'] / this.limit,
-        );
-
-        // this.posts = response.data;
-        this.posts = [...this.posts, ...response.data];
-      } catch (error) {
-        console.error(error);
-      } finally {
-        this.isLoadingPosts = false;
-      }
-    },
-  },
-
   mounted() {
-    this.fetchPosts();
+    this.postsStore.fetchPosts();
   },
 
   computed: {
-    // вычисляемые свойства
+    ...mapStores(usePostsStore, useUIStore),
+
     sortedPosts() {
-      return [...this.posts].sort((post1, post2) =>
+      return [...this.postsStore.posts].sort((post1, post2) =>
         post1[this.selectedSort]?.localeCompare(post2[this.selectedSort]),
       );
     },
@@ -192,39 +83,31 @@ export default {
     },
   },
 
-  watch: {
-    // page() {
-    //   this.fetchPosts();
-    // },
-    // limit() {
-    //   this.page = 1;
-    //   this.fetchPosts();
-    // },
-  },
-
-  // watch: { // наблюдаемые свойства
-  //   selectedSort(newValue) {
-  //     this.posts.sort((post1, post2) =>
-  //       post1[newValue]?.localeCompare(post2[newValue]),
-  //     );
-  //   },
-  // ...: { // при работе с объектами и массивами (глубокой вложенностью)
-  //   handleError(value {
-  //     // ...
-  //   }),
-  //   deep: true
-  // }
-  // },
-
   components: {
+    PostsList,
     FormAddPost,
-    PostList,
+    PaginationPosts,
+    PagesLimit,
   },
 };
 </script>
 
 <style scoped lang="scss">
-.post-add-button {
+.search {
+  padding: 1rem;
+  font-size: 20px;
+  border-radius: 1rem;
+
+  &::placeholder {
+    font-style: italic;
+  }
+
+  &:focus {
+    outline: 2px solid #333;
+  }
+}
+
+.add {
   position: fixed;
   bottom: 3rem;
   right: 3rem;
@@ -257,24 +140,12 @@ export default {
   bottom: 0;
   right: 0;
 
-  padding: 0.5rem;
-}
-
-.search {
-  padding: 1rem;
-  font-size: 20px;
-  border-radius: 1rem;
-
-  &::placeholder {
-    font-style: italic;
-  }
-
-  &:focus {
-    outline: 2px solid #333;
+  select {
+    padding: 0.3rem;
   }
 }
 
-.observer {
-  height: 1px;
+.scroll {
+  margin-top: 10rem;
 }
 </style>

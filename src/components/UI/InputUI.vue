@@ -1,15 +1,17 @@
 <template>
-  <input :value="modelValue" @input="updateInput" ref="input" />
+  <input :value="modelValue" @input="updateValue" ref="input" />
 </template>
 
 <script>
 export default {
   name: 'input-ui',
+
   props: {
-    modelValue: [String, Number], // v-model (двойное связывание с инпутом дочернего компонента; modelValue - по умол.; v-model:value -> update:value)
+    modelValue: [String, Number],
   },
+
   methods: {
-    updateInput(event) {
+    updateValue(event) {
       this.$emit('update:modelValue', event.target.value);
     },
     getInputRef() {

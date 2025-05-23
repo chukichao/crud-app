@@ -1,5 +1,5 @@
 <template>
-  <select :selected="defaultValue" :value="modelValue" @change="updateInput">
+  <select :value="modelValue" @change="updateValue">
     <option value="" disabled>{{ title }}</option>
     <option v-for="option in options" :key="option.value" :value="option.value">
       {{ option.title }}
@@ -17,11 +17,6 @@ export default {
     },
     options: {
       type: Array,
-      default: () => [],
-    },
-    defaultValue: {
-      type: [String, Number],
-      default: '',
     },
     title: {
       type: String,
@@ -29,7 +24,7 @@ export default {
   },
 
   methods: {
-    updateInput(event) {
+    updateValue(event) {
       this.$emit('update:modelValue', event.target.value);
     },
   },

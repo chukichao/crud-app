@@ -16,8 +16,9 @@ export default {
   left: 0;
   bottom: 0;
 
-  padding: 1rem 4rem;
   width: 400px;
+
+  padding: 1rem 2rem;
 
   background: bisque;
   border: 2px solid #333;

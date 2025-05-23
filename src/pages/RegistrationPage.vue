@@ -1,56 +1,47 @@
 <template>
   <h1>Registration Page</h1>
 
-  <form class="form" @submit.prevent="validate" ref="form">
+  <form class="form" @submit.prevent="registerAccount" ref="form">
     <div class="form-main">
       <label
-        >Name*:
+        >Name:
         <input-ui
           v-model.trim="user.username"
           name="username"
           autocomplete="username"
-          :class="{ requiredError }"
+          :class="{ required }"
         ></input-ui>
       </label>
 
       <label
-        >Age*:
+        >Age:
         <input-ui
           v-model.trim.number="user.age"
           type="number"
           name="age"
-          :class="{ requiredError }"
+          :class="{ required }"
         ></input-ui>
       </label>
 
       <label
-        >Date of birth:
-        <input-ui
-          v-model="user.birthday"
-          type="date"
-          name="birthday"
-        ></input-ui>
-      </label>
-
-      <label
-        >Password*:
+        >Password:
         <input-ui
           v-model.trim="user.password"
           type="password"
           name="password"
           autocomplete="new-password"
-          :class="{ requiredError, confirmError }"
+          :class="{ required, confirm }"
         ></input-ui>
       </label>
 
       <label
-        >Confirm Password*:
+        >Confirm Password:
         <input-ui
           v-model.trim="user.confirmPassword"
           type="password"
           name="confirmPassword"
           autocomplete="new-password"
-          :class="{ confirmError }"
+          :class="{ confirm }"
         ></input-ui>
       </label>
 
@@ -73,29 +64,34 @@
       </div>
     </div>
 
+    <label
+      >Date of birth:
+      <input-ui v-model="user.birthday" type="date" name="birthday"></input-ui>
+    </label>
+
     <div class="form-gender">
       Gender:
       <div>
         <label>
-          <input-ui
+          <input
             v-model="user.gender"
             type="radio"
             name="gender"
             value="male"
             checked
-          ></input-ui>
+          />
           Male</label
         >
       </div>
 
       <div>
         <label
-          ><input-ui
+          ><input
             v-model="user.gender"
             type="radio"
             name="gender"
             value="female"
-          ></input-ui>
+          />
           Female</label
         >
       </div>
@@ -143,7 +139,7 @@
     <div class="form-rules">
       <label
         ><input v-model="user.agree" type="checkbox" name="agree" /> Я
-        ознакомлен с правилами конфиденциальности</label
+        ознакомлен с правилами конфиденциальности (обязательно)</label
       >
     </div>
 
@@ -152,6 +148,9 @@
 </template>
 
 <script>
+import { mapStores } from 'pinia';
+import { useUserStore } from '../store/UserStore.js';
+
 export default {
   data() {
     return {
@@ -174,36 +173,43 @@ export default {
     };
   },
 
-  inject: ['registerAccount'],
-
   methods: {
+    registerAccount() {
+      if (this.validate()) {
+        this.userStore.login(this.user.username, this.user);
+        this.$router.push('/');
+      }
+    },
     validate() {
-      if (!this.user.username || !this.user.password || !this.user.age) {
+      if (!this.user.username || !this.user.password) {
         this.errors.requiredError = true;
         this.errorFeedback = 'required field';
-        return;
+        return false;
       }
       this.errors.requiredError = false;
 
       if (this.user.password !== this.user.confirmPassword) {
         this.errors.confirmError = true;
         this.errorFeedback = 'passwords must match';
-        return;
+        return false;
       }
       this.errors.confirmError = false;
 
       this.errorFeedback = '';
 
-      this.registerAccount(this.user);
+      if (user.agree) {
+        return true;
+      }
     },
   },
 
   computed: {
-    requiredError() {
-      return this.errors.requiredError ? 'requiredError' : '';
+    ...mapStores(useUserStore),
+    required() {
+      return this.errors.requiredError ? 'required' : '';
     },
-    confirmError() {
-      return this.errors.confirmError ? 'confirmError' : '';
+    confirm() {
+      return this.errors.confirmError ? 'confirm' : '';
     },
   },
 };
@@ -261,8 +267,8 @@ export default {
   }
 }
 
-.requiredError,
-.confirmError {
+.required,
+.confirm {
   outline: 1px solid red;
 }
 

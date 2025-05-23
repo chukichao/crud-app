@@ -21,6 +21,11 @@
 </template>
 
 <script>
+import { mapStores } from 'pinia';
+
+import { useUIStore } from '../store/UIStore.js';
+import { useUserStore } from '../store/UserStore.js';
+
 export default {
   data() {
     return {
@@ -31,33 +36,38 @@ export default {
     };
   },
 
-  emits: ['login', 'toggle'],
-
   methods: {
     login() {
-      this.$emit('login');
+      const newUser = {
+        username: this.user.username,
+        token: String(Math.random()).slice(2),
+      };
+
+      this.userStore.login(newUser);
 
       this.user = {
         username: '',
         password: '',
       };
 
-      this.$emit('toggle');
+      this.uiStore.closeModal();
+      this.$router.push('/');
     },
   },
 
   computed: {
+    ...mapStores(useUserStore, useUIStore),
     disabledButton() {
-      // if (this.user.username.length >= 1 && this.user.password.length >= 1) {
-      //   return false;
-      // }
+      if (this.user.username.length >= 1 && this.user.password.length >= 1) {
+        return false;
+      }
 
-      return false;
+      return true;
     },
   },
 
   mounted() {
-    this.$refs.username.getInputRef().focus(); // без использования кастомной директивы
+    this.$refs.username.getInputRef().focus();
   },
 };
 </script>
@@ -80,7 +90,6 @@ h2 {
 
   button {
     align-self: flex-end;
-
     margin-top: 1rem;
 
     &:hover {
