@@ -1,48 +1,44 @@
 <template>
   <h1>Registration Page</h1>
 
-  <form class="form" @submit.prevent="registerAccount" ref="form">
+  <form class="form" @submit.prevent="registerAccount">
     <div class="form-main">
       <label
         >Name:
-        <input-ui
+        <InputUI
           v-model.trim="user.username"
-          name="username"
           autocomplete="username"
           :class="{ required }"
-        ></input-ui>
+        ></InputUI>
       </label>
 
       <label
         >Age:
-        <input-ui
-          v-model.trim.number="user.age"
+        <InputUI
+          v-model="user.age"
           type="number"
-          name="age"
           :class="{ required }"
-        ></input-ui>
+        ></InputUI>
       </label>
 
       <label
         >Password:
-        <input-ui
+        <InputUI
           v-model.trim="user.password"
           type="password"
-          name="password"
           autocomplete="new-password"
           :class="{ required, confirm }"
-        ></input-ui>
+        ></InputUI>
       </label>
 
       <label
         >Confirm Password:
-        <input-ui
+        <InputUI
           v-model.trim="user.confirmPassword"
           type="password"
-          name="confirmPassword"
           autocomplete="new-password"
-          :class="{ confirm }"
-        ></input-ui>
+          :class="{ required, confirm }"
+        ></InputUI>
       </label>
 
       <small class="error-feedback" v-if="errorFeedback">{{
@@ -55,43 +51,31 @@
     <div class="form-country">
       <label for="country">Country:</label>
       <div>
-        <select name="country" id="country" v-model="user.country">
-          <option value=""></option>
-          <option value="russia">Russia</option>
-          <option value="belarus">Belarus</option>
-          <option value="ukraine">Ukraine</option>
-        </select>
+        <SelectUI
+          :options="countryOptions"
+          id="country"
+          v-model="user.country"
+        ></SelectUI>
       </div>
     </div>
 
     <label
       >Date of birth:
-      <input-ui v-model="user.birthday" type="date" name="birthday"></input-ui>
+      <InputUI v-model="user.birthday" type="date"></InputUI>
     </label>
 
     <div class="form-gender">
       Gender:
       <div>
         <label>
-          <input
-            v-model="user.gender"
-            type="radio"
-            name="gender"
-            value="male"
-            checked
-          />
+          <input v-model="user.gender" type="radio" value="male" />
           Male</label
         >
       </div>
 
       <div>
         <label
-          ><input
-            v-model="user.gender"
-            type="radio"
-            name="gender"
-            value="female"
-          />
+          ><input v-model="user.gender" type="radio" value="female" />
           Female</label
         >
       </div>
@@ -101,53 +85,113 @@
       Skills:
       <div>
         <label
-          ><input
-            v-model="user.skills"
-            type="checkbox"
-            name="skills"
-            value="html"
-          />
+          ><input v-model="user.skills" type="checkbox" value="html" />
           HTML</label
         >
       </div>
 
       <div>
         <label
-          ><input
-            v-model="user.skills"
-            type="checkbox"
-            name="skills"
-            value="css"
-          />
+          ><input v-model="user.skills" type="checkbox" value="css" />
           CSS</label
         >
       </div>
 
       <div>
         <label
-          ><input
-            v-model="user.skills"
-            type="checkbox"
-            name="skills"
-            value="js"
-          />
-          JS</label
+          ><input v-model="user.skills" type="checkbox" value="js" /> JS</label
         >
       </div>
     </div>
 
     <div class="form-rules">
       <label
-        ><input v-model="user.agree" type="checkbox" name="agree" /> Я
-        ознакомлен с правилами конфиденциальности (обязательно)</label
+        ><input :class="{ required }" v-model="user.agree" type="checkbox" /> I
+        have read the privacy policy (required)</label
       >
     </div>
 
-    <button-ui>Sign up</button-ui>
+    <ButtonUI>Sign up</ButtonUI>
   </form>
 </template>
 
-<script>
+<!-- COMPOSITION API -->
+
+<script setup>
+import { useUserStore } from '../store/UserStore.js';
+
+import { ref, reactive, computed } from 'vue';
+
+import { useRouter } from 'vue-router';
+
+const userStore = useUserStore();
+
+const router = useRouter();
+
+const user = reactive({
+  username: null,
+  age: null,
+  password: null,
+  confirmPassword: null,
+  country: null,
+  birthday: null,
+  gender: 'male',
+  skills: [],
+  agree: false,
+});
+
+const errors = reactive({
+  requiredError: false,
+  confirmError: false,
+});
+
+const errorFeedback = ref(null);
+
+const countryOptions = ref([
+  { title: 'Russia', value: 'russia' },
+  { title: 'Belarus', value: 'belarus' },
+  { title: 'Ukraine', value: 'ukraine' },
+]);
+
+const required = computed(() => {
+  return errors.requiredError ? 'required' : '';
+});
+
+const confirm = computed(() => {
+  return errors.confirmError ? 'confirm' : '';
+});
+
+const registerAccount = () => {
+  if (validate()) {
+    userStore.login(user.username, user);
+    router.push('/');
+  }
+};
+
+const validate = () => {
+  if (!user.username || !user.password || !user.agree) {
+    errors.requiredError = true;
+    errorFeedback.value = 'required field';
+    return false;
+  }
+  errors.requiredError = false;
+
+  if (user.password !== user.confirmPassword) {
+    errors.confirmError = true;
+    errorFeedback.value = 'passwords must match';
+    return false;
+  }
+  errors.confirmError = false;
+
+  errorFeedback.value = null;
+
+  return true;
+};
+</script>
+
+<!-- OPTIONS API -->
+
+<!-- <script>
 import { mapStores } from 'pinia';
 import { useUserStore } from '../store/UserStore.js';
 
@@ -155,13 +199,13 @@ export default {
   data() {
     return {
       user: {
-        username: '',
-        age: '',
-        birthday: '',
-        password: '',
-        confirmPassword: '',
-        country: '',
-        gender: '',
+        username: null,
+        age: null,
+        password: null,
+        confirmPassword: null,
+        country: null,
+        birthday: null,
+        gender: 'male',
         skills: [],
         agree: false,
       },
@@ -169,8 +213,23 @@ export default {
         requiredError: false,
         confirmError: false,
       },
-      errorFeedback: '',
+      errorFeedback: null,
+      countryOptions: [
+        { title: 'Russia', value: 'russia' },
+        { title: 'Belarus', value: 'belarus' },
+        { title: 'Ukraine', value: 'ukraine' },
+      ],
     };
+  },
+
+  computed: {
+    ...mapStores(useUserStore),
+    required() {
+      return this.errors.requiredError ? 'required' : '';
+    },
+    confirm() {
+      return this.errors.confirmError ? 'confirm' : '';
+    },
   },
 
   methods: {
@@ -181,7 +240,7 @@ export default {
       }
     },
     validate() {
-      if (!this.user.username || !this.user.password) {
+      if (!this.user.username || !this.user.password || !this.user.agree) {
         this.errors.requiredError = true;
         this.errorFeedback = 'required field';
         return false;
@@ -195,25 +254,13 @@ export default {
       }
       this.errors.confirmError = false;
 
-      this.errorFeedback = '';
+      this.errorFeedback = null;
 
-      if (user.agree) {
-        return true;
-      }
-    },
-  },
-
-  computed: {
-    ...mapStores(useUserStore),
-    required() {
-      return this.errors.requiredError ? 'required' : '';
-    },
-    confirm() {
-      return this.errors.confirmError ? 'confirm' : '';
+      return true;
     },
   },
 };
-</script>
+</script> -->
 
 <style scoped lang="scss">
 .form {

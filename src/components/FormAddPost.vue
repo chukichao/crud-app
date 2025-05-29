@@ -1,13 +1,52 @@
 <template>
   <h2>Create post</h2>
   <form class="form" @submit.prevent="createPost">
-    <input-ui v-model.trim="post.title" placeholder="title" ref="title" />
-    <input-ui v-model.trim="post.body" placeholder="description" />
-    <button-ui>Сonfirm</button-ui>
+    <InputUI v-model.trim="post.title" placeholder="title" ref="input" />
+    <InputUI v-model.trim="post.body" placeholder="description" />
+    <ButtonUI>Сonfirm</ButtonUI>
   </form>
 </template>
 
-<script>
+<!-- COMPOSITION API -->
+
+<script setup>
+import { usePostsStore } from '../store/PostsStore.js';
+import { useUIStore } from '../store/UIStore.js';
+
+import { reactive, useTemplateRef, onMounted } from 'vue';
+
+const postsStore = usePostsStore();
+const uiStore = useUIStore();
+
+const input = useTemplateRef('input');
+
+let post = reactive({
+  title: '',
+  body: '',
+});
+
+const createPost = () => {
+  if (!post.title || !post.body) {
+    return;
+  }
+
+  postsStore.createPost(post);
+  uiStore.closeModal();
+
+  post = {
+    title: '',
+    body: '',
+  };
+};
+
+onMounted(() => {
+  input.value.getInputRef().focus();
+});
+</script>
+
+<!-- OPTIONS API -->
+
+<!-- <script>
 import { mapStores } from 'pinia';
 import { usePostsStore } from '../store/PostsStore.js';
 import { useUIStore } from '../store/UIStore.js';
@@ -28,8 +67,6 @@ export default {
         return;
       }
 
-      this.post.id = Date.now();
-
       this.postsStore.createPost(this.post);
       this.uiStore.closeModal();
 
@@ -40,15 +77,15 @@ export default {
     },
   },
 
-  mounted() {
-    this.$refs.title.getInputRef().focus();
-  },
-
   computed: {
     ...mapStores(usePostsStore, useUIStore),
   },
+
+  mounted() {
+    this.$refs.input.getInputRef().focus();
+  },
 };
-</script>
+</script> -->
 
 <style scoped lang="scss">
 h2 {

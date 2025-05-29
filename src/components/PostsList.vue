@@ -1,7 +1,8 @@
 <template>
   <div class="posts-list">
     <div v-if="posts.length">
-      <h2>Post list ({{ postsStore.totalCountPosts }})</h2>
+      <h2>Post list (100)</h2>
+      <h3>(shown {{ postsStore.totalCountPosts }})</h3>
 
       <TransitionGroup name="list" tag="ul">
         <PostItem v-for="post in posts" :key="post.id" :post="post" />
@@ -9,13 +10,31 @@
     </div>
 
     <div v-else>
-      <loader-ui v-if="uiStore.isLoading" />
+      <LoaderUI v-if="uiStore.isLoading" />
       <h2 v-else>No posts</h2>
     </div>
   </div>
 </template>
 
-<script>
+<!-- COMPOSITION API -->
+
+<script setup>
+import PostItem from './PostItem.vue';
+
+import { usePostsStore } from '../store/PostsStore.js';
+import { useUIStore } from '../store/UIStore.js';
+
+const postsStore = usePostsStore();
+const uiStore = useUIStore();
+
+const props = defineProps({
+  posts: Array,
+});
+</script>
+
+<!-- OPTIONS API -->
+
+<!-- <script>
 import PostItem from './PostItem.vue';
 
 import { mapStores } from 'pinia';
@@ -35,7 +54,7 @@ export default {
     PostItem,
   },
 };
-</script>
+</script> -->
 
 <style scoped lang="scss">
 .posts-list {

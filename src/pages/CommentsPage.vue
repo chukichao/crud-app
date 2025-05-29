@@ -9,15 +9,37 @@
         <p>{{ comment.email }}</p>
       </li>
     </ul>
-    <button-ui @click="$router.push('/posts')">Back</button-ui>
+    <ButtonUI @click="$router.push('/posts')">Back</ButtonUI>
   </div>
 
   <div v-else class="status">
-    <loader-ui v-if="uiStore.isLoading" />
+    <LoaderUI v-if="uiStore.isLoading" />
   </div>
 </template>
 
-<script>
+<!-- COMPOSITION API -->
+
+<script setup>
+import { useCommentsStore } from '../store/CommentsStore';
+import { useUIStore } from '../store/UIStore';
+
+import { onMounted } from 'vue';
+
+import { useRoute } from 'vue-router';
+
+const commentsStore = useCommentsStore();
+const uiStore = useUIStore();
+
+const route = useRoute();
+
+onMounted(() => {
+  commentsStore.fetchComments(route.params.id);
+});
+</script>
+
+<!-- OPTIONS API -->
+
+<!-- <script>
 import { mapStores } from 'pinia';
 import { useCommentsStore } from '../store/CommentsStore';
 import { useUIStore } from '../store/UIStore';
@@ -31,7 +53,7 @@ export default {
     ...mapStores(useCommentsStore, useUIStore),
   },
 };
-</script>
+</script> -->
 
 <style scoped lang="scss">
 .comments {

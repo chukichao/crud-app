@@ -6,9 +6,10 @@ export const useUserStore = defineStore('user', {
     userData: null,
   }),
   actions: {
-    login(data, userData = null) {
-      this.auth = data;
+    login(username, userData = null) {
+      this.auth = { ...username, token: String(Math.random()).slice(2) };
       localStorage.setItem('auth', JSON.stringify(this.auth));
+
       this.userData = userData;
     },
     logout() {

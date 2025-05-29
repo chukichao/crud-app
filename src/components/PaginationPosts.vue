@@ -18,7 +18,17 @@
   </ul>
 </template>
 
-<script>
+<!-- COMPOSITION API -->
+
+<script setup>
+import { usePostsStore } from '../store/PostsStore.js';
+
+const postsStore = usePostsStore();
+</script>
+
+<!-- OPTIONS API -->
+
+<!-- <script>
 import { mapStores } from 'pinia';
 import { usePostsStore } from '../store/PostsStore.js';
 
@@ -27,7 +37,7 @@ export default {
     ...mapStores(usePostsStore),
   },
 };
-</script>
+</script> -->
 
 <style scoped lang="scss">
 ul {

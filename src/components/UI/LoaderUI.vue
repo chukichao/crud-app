@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: 'loader-ui',
+  name: 'LoaderUI',
 };
 </script>
 

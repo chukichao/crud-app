@@ -11,7 +11,7 @@ import { mapStores } from 'pinia';
 import { useUIStore } from '../../store/UIStore.js';
 
 export default {
-  name: 'modal-ui',
+  name: 'ModalUI',
 
   computed: {
     ...mapStores(useUIStore),

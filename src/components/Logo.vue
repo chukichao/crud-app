@@ -2,7 +2,15 @@
   <div class="logo">crudApp<span v-blink.hover>_</span></div>
 </template>
 
-<script>
+<!-- COMPOSITION API -->
+
+<script setup>
+import vBlink from '../directives/VBlink.js';
+</script>
+
+<!-- OPTIONS API -->
+
+<!-- <script>
 import VBlink from '../directives/VBlink.js';
 
 export default {
@@ -10,7 +18,7 @@ export default {
     blink: VBlink,
   },
 };
-</script>
+</script> -->
 
 <style scoped lang="scss">
 .logo {

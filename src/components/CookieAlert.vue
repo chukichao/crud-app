@@ -1,0 +1,56 @@
+<template>
+  <div class="cookie-alert">
+    <h3>Welcome!</h3>
+    <p>
+      Our platform uses cookies to ensure the correct operation of the site and
+      your comfortable interaction with it.
+    </p>
+    <ButtonUI @click="uiStore.closeCookieAlert">Accept</ButtonUI>
+  </div>
+</template>
+
+<!-- COMPOSITION API -->
+
+<script setup>
+import { useUIStore } from '../store/UIStore.js';
+
+const uiStore = useUIStore();
+</script>
+
+<!-- OPTIONS API -->
+
+<!-- <script>
+import { mapStores } from 'pinia';
+import { useUIStore } from '../store/UIStore.js';
+
+export default {
+  computed: {
+    ...mapStores(useUIStore),
+  },
+};
+</script> -->
+
+<style scoped lang="scss">
+.cookie-alert {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+
+  width: 400px;
+
+  padding: 1rem 2rem;
+
+  background: bisque;
+  border: 2px solid #333;
+  border-radius: 5px;
+
+  p {
+    margin: 1rem 0;
+  }
+
+  button {
+    background-color: white;
+    border-radius: 5px;
+  }
+}
+</style>

@@ -1,7 +1,7 @@
 <template>
   <h1>Posts Page</h1>
 
-  <input-ui
+  <InputUI
     type="search"
     class="search"
     v-model.trim="searchQuery"
@@ -15,25 +15,66 @@
 
   <div class="scroll" v-observer="postsStore.fetchPosts"></div>
 
-  <div class="sort">
+  <div class="filter">
     <PagesLimit />
-    <select-ui :options="sortOptions" v-model="selectedSort" title="sort" />
+    <SelectUI :options="sortOptions" v-model="selectedSort" title="sort" />
   </div>
 
   <div class="add">
-    <button-ui @click="uiStore.openModal('addPost')" title="Add new post"
+    <ButtonUI @click="uiStore.openModal('addPost')" title="Add new post"
       >+
-    </button-ui>
+    </ButtonUI>
   </div>
 
-  <keep-alive>
-    <modal-ui v-if="uiStore.modal.type === 'addPost'">
-      <FormAddPost />
-    </modal-ui>
-  </keep-alive>
+  <ModalUI v-if="uiStore.modal.type === 'addPost'">
+    <FormAddPost />
+  </ModalUI>
 </template>
 
-<script>
+<!-- COMPOSITION API -->
+
+<script setup>
+import PostsList from '../components/PostsList.vue';
+import FormAddPost from '../components/FormAddPost.vue';
+import PaginationPosts from '../components/PaginationPosts.vue';
+import PagesLimit from '../components/PagesLimit.vue';
+
+import { usePostsStore } from '../store/PostsStore.js';
+import { useUIStore } from '../store/UIStore.js';
+
+import vObserver from '../directives/VIntersection.js';
+import vFocus from '../directives/VFocus.js';
+
+import { computed, onMounted, ref } from 'vue';
+
+const postsStore = usePostsStore();
+const uiStore = useUIStore();
+
+const searchQuery = ref('');
+const selectedSort = ref('');
+const sortOptions = ref([
+  { title: 'by title', value: 'title' },
+  { title: 'by body', value: 'body' },
+]);
+
+const sortedAndSearchedPosts = computed(() => {
+  const sortedPosts = [...postsStore.posts].sort((post1, post2) =>
+    post1[selectedSort.value]?.localeCompare(post2[selectedSort.value]),
+  );
+
+  return sortedPosts.filter((post) =>
+    post.title.toLowerCase().includes(searchQuery.value.toLowerCase()),
+  );
+});
+
+onMounted(() => {
+  postsStore.fetchPosts();
+});
+</script>
+
+<!-- OPTIONS API -->
+
+<!-- <script>
 import PostsList from '../components/PostsList.vue';
 import FormAddPost from '../components/FormAddPost.vue';
 import PaginationPosts from '../components/PaginationPosts.vue';
@@ -58,15 +99,6 @@ export default {
     };
   },
 
-  directives: {
-    observer: VIntersection,
-    focus: VFocus,
-  },
-
-  mounted() {
-    this.postsStore.fetchPosts();
-  },
-
   computed: {
     ...mapStores(usePostsStore, useUIStore),
 
@@ -83,14 +115,23 @@ export default {
     },
   },
 
+  mounted() {
+    this.postsStore.fetchPosts();
+  },
+
   components: {
     PostsList,
     FormAddPost,
     PaginationPosts,
     PagesLimit,
   },
+
+  directives: {
+    observer: VIntersection,
+    focus: VFocus,
+  },
 };
-</script>
+</script> -->
 
 <style scoped lang="scss">
 .search {
@@ -135,7 +176,7 @@ export default {
   }
 }
 
-.sort {
+.filter {
   position: fixed;
   bottom: 0;
   right: 0;

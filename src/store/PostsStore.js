@@ -8,6 +8,7 @@ export const usePostsStore = defineStore('posts', {
     page: 1,
     limit: 10,
     totalPages: 0,
+    postId: 100,
   }),
   getters: {
     totalCountPosts() {
@@ -44,7 +45,12 @@ export const usePostsStore = defineStore('posts', {
         uiStore.isLoading = false;
       }
     },
-    createPost(newPost) {
+    createPost(createdPost) {
+      const newPost = {
+        ...createdPost,
+        id: ++this.postId,
+      };
+
       this.posts.unshift(newPost);
     },
     removePost(id) {

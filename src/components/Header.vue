@@ -30,24 +30,46 @@
     </nav>
 
     <div v-if="userStore.auth">
-      <button-ui @click="logout">Logout</button-ui>
+      <ButtonUI @click="logout">Logout</ButtonUI>
     </div>
 
     <div v-else>
-      <button-ui><RouterLink to="/signup">Sign up</RouterLink></button-ui>
+      <ButtonUI><RouterLink to="/signup">Sign up</RouterLink></ButtonUI>
 
-      <button-ui @click="uiStore.openModal('login')">Sign in</button-ui>
+      <ButtonUI @click="uiStore.openModal('login')">Sign in</ButtonUI>
     </div>
 
-    <keep-alive>
-      <modal-ui v-if="uiStore.modal.type === 'login'">
-        <FormLogin />
-      </modal-ui>
-    </keep-alive>
+    <ModalUI v-if="uiStore.modal.type === 'login'">
+      <FormLogin />
+    </ModalUI>
   </header>
 </template>
 
-<script>
+<!-- COMPOSITION API -->
+
+<script setup>
+import Logo from './Logo.vue';
+import FormLogin from './FormLogin.vue';
+
+import { useUIStore } from '../store/UIStore.js';
+import { useUserStore } from '../store/UserStore.js';
+
+import { useRouter } from 'vue-router';
+
+const uiStore = useUIStore();
+const userStore = useUserStore();
+
+const router = useRouter();
+
+const logout = () => {
+  userStore.logout();
+  router.push('/');
+};
+</script>
+
+<!-- OPTIONS API -->
+
+<!-- <script>
 import Logo from './Logo.vue';
 import FormLogin from './FormLogin.vue';
 
@@ -72,7 +94,7 @@ export default {
     FormLogin,
   },
 };
-</script>
+</script> -->
 
 <style scoped lang="scss">
 .header {

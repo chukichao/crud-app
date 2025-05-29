@@ -4,7 +4,7 @@ export const useUIStore = defineStore('ui', {
   state: () => ({
     modal: {
       isOpen: false,
-      type: null, // login, addPost, editPost
+      type: null,
       extra: null,
     },
     isLoading: false,

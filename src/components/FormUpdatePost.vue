@@ -12,11 +12,50 @@
       <textarea v-model.trim="post.body" placeholder="description" />
     </div>
 
-    <button-ui>Сonfirm</button-ui>
+    <ButtonUI>Сonfirm</ButtonUI>
   </form>
 </template>
 
-<script>
+<!-- COMPOSITION API -->
+
+<script setup>
+import { usePostsStore } from '../store/PostsStore';
+import { useUIStore } from '../store/UIStore.js';
+
+import vFocus from '../directives/VFocus.js';
+
+import { ref, onMounted } from 'vue';
+
+const postsStore = usePostsStore();
+const uiStore = useUIStore();
+
+const props = defineProps({
+  title: String,
+  body: String,
+  id: Number,
+});
+
+let post = ref({ title: '', body: '' });
+
+const updatePost = () => {
+  if (!post.value.title || !post.value.body) {
+    return;
+  }
+
+  postsStore.updatePost(props.id, post.value);
+
+  uiStore.closeModal();
+};
+
+onMounted(() => {
+  post.value.title = props.title;
+  post.value.body = props.body;
+});
+</script>
+
+<!-- OPTIONS API -->
+
+<!-- <script>
 import { mapStores } from 'pinia';
 import { usePostsStore } from '../store/PostsStore';
 import { useUIStore } from '../store/UIStore.js';
@@ -28,10 +67,6 @@ export default {
     title: String,
     body: String,
     id: Number,
-  },
-
-  directives: {
-    focus: VFocus,
   },
 
   data() {
@@ -68,8 +103,12 @@ export default {
     this.post.title = this.title;
     this.post.body = this.body;
   },
+
+  directives: {
+    focus: VFocus,
+  },
 };
-</script>
+</script> -->
 
 <style scoped lang="scss">
 h2 {

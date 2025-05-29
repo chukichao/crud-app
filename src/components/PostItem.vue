@@ -1,33 +1,51 @@
 <template>
   <li>
     <div class="post-item" @click="$router.push(`/posts/${post.id}`)">
-      <button-ui
+      <ButtonUI
         @click.stop="postsStore.removePost(post.id)"
         class="post-item-delete"
       >
-        X
-      </button-ui>
+        &times;
+      </ButtonUI>
 
       <div class="post-item-content">
         <div class="post-item-content-body">
-          <h3>{{ post.id < 100 ? `${post.id}.` : '' }} {{ post.title }}</h3>
+          <h3>{{ post.id }}. {{ post.title }}</h3>
           <p>{{ post.body }}</p>
         </div>
         <div class="post-item-content-edit">
-          <button-ui @click.stop="uiStore.openModal('editPost', post.id)">
+          <ButtonUI @click.stop="uiStore.openModal('editPost', post.id)">
             Edit
-          </button-ui>
+          </ButtonUI>
         </div>
       </div>
     </div>
 
-    <modal-ui v-if="uiStore.modal.extra === post.id">
+    <ModalUI v-if="uiStore.modal.extra === post.id">
       <FormUpdatePost :title="post.title" :body="post.body" :id="post.id" />
-    </modal-ui>
+    </ModalUI>
   </li>
 </template>
 
-<script>
+<!-- COMPOSITION API -->
+
+<script setup>
+import FormUpdatePost from './FormUpdatePost.vue';
+
+import { usePostsStore } from '../store/PostsStore';
+import { useUIStore } from '../store/UIStore.js';
+
+const postsStore = usePostsStore();
+const uiStore = useUIStore();
+
+const props = defineProps({
+  post: Object,
+});
+</script>
+
+<!-- OPTIONS API -->
+
+<!-- <script>
 import FormUpdatePost from './FormUpdatePost.vue';
 
 import { mapStores } from 'pinia';
@@ -47,7 +65,7 @@ export default {
     FormUpdatePost,
   },
 };
-</script>
+</script> -->
 
 <style scoped lang="scss">
 .post-item {

@@ -7,25 +7,39 @@
 
   <Footer />
 
-  <teleport to="body">
-    <alert-ui v-if="uiStore.cookieAlert">
-      <h3>Welcome!</h3>
-      <p style="margin: 1rem 0">
-        Our platform uses cookies to ensure the correct operation of the site
-        and your comfortable interaction with it.
-      </p>
-      <button-ui
-        @click="uiStore.closeCookieAlert"
-        style="background-color: white; border-radius: 5px"
-        >Accept</button-ui
-      >
-    </alert-ui>
-  </teleport>
+  <CookieAlert v-show="uiStore.cookieAlert" />
 </template>
+
+<!-- COMPOSITION API -->
+
+<!-- <script setup>
+import Header from './components/Header.vue';
+import Footer from './components/Footer.vue';
+import CookieAlert from './components/CookieAlert.vue';
+
+import { useUserStore } from './store/UserStore.js';
+import { useUIStore } from './store/UIStore.js';
+
+import { onMounted } from 'vue';
+
+const userStore = useUserStore();
+const uiStore = useUIStore();
+
+onMounted(() => {
+  const user = localStorage.getItem('auth');
+
+  if (user) {
+    userStore.login(JSON.parse(user));
+  }
+});
+</script> -->
+
+<!-- OPTIONS API -->
 
 <script>
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
+import CookieAlert from './components/CookieAlert.vue';
 
 import { mapStores } from 'pinia';
 import { useUserStore } from './store/UserStore.js';
@@ -47,6 +61,7 @@ export default {
   components: {
     Header,
     Footer,
+    CookieAlert,
   },
 };
 </script>

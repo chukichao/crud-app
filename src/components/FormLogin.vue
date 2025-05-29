@@ -2,25 +2,73 @@
   <h2>Login</h2>
 
   <form class="form" @submit.prevent="login">
-    <input-ui
+    <InputUI
       v-model.trim="user.username"
       autocomplete="username"
       placeholder="username"
-      ref="username"
+      ref="input"
     />
 
-    <input-ui
+    <InputUI
       type="password"
       v-model.trim="user.password"
       autocomplete="current-password"
       placeholder="password"
     />
 
-    <button-ui :disabled="disabledButton">Sign in</button-ui>
+    <ButtonUI :disabled="disabledButton">Sign in</ButtonUI>
   </form>
 </template>
 
-<script>
+<!-- COMPOSITION API -->
+
+<script setup>
+import { useUIStore } from '../store/UIStore.js';
+import { useUserStore } from '../store/UserStore.js';
+
+import { reactive, computed, useTemplateRef, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+
+const uiStore = useUIStore();
+const userStore = useUserStore();
+
+const router = useRouter();
+
+const input = useTemplateRef('input');
+
+let user = reactive({
+  username: '',
+  password: '',
+});
+
+const login = () => {
+  userStore.login(user);
+
+  user = {
+    username: '',
+    password: '',
+  };
+
+  uiStore.closeModal();
+  router.push('/');
+};
+
+const disabledButton = computed(() => {
+  if (user.username.length >= 1 && user.password.length >= 1) {
+    return false;
+  }
+
+  return true;
+});
+
+onMounted(() => {
+  input.value.getInputRef().focus();
+});
+</script>
+
+<!-- OPTIONS API -->
+
+<!-- <script>
 import { mapStores } from 'pinia';
 
 import { useUIStore } from '../store/UIStore.js';
@@ -38,12 +86,7 @@ export default {
 
   methods: {
     login() {
-      const newUser = {
-        username: this.user.username,
-        token: String(Math.random()).slice(2),
-      };
-
-      this.userStore.login(newUser);
+      this.userStore.login(this.user);
 
       this.user = {
         username: '',
@@ -67,10 +110,10 @@ export default {
   },
 
   mounted() {
-    this.$refs.username.getInputRef().focus();
+    this.$refs.input.getInputRef().focus();
   },
 };
-</script>
+</script> -->
 
 <style scoped lang="scss">
 h2 {

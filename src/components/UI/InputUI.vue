@@ -1,19 +1,20 @@
 <template>
-  <input :value="modelValue" @input="updateValue" ref="input" />
+  <input
+    :value="modelValue"
+    @input="$emit('update:modelValue', $event.target.value)"
+    ref="input"
+  />
 </template>
 
 <script>
 export default {
-  name: 'input-ui',
+  name: 'InputUI',
 
   props: {
     modelValue: [String, Number],
   },
 
   methods: {
-    updateValue(event) {
-      this.$emit('update:modelValue', event.target.value);
-    },
     getInputRef() {
       return this.$refs.input;
     },

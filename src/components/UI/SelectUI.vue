@@ -1,5 +1,8 @@
 <template>
-  <select :value="modelValue" @change="updateValue">
+  <select
+    :value="modelValue"
+    @change="this.$emit('update:modelValue', $event.target.value)"
+  >
     <option value="" disabled>{{ title }}</option>
     <option v-for="option in options" :key="option.value" :value="option.value">
       {{ option.title }}
@@ -9,7 +12,7 @@
 
 <script>
 export default {
-  name: 'select-ui',
+  name: 'SelectUI',
 
   props: {
     modelValue: {
@@ -20,12 +23,6 @@ export default {
     },
     title: {
       type: String,
-    },
-  },
-
-  methods: {
-    updateValue(event) {
-      this.$emit('update:modelValue', event.target.value);
     },
   },
 };
