@@ -3,18 +3,22 @@ import { defineStore } from 'pinia';
 export const useUserStore = defineStore('user', {
   state: () => ({
     auth: null,
-    userData: null,
   }),
   actions: {
-    login(username, userData = null) {
-      this.auth = { ...username, token: String(Math.random()).slice(2) };
+    login(authData, newUser = null) {
+      this.auth = { ...authData };
       localStorage.setItem('auth', JSON.stringify(this.auth));
 
-      this.userData = userData;
+      if (!newUser) {
+        return false;
+      }
+
+      const database = JSON.parse(localStorage.getItem('database'));
+      database.users = [...database.users, newUser];
+      localStorage.setItem('database', JSON.stringify(database));
     },
     logout() {
       this.auth = null;
-      this.userData = null;
       localStorage.removeItem('auth');
     },
   },

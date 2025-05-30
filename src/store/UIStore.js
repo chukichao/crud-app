@@ -26,6 +26,7 @@ export const useUIStore = defineStore('ui', {
       };
     },
     closeCookieAlert() {
+      localStorage.setItem('cookie', 'true');
       this.cookieAlert = false;
     },
   },

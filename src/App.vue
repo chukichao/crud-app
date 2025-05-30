@@ -12,7 +12,7 @@
 
 <!-- COMPOSITION API -->
 
-<!-- <script setup>
+<script setup>
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
 import CookieAlert from './components/CookieAlert.vue';
@@ -26,17 +26,37 @@ const userStore = useUserStore();
 const uiStore = useUIStore();
 
 onMounted(() => {
-  const user = localStorage.getItem('auth');
+  const database = localStorage.getItem('database');
+  if (!database) {
+    localStorage.setItem(
+      'database',
+      JSON.stringify({
+        users: [
+          {
+            username: 'admin',
+            password: 'admin',
+            id: String(Math.random()).slice(2),
+          },
+        ],
+      }),
+    );
+  }
 
+  const user = localStorage.getItem('auth');
   if (user) {
     userStore.login(JSON.parse(user));
   }
+
+  const cookie = localStorage.getItem('cookie');
+  if (cookie) {
+    uiStore.closeCookieAlert();
+  }
 });
-</script> -->
+</script>
 
 <!-- OPTIONS API -->
 
-<script>
+<!-- <script>
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
 import CookieAlert from './components/CookieAlert.vue';
@@ -51,10 +71,30 @@ export default {
   },
 
   mounted() {
-    const user = localStorage.getItem('auth');
+    const database = localStorage.getItem('database');
+    if (!database) {
+      localStorage.setItem(
+        'database',
+        JSON.stringify({
+          users: [
+            {
+              username: 'admin',
+              password: 'admin',
+              id: String(Math.random()).slice(2),
+            },
+          ],
+        }),
+      );
+    }
 
+    const user = localStorage.getItem('auth');
     if (user) {
       this.userStore.login(JSON.parse(user));
+    }
+
+    const cookie = localStorage.getItem('cookie');
+    if (cookie) {
+      this.uiStore.closeCookieAlert();
     }
   },
 
@@ -64,7 +104,7 @@ export default {
     CookieAlert,
   },
 };
-</script>
+</script> -->
 
 <style lang="scss">
 main {

@@ -15,7 +15,7 @@
       <label
         >Age:
         <InputUI
-          v-model="user.age"
+          v-model.number="user.age"
           type="number"
           :class="{ required }"
         ></InputUI>
@@ -34,7 +34,7 @@
       <label
         >Confirm Password:
         <InputUI
-          v-model.trim="user.confirmPassword"
+          v-model.trim="confirmPassword"
           type="password"
           autocomplete="new-password"
           :class="{ required, confirm }"
@@ -132,13 +132,14 @@ const user = reactive({
   username: null,
   age: null,
   password: null,
-  confirmPassword: null,
   country: null,
   birthday: null,
   gender: 'male',
   skills: [],
   agree: false,
 });
+
+const confirmPassword = ref(null);
 
 const errors = reactive({
   requiredError: false,
@@ -163,7 +164,17 @@ const confirm = computed(() => {
 
 const registerAccount = () => {
   if (validate()) {
-    userStore.login(user.username, user);
+    const authData = {
+      username: user.username,
+      token: String(Math.random()).slice(2),
+    };
+
+    const newUser = {
+      ...user,
+      id: String(Math.random()).slice(2),
+    };
+
+    userStore.login(authData, newUser);
     router.push('/');
   }
 };
@@ -176,7 +187,7 @@ const validate = () => {
   }
   errors.requiredError = false;
 
-  if (user.password !== user.confirmPassword) {
+  if (user.password !== confirmPassword.value) {
     errors.confirmError = true;
     errorFeedback.value = 'passwords must match';
     return false;
@@ -202,13 +213,13 @@ export default {
         username: null,
         age: null,
         password: null,
-        confirmPassword: null,
         country: null,
         birthday: null,
         gender: 'male',
         skills: [],
         agree: false,
       },
+      confirmPassword: null,
       errors: {
         requiredError: false,
         confirmError: false,
@@ -235,7 +246,17 @@ export default {
   methods: {
     registerAccount() {
       if (this.validate()) {
-        this.userStore.login(this.user.username, this.user);
+        const authData = {
+          username: this.user.username,
+          token: String(Math.random()).slice(2),
+        };
+
+        const newUser = {
+          ...this.user,
+          id: String(Math.random()).slice(2),
+        };
+
+        this.userStore.login(authData, newUser);
         this.$router.push('/');
       }
     },
@@ -247,7 +268,7 @@ export default {
       }
       this.errors.requiredError = false;
 
-      if (this.user.password !== this.user.confirmPassword) {
+      if (this.user.password !== this.confirmPassword) {
         this.errors.confirmError = true;
         this.errorFeedback = 'passwords must match';
         return false;

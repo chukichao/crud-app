@@ -3,6 +3,7 @@
 
   <form class="form" @submit.prevent="login">
     <InputUI
+      :class="{ errorInput: errorLogin }"
       v-model.trim="user.username"
       autocomplete="username"
       placeholder="username"
@@ -10,11 +11,16 @@
     />
 
     <InputUI
+      :class="{ errorInput: errorLogin }"
       type="password"
       v-model.trim="user.password"
       autocomplete="current-password"
       placeholder="password"
     />
+
+    <div class="errorFeedback" v-show="errorLogin">
+      Incorrect username or password
+    </div>
 
     <ButtonUI :disabled="disabledButton">Sign in</ButtonUI>
   </form>
@@ -26,7 +32,7 @@
 import { useUIStore } from '../store/UIStore.js';
 import { useUserStore } from '../store/UserStore.js';
 
-import { reactive, computed, useTemplateRef, onMounted } from 'vue';
+import { reactive, ref, computed, useTemplateRef, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
 const uiStore = useUIStore();
@@ -41,8 +47,26 @@ let user = reactive({
   password: '',
 });
 
+const errorLogin = ref(null);
+
 const login = () => {
-  userStore.login(user);
+  const database = JSON.parse(localStorage.getItem('database'));
+  const _user = database.users.find(
+    (_user) => _user.username === user.username,
+  );
+
+  if (!_user || _user.password !== user.password) {
+    errorLogin.value = true;
+    return;
+  }
+
+  errorLogin.value = false;
+
+  const authData = {
+    username: user.username,
+    token: String(Math.random()).slice(2),
+  };
+  userStore.login(authData);
 
   user = {
     username: '',
@@ -81,12 +105,29 @@ export default {
         username: '',
         password: '',
       },
+      errorLogin: null,
     };
   },
 
   methods: {
     login() {
-      this.userStore.login(this.user);
+      const database = JSON.parse(localStorage.getItem('database'));
+      const user = database.users.find(
+        (user) => user.username === this.user.username,
+      );
+
+      if (!user || user.password !== this.user.password) {
+        this.errorLogin = true;
+        return;
+      }
+
+      this.errorLogin = false;
+
+      const authData = {
+        username: this.user.username,
+        token: String(Math.random()).slice(2),
+      };
+      this.userStore.login(authData);
 
       this.user = {
         username: '',
@@ -139,5 +180,15 @@ h2 {
       background: bisque;
     }
   }
+}
+
+.errorInput {
+  border: 2px solid red;
+}
+
+.errorFeedback {
+  align-self: flex-start;
+  color: red;
+  font-size: 10px;
 }
 </style>
