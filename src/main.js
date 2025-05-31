@@ -11,10 +11,6 @@ import componentsUI from '../src/components/UI';
 const app = createApp(App);
 const pinia = createPinia();
 
-// app.config.errorHandler = (err) => {
-//   /* обработка ошибки */
-// }
-
 componentsUI.forEach((component) => {
   app.component(component.name, component);
 });

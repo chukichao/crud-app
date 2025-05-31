@@ -31,6 +31,8 @@ export default {
 
   background: rgba(0, 0, 0, 0.5);
 
+  text-align: center;
+
   &-body {
     min-width: 300px;
     min-height: 50px;

@@ -1,8 +1,8 @@
 <template>
   <h2>Create post</h2>
   <form class="form" @submit.prevent="createPost">
-    <InputUI v-model.trim="post.title" placeholder="title" ref="input" />
-    <InputUI v-model.trim="post.body" placeholder="description" />
+    <textarea v-model.trim="post.title" placeholder="title" ref="textarea" />
+    <textarea v-model.trim="post.body" placeholder="description" />
     <ButtonUI>Сonfirm</ButtonUI>
   </form>
 </template>
@@ -18,7 +18,7 @@ import { reactive, useTemplateRef, onMounted } from 'vue';
 const postsStore = usePostsStore();
 const uiStore = useUIStore();
 
-const input = useTemplateRef('input');
+const textarea = useTemplateRef('textarea');
 
 let post = reactive({
   title: '',
@@ -40,7 +40,7 @@ const createPost = () => {
 };
 
 onMounted(() => {
-  input.value.getInputRef().focus();
+  textarea.value.focus();
 });
 </script>
 
@@ -82,7 +82,7 @@ export default {
   },
 
   mounted() {
-    this.$refs.input.getInputRef().focus();
+    this.$refs.textarea.focus();
   },
 };
 </script> -->
@@ -98,7 +98,13 @@ h2 {
   display: flex;
   flex-direction: column;
 
-  input {
+  textarea {
+    margin: 0.5rem auto;
+    font-size: 1rem;
+
+    width: 100%;
+    height: 200px;
+
     &:focus {
       outline: 1px solid #333;
     }

@@ -12,12 +12,12 @@
 <script setup>
 import { usePostsStore } from '../store/PostsStore.js';
 
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
 
 const postsStore = usePostsStore();
 
 const limit = ref('');
-const options = ref([
+const options = reactive([
   { title: 5, value: 5 },
   { title: 10, value: 10 },
   { title: 25, value: 25 },

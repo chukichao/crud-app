@@ -30,7 +30,7 @@
     </nav>
 
     <div v-if="userStore.auth">
-      <ButtonUI @click="logout">Logout</ButtonUI>
+      <ButtonUI @click="uiStore.openModal('logout')">Logout</ButtonUI>
     </div>
 
     <div v-else>
@@ -41,6 +41,12 @@
 
     <ModalUI v-if="uiStore.modal.type === 'login'">
       <FormLogin />
+    </ModalUI>
+
+    <ModalUI v-if="uiStore.modal.type === 'logout'">
+      <h2>Are you sure?</h2>
+      <buttonUI @click="logout">Yes</buttonUI>
+      <buttonUI @click="uiStore.closeModal">No</buttonUI>
     </ModalUI>
   </header>
 </template>
@@ -63,6 +69,7 @@ const router = useRouter();
 
 const logout = () => {
   userStore.logout();
+  uiStore.closeModal();
   router.push('/');
 };
 </script>
@@ -81,6 +88,7 @@ export default {
   methods: {
     logout() {
       this.userStore.logout();
+      this.uiStore.closeModal();
       this.$router.push('/');
     },
   },

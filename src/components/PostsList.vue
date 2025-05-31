@@ -1,7 +1,7 @@
 <template>
   <div class="posts-list">
     <div v-if="posts.length">
-      <h2>Post list (100)</h2>
+      <h2>Post list</h2>
       <h3>(shown {{ postsStore.totalCountPosts }})</h3>
 
       <TransitionGroup name="list" tag="ul">

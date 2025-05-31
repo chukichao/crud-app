@@ -1,5 +1,5 @@
 <template>
-  <h1>Posts Page</h1>
+  <h1 id="heading">Posts Page</h1>
 
   <InputUI
     type="search"
@@ -9,11 +9,14 @@
     placeholder="search"
   />
 
-  <PaginationPosts />
+  <PaginationPosts v-if="searchQuery.length === 0" />
 
   <PostsList :posts="sortedAndSearchedPosts" />
 
-  <div class="scroll" v-observer="postsStore.fetchPosts"></div>
+  <div
+    v-if="sortedAndSearchedPosts.length"
+    v-observer="postsStore.fetchPosts"
+  ></div>
 
   <div class="filter">
     <PagesLimit />
@@ -45,17 +48,21 @@ import { useUIStore } from '../store/UIStore.js';
 import vObserver from '../directives/VIntersection.js';
 import vFocus from '../directives/VFocus.js';
 
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, reactive, watch } from 'vue';
 
 const postsStore = usePostsStore();
 const uiStore = useUIStore();
 
 const searchQuery = ref('');
 const selectedSort = ref('');
-const sortOptions = ref([
+const sortOptions = reactive([
   { title: 'by title', value: 'title' },
   { title: 'by body', value: 'body' },
 ]);
+
+const scrollToUp = async () => {
+  await document.getElementById('heading').scrollIntoView();
+};
 
 const sortedAndSearchedPosts = computed(() => {
   const sortedPosts = [...postsStore.posts].sort((post1, post2) =>
@@ -69,6 +76,10 @@ const sortedAndSearchedPosts = computed(() => {
 
 onMounted(() => {
   postsStore.fetchPosts();
+});
+
+watch(selectedSort, () => {
+  scrollToUp();
 });
 </script>
 
@@ -99,6 +110,12 @@ export default {
     };
   },
 
+  methods: {
+    async scrollToUp() {
+      await document.getElementById('heading').scrollIntoView();
+    },
+  },
+
   computed: {
     ...mapStores(usePostsStore, useUIStore),
 
@@ -112,6 +129,12 @@ export default {
       return this.sortedPosts.filter((post) =>
         post.title.toLowerCase().includes(this.searchQuery.toLowerCase()),
       );
+    },
+  },
+
+  watch: {
+    selectedSort() {
+      this.scrollToUp();
     },
   },
 
@@ -184,9 +207,5 @@ export default {
   select {
     padding: 0.3rem;
   }
-}
-
-.scroll {
-  margin-top: 10rem;
 }
 </style>

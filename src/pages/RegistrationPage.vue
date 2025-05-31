@@ -148,7 +148,7 @@ const errors = reactive({
 
 const errorFeedback = ref(null);
 
-const countryOptions = ref([
+const countryOptions = reactive([
   { title: 'Russia', value: 'russia' },
   { title: 'Belarus', value: 'belarus' },
   { title: 'Ukraine', value: 'ukraine' },
