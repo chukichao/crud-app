@@ -14,7 +14,7 @@
         <li>
           <RouterLink
             v-if="userStore.auth"
-            to="/posts"
+            :to="`/posts?page=${postsStore.page}&limit=${postsStore.limit}`"
             custom
             v-slot="{ navigate, href }"
           >
@@ -59,11 +59,13 @@ import FormLogin from './FormLogin.vue';
 
 import { useUIStore } from '../store/UIStore.js';
 import { useUserStore } from '../store/UserStore.js';
+import { usePostsStore } from '../store/PostsStore.js';
 
 import { useRouter } from 'vue-router';
 
 const uiStore = useUIStore();
 const userStore = useUserStore();
+const postsStore = usePostsStore();
 
 const router = useRouter();
 
@@ -83,6 +85,7 @@ import FormLogin from './FormLogin.vue';
 import { mapStores } from 'pinia';
 import { useUIStore } from '../store/UIStore.js';
 import { useUserStore } from '../store/UserStore.js';
+import { usePostsStore } from '../store/PostsStore.js';
 
 export default {
   methods: {
@@ -94,7 +97,7 @@ export default {
   },
 
   computed: {
-    ...mapStores(useUIStore, useUserStore),
+    ...mapStores(useUIStore, useUserStore, usePostsStore),
   },
 
   components: {

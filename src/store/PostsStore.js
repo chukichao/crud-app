@@ -67,13 +67,13 @@ export const usePostsStore = defineStore('posts', {
       this.posts = this.posts.filter((post) => post.id !== id);
       this.posts.unshift(newPost);
     },
-    setLimit(limit) {
-      this.limit = limit;
-      this.page = 1;
+    setLimit(limit, page = 1) {
+      this.limit = Number(limit);
+      this.page = Number(page);
       this.fetchPosts();
     },
     setPage(page) {
-      this.page = page;
+      this.page = Number(page);
       this.fetchPosts();
     },
     prevPage() {

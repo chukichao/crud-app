@@ -45,6 +45,8 @@ import PagesLimit from '../components/PagesLimit.vue';
 import { usePostsStore } from '../store/PostsStore.js';
 import { useUIStore } from '../store/UIStore.js';
 
+import { useRoute } from 'vue-router';
+
 import vObserver from '../directives/VIntersection.js';
 import vFocus from '../directives/VFocus.js';
 
@@ -52,6 +54,8 @@ import { computed, onMounted, ref, reactive, watch } from 'vue';
 
 const postsStore = usePostsStore();
 const uiStore = useUIStore();
+
+const route = useRoute();
 
 const searchQuery = ref('');
 const selectedSort = ref('');
@@ -80,6 +84,14 @@ watch(selectedSort, () => {
 
 onMounted(() => {
   postsStore.fetchPosts();
+
+  const queryLimit = Number(route.query.limit);
+  const queryPage = Number(route.query.page);
+
+  if (queryLimit !== postsStore.limit || queryPage !== postsStore.page) {
+    postsStore.setLimit(queryLimit, queryPage);
+    postsStore.setPage(queryPage);
+  }
 });
 </script>
 
@@ -140,6 +152,17 @@ export default {
 
   mounted() {
     this.postsStore.fetchPosts();
+
+    const queryLimit = Number(this.$route.query.limit);
+    const queryPage = Number(this.$route.query.page);
+
+    if (
+      queryLimit !== this.postsStore.limit ||
+      queryPage !== this.postsStore.page
+    ) {
+      this.postsStore.setLimit(queryLimit, queryPage);
+      this.postsStore.setPage(queryPage);
+    }
   },
 
   components: {

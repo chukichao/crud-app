@@ -1,10 +1,10 @@
 <template>
   <ul>
-    <li @click="postsStore.prevPage">{{ '<' }}</li>
+    <li @click="prevPage">{{ '<' }}</li>
     <li
       v-for="currentPage in postsStore.totalPages"
       :key="currentPage"
-      @click="postsStore.setPage(currentPage)"
+      @click="setPage(currentPage)"
       :class="{
         active: postsStore.page === currentPage,
         visible:
@@ -14,7 +14,7 @@
     >
       {{ currentPage }}
     </li>
-    <li @click="postsStore.nextPage">{{ '>' }}</li>
+    <li @click="nextPage">{{ '>' }}</li>
   </ul>
 </template>
 
@@ -23,7 +23,38 @@
 <script setup>
 import { usePostsStore } from '../store/PostsStore.js';
 
+import { useRouter } from 'vue-router';
+
 const postsStore = usePostsStore();
+
+const router = useRouter();
+
+const updateQuery = () => {
+  router.replace({
+    query: {
+      page: postsStore.page,
+      limit: postsStore.limit,
+    },
+  });
+};
+
+const setPage = (currentPage) => {
+  postsStore.setPage(currentPage);
+
+  updateQuery();
+};
+
+const prevPage = () => {
+  postsStore.prevPage();
+
+  updateQuery();
+};
+
+const nextPage = () => {
+  postsStore.nextPage();
+
+  updateQuery();
+};
 </script>
 
 <!-- OPTIONS API -->
@@ -33,6 +64,29 @@ import { mapStores } from 'pinia';
 import { usePostsStore } from '../store/PostsStore.js';
 
 export default {
+  methods: {
+    updateQuery() {
+      this.$router.replace({
+        query: {
+          page: this.postsStore.page,
+          limit: this.postsStore.limit,
+        },
+      });
+    },
+    setPage(currentPage) {
+      this.postsStore.setPage(currentPage);
+      this.updateQuery();
+    },
+    prevPage() {
+      this.postsStore.prevPage();
+      this.updateQuery();
+    },
+    nextPage() {
+      this.postsStore.nextPage();
+      this.updateQuery();
+    },
+  },
+
   computed: {
     ...mapStores(usePostsStore),
   },

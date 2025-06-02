@@ -1,5 +1,5 @@
 <template>
-  <select v-model="limit" @change="postsStore.setLimit($event.target.value)">
+  <select v-model="limit" @change="setLimit">
     <option value="" disabled>limit</option>
     <option v-for="option in options" :key="option.value" :value="option.value">
       {{ option.title }}
@@ -14,6 +14,10 @@ import { usePostsStore } from '../store/PostsStore.js';
 
 import { ref, reactive } from 'vue';
 
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
 const postsStore = usePostsStore();
 
 const limit = ref('');
@@ -23,6 +27,21 @@ const options = reactive([
   { title: 25, value: 25 },
   { title: 'all', value: 100 },
 ]);
+
+const updateQuery = () => {
+  router.replace({
+    query: {
+      page: postsStore.page,
+      limit: postsStore.limit,
+    },
+  });
+};
+
+const setLimit = (event) => {
+  postsStore.setLimit(event.target.value);
+
+  updateQuery();
+};
 </script>
 
 <!-- OPTIONS API -->
@@ -45,8 +64,18 @@ export default {
   },
 
   methods: {
-    updateValue(event) {
+    updateQuery() {
+      this.$router.replace({
+        query: {
+          page: this.postsStore.page,
+          limit: this.postsStore.limit,
+        },
+      });
+    },
+    setLimit(event) {
       this.postsStore.setLimit(event.target.value);
+
+      this.updateQuery();
     },
   },
 

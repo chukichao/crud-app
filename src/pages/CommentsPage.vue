@@ -1,19 +1,28 @@
 <template>
-  <h1>Comments Page</h1>
+  <h1 id="heading">Comments Page</h1>
 
-  <div v-if="commentsStore.comments.length" class="comments">
-    <ul>
-      <li v-for="comment in commentsStore.comments" :key="comment.id">
-        <h3>{{ comment.id }}. {{ comment.name }}</h3>
-        <p>{{ comment.body }}</p>
-        <p>{{ comment.email }}</p>
-      </li>
-    </ul>
-    <ButtonUI @click="$router.push('/posts')">Back</ButtonUI>
-  </div>
+  <div class="comments-list">
+    <div v-if="commentsStore.comments.length" class="comments-item">
+      <ul>
+        <li v-for="comment in commentsStore.comments" :key="comment.id">
+          <h3>{{ comment.id }}. {{ comment.name }}</h3>
+          <p>{{ comment.body }}</p>
+          <p>{{ comment.email }}</p>
+        </li>
+      </ul>
+    </div>
 
-  <div v-else class="status">
-    <LoaderUI v-if="uiStore.isLoading" />
+    <div v-else>
+      <LoaderUI v-if="uiStore.isLoading" />
+      <h2 v-else>No comments yet</h2>
+    </div>
+
+    <ButtonUI
+      @click="
+        $router.push(`/posts?page=${postsStore.page}&limit=${postsStore.limit}`)
+      "
+      >Back</ButtonUI
+    >
   </div>
 </template>
 
@@ -22,6 +31,7 @@
 <script setup>
 import { useCommentsStore } from '../store/CommentsStore';
 import { useUIStore } from '../store/UIStore';
+import { usePostsStore } from '../store/PostsStore';
 
 import { onMounted } from 'vue';
 
@@ -29,11 +39,17 @@ import { useRoute } from 'vue-router';
 
 const commentsStore = useCommentsStore();
 const uiStore = useUIStore();
+const postsStore = usePostsStore();
 
 const route = useRoute();
 
+const scrollToUp = async () => {
+  await document.getElementById('heading').scrollIntoView();
+};
+
 onMounted(() => {
   commentsStore.fetchComments(route.params.id);
+  scrollToUp();
 });
 </script>
 
@@ -43,22 +59,40 @@ onMounted(() => {
 import { mapStores } from 'pinia';
 import { useCommentsStore } from '../store/CommentsStore';
 import { useUIStore } from '../store/UIStore';
+import { usePostsStore } from '../store/PostsStore';
 
 export default {
-  mounted() {
-    this.commentsStore.fetchComments(this.$route.params.id);
+  methods: {
+    async scrollToUp() {
+      await document.getElementById('heading').scrollIntoView();
+    },
   },
 
   computed: {
-    ...mapStores(useCommentsStore, useUIStore),
+    ...mapStores(useCommentsStore, useUIStore, usePostsStore),
+  },
+
+  mounted() {
+    this.commentsStore.fetchComments(this.$route.params.id);
+    this.scrollToUp();
   },
 };
 </script> -->
 
 <style scoped lang="scss">
-.comments {
+.comments-list {
+  text-align: center;
+
+  h2 {
+    padding: 1.5rem;
+    font-size: 30px;
+  }
+}
+
+.comments-item {
   display: flex;
   flex-direction: column;
+  justify-content: center;
 
   ul {
     list-style: none;
