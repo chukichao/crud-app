@@ -74,12 +74,12 @@ const sortedAndSearchedPosts = computed(() => {
   );
 });
 
-onMounted(() => {
-  postsStore.fetchPosts();
-});
-
 watch(selectedSort, () => {
   scrollToUp();
+});
+
+onMounted(() => {
+  postsStore.fetchPosts();
 });
 </script>
 

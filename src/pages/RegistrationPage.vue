@@ -1,5 +1,5 @@
 <template>
-  <h1>Registration Page</h1>
+  <h1 id="heading">Registration Page</h1>
 
   <form class="form" @submit.prevent="registerAccount">
     <div class="form-main">
@@ -40,6 +40,13 @@
           :class="{ required, confirm }"
         ></InputUI>
       </label>
+
+      <div class="form-rules">
+        <label
+          ><input :class="{ required }" v-model="user.agree" type="checkbox" />
+          I have read the privacy policy (required)</label
+        >
+      </div>
 
       <small class="error-feedback" v-if="errorFeedback">{{
         errorFeedback
@@ -104,13 +111,6 @@
       </div>
     </div>
 
-    <div class="form-rules">
-      <label
-        ><input :class="{ required }" v-model="user.agree" type="checkbox" /> I
-        have read the privacy policy (required)</label
-      >
-    </div>
-
     <ButtonUI>Sign up</ButtonUI>
   </form>
 </template>
@@ -120,7 +120,7 @@
 <script setup>
 import { useUserStore } from '../store/UserStore.js';
 
-import { ref, reactive, computed } from 'vue';
+import { ref, reactive, computed, watch } from 'vue';
 
 import { useRouter } from 'vue-router';
 
@@ -154,14 +154,6 @@ const countryOptions = reactive([
   { title: 'Ukraine', value: 'ukraine' },
 ]);
 
-const required = computed(() => {
-  return errors.requiredError ? 'required' : '';
-});
-
-const confirm = computed(() => {
-  return errors.confirmError ? 'confirm' : '';
-});
-
 const registerAccount = () => {
   if (validate()) {
     const authData = {
@@ -180,7 +172,7 @@ const registerAccount = () => {
 };
 
 const validate = () => {
-  if (!user.username || !user.password || !user.agree) {
+  if (!user.username || !user.password || !user.age || !user.agree) {
     errors.requiredError = true;
     errorFeedback.value = 'required field';
     return false;
@@ -198,6 +190,22 @@ const validate = () => {
 
   return true;
 };
+
+const scrollToUp = async () => {
+  await document.getElementById('heading').scrollIntoView();
+};
+
+const required = computed(() => {
+  return errors.requiredError ? 'required' : '';
+});
+
+const confirm = computed(() => {
+  return errors.confirmError ? 'confirm' : '';
+});
+
+watch(errors, () => {
+  scrollToUp();
+});
 </script>
 
 <!-- OPTIONS API -->
@@ -261,7 +269,12 @@ export default {
       }
     },
     validate() {
-      if (!this.user.username || !this.user.password || !this.user.agree) {
+      if (
+        !this.user.username ||
+        !this.user.password ||
+        !this.user.age ||
+        !this.user.agree
+      ) {
         this.errors.requiredError = true;
         this.errorFeedback = 'required field';
         return false;
@@ -278,6 +291,17 @@ export default {
       this.errorFeedback = null;
 
       return true;
+    },
+    async scrollToUp() {
+      await document.getElementById('heading').scrollIntoView();
+    },
+  },
+  watch: {
+    'errors.confirmError'() {
+      this.scrollToUp();
+    },
+    'errors.requiredError'() {
+      this.scrollToUp();
     },
   },
 };
@@ -342,5 +366,7 @@ export default {
 
 .error-feedback {
   color: red;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+    'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 </style>
