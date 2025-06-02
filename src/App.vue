@@ -111,15 +111,17 @@ main {
   display: flex;
   flex-direction: column;
 
+  max-width: 700px;
+
   margin: 0 auto;
   padding: 2rem;
 
-  max-width: 700px;
-
   h1 {
-    text-align: center;
     margin: 5rem auto;
+
     font-size: 2rem;
+
+    text-align: center;
   }
 }
 

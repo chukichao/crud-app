@@ -24,8 +24,8 @@ export default {
 
 <style scoped lang="scss">
 input {
-  padding: 0.5rem;
   margin: 0.5rem 0;
+  padding: 0.5rem;
 
   outline: none;
 

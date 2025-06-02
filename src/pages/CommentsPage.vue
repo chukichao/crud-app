@@ -85,6 +85,7 @@ export default {
 
   h2 {
     padding: 1.5rem;
+
     font-size: 30px;
   }
 }

@@ -62,6 +62,7 @@ export default {
 
   h2 {
     padding: 1.5rem;
+
     font-size: 30px;
   }
 
@@ -77,12 +78,12 @@ export default {
 }
 
 .list-leave-to {
-  opacity: 0;
   transform: translateX(130px);
+  opacity: 0;
 }
 
 .list-enter-from {
-  opacity: 0;
   transform: translateX(-130px);
+  opacity: 0;
 }
 </style>

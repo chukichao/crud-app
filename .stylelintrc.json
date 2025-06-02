@@ -1,0 +1,32 @@
+{
+  "extends": ["stylelint-config-standard"],
+  "overrides": [
+    {
+      "files": ["*.scss", "**/*.scss"],
+      "extends": [
+        "stylelint-config-standard-scss",
+        "stylelint-config-rational-order"
+      ]
+    },
+    {
+      "files": ["*.vue", "**/*.vue"],
+      "extends": [
+        "stylelint-config-standard-scss",
+        "stylelint-config-standard-vue/scss",
+        "stylelint-config-rational-order"
+      ]
+    }
+  ],
+  "plugins": ["stylelint-order", "stylelint-config-rational-order/plugin"],
+  "rules": {
+    "media-feature-range-notation": null,
+    "declaration-empty-line-before": null,
+
+    "plugin/rational-order": [
+      true,
+      {
+        "empty-line-between-groups": true
+      }
+    ]
+  }
+}

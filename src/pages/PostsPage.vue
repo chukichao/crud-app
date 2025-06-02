@@ -182,7 +182,9 @@ export default {
 <style scoped lang="scss">
 .search {
   padding: 1rem;
+
   font-size: 20px;
+
   border-radius: 1rem;
 
   &::placeholder {
@@ -196,19 +198,19 @@ export default {
 
 .add {
   position: fixed;
-  bottom: 3rem;
   right: 3rem;
+  bottom: 3rem;
 
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 
   width: 50px;
   height: 50px;
 
   background-color: bisque;
-  border-radius: 50%;
   border: 1px solid #333;
+  border-radius: 50%;
 
   transition: 1s;
 
@@ -217,15 +219,16 @@ export default {
   }
 
   button {
-    border: none;
     font-size: 20px;
+
+    border: none;
   }
 }
 
 .filter {
   position: fixed;
-  bottom: 0;
   right: 0;
+  bottom: 0;
 
   select {
     padding: 0.3rem;

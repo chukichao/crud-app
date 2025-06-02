@@ -23,17 +23,17 @@ export default {
 <style scoped lang="scss">
 .logo {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
 
   padding: 1.5rem;
-  margin-right: 1rem;
 
   transition: 2s linear;
 
   &:hover {
-    cursor: default;
     transform: scale(1.1);
+    cursor: default;
   }
 }
 </style>

@@ -104,17 +104,20 @@ ul {
 
   li {
     padding: 1.5rem;
+
     border: 1px solid #333;
 
     &:hover {
-      cursor: pointer;
       color: white;
+
       background-color: black;
+      cursor: pointer;
     }
   }
 
   .active {
     color: white;
+
     background-color: black;
   }
 

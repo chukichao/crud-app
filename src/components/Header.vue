@@ -118,6 +118,7 @@ export default {
 
   ul {
     display: flex;
+
     list-style: none;
 
     li {
@@ -126,22 +127,23 @@ export default {
   }
 
   a {
-    text-decoration: none;
     color: inherit;
+    text-decoration: none;
 
     &:hover {
       text-shadow: 1px 1px 1px #333;
+
       cursor: pointer;
     }
   }
 
   button {
-    padding: 2rem;
     margin-right: 1rem;
-
-    border: none;
+    padding: 2rem;
 
     font-size: 23px;
+
+    border: none;
 
     transition: 2s linear;
 

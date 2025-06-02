@@ -71,9 +71,9 @@ export default {
 .post-item {
   display: flex;
   flex-direction: column;
+  margin-top: 1rem;
 
   padding: 0 0 2rem 2rem;
-  margin-top: 1rem;
 
   border: 2px solid #333;
 
@@ -85,11 +85,13 @@ export default {
 
   &-delete {
     align-self: end;
+
     border: none;
 
     &:hover {
-      background-color: #333;
       color: white;
+
+      background-color: #333;
     }
   }
 
@@ -102,8 +104,8 @@ export default {
 
     &-body {
       p {
-        padding: 0.5rem;
         margin: 1rem 0;
+        padding: 0.5rem;
 
         text-indent: 0.5rem;
       }

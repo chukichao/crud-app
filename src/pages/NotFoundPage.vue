@@ -14,9 +14,9 @@
   }
 
   a {
-    text-decoration: none;
     color: inherit;
     font-size: 30px;
+    text-decoration: none;
   }
 }
 </style>

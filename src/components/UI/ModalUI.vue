@@ -22,16 +22,13 @@ export default {
 <style scoped lang="scss">
 .modal {
   position: fixed;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
+  inset: 0;
 
   display: flex;
 
-  background: rgba(0, 0, 0, 0.5);
-
   text-align: center;
+
+  background: rgb(0 0 0 / 50%);
 
   &-body {
     min-width: 300px;

@@ -99,11 +99,11 @@ h2 {
   flex-direction: column;
 
   textarea {
-    margin: 0.5rem auto;
-    font-size: 1rem;
-
     width: 100%;
     height: 200px;
+    margin: 0.5rem auto;
+
+    font-size: 1rem;
 
     &:focus {
       outline: 1px solid #333;

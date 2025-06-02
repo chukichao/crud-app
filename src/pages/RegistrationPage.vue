@@ -196,11 +196,11 @@ const scrollToUp = async () => {
 };
 
 const required = computed(() => {
-  return errors.requiredError ? 'required' : '';
+  return errors.requiredError ? 'error-outline-required' : '';
 });
 
 const confirm = computed(() => {
-  return errors.confirmError ? 'confirm' : '';
+  return errors.confirmError ? 'error-outline-confirm' : '';
 });
 
 watch(errors, () => {
@@ -239,16 +239,6 @@ export default {
         { title: 'Ukraine', value: 'ukraine' },
       ],
     };
-  },
-
-  computed: {
-    ...mapStores(useUserStore),
-    required() {
-      return this.errors.requiredError ? 'required' : '';
-    },
-    confirm() {
-      return this.errors.confirmError ? 'confirm' : '';
-    },
   },
 
   methods: {
@@ -296,6 +286,17 @@ export default {
       await document.getElementById('heading').scrollIntoView();
     },
   },
+
+  computed: {
+    ...mapStores(useUserStore),
+    required() {
+      return this.errors.requiredError ? 'error-outline-required' : '';
+    },
+    confirm() {
+      return this.errors.confirmError ? 'error-outline-confirm' : '';
+    },
+  },
+
   watch: {
     'errors.confirmError'() {
       this.scrollToUp();
@@ -313,14 +314,8 @@ export default {
   button {
     width: 100%;
     padding: 0.8rem;
-    cursor: pointer;
-  }
 
-  input,
-  select {
-    &:focus {
-      outline: 1px solid #333;
-    }
+    cursor: pointer;
   }
 
   label {
@@ -357,10 +352,16 @@ export default {
       width: auto;
     }
   }
+
+  input {
+    &:focus {
+      outline: 1px solid #333;
+    }
+  }
 }
 
-.required,
-.confirm {
+.error-outline-required,
+.error-outline-confirm {
   outline: 1px solid red;
 }
 

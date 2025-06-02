@@ -3,7 +3,7 @@
 
   <form class="form" @submit.prevent="login">
     <InputUI
-      :class="{ errorInput: errorLogin }"
+      :class="{ ['error-outline']: errorLogin }"
       v-model.trim="user.username"
       autocomplete="username"
       placeholder="username"
@@ -11,14 +11,14 @@
     />
 
     <InputUI
-      :class="{ errorInput: errorLogin }"
+      :class="{ ['error-outline']: errorLogin }"
       type="password"
       v-model.trim="user.password"
       autocomplete="current-password"
       placeholder="password"
     />
 
-    <div class="errorFeedback" v-show="errorLogin">
+    <div class="error-feedback" v-show="errorLogin">
       Incorrect username or password
     </div>
 
@@ -159,6 +159,7 @@ export default {
 <style scoped lang="scss">
 h2 {
   margin: 1rem 0;
+
   font-size: 30px;
 }
 
@@ -182,12 +183,13 @@ h2 {
   }
 }
 
-.errorInput {
+.error-outline {
   border: 2px solid red;
 }
 
-.errorFeedback {
+.error-feedback {
   align-self: flex-start;
+
   color: red;
   font-size: 10px;
 }

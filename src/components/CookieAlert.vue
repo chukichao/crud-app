@@ -33,8 +33,8 @@ export default {
 <style scoped lang="scss">
 .cookie-alert {
   position: fixed;
-  left: 0;
   bottom: 0;
+  left: 0;
 
   width: 400px;
 

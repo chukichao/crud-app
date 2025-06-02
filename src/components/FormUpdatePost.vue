@@ -113,6 +113,7 @@ export default {
 <style scoped lang="scss">
 h2 {
   margin: 1rem 0;
+
   font-size: 30px;
 }
 
@@ -122,11 +123,11 @@ h2 {
   justify-content: center;
 
   textarea {
-    margin: 0.5rem auto;
-    font-size: 1rem;
-
     width: 100%;
     height: 200px;
+    margin: 0.5rem auto;
+
+    font-size: 1rem;
 
     &:focus {
       outline: 1px solid #333;
