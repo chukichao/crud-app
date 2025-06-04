@@ -1,16 +1,18 @@
-let interval;
+import type { DirectiveBinding } from 'vue';
+
+let interval: number;
 let isShow = true;
 
-const mouseover = (event) => {
-  event.target.style.opacity = '0';
+const mouseover = (event: Event) => {
+  (event.target as HTMLElement).style.opacity = '0';
 };
 
-const mouseout = (event) => {
-  event.target.style.opacity = '1';
+const mouseout = (event: Event) => {
+  (event.target as HTMLElement).style.opacity = '1';
 };
 
 export default {
-  mounted(el, binding) {
+  mounted(el: HTMLElement, binding: DirectiveBinding) {
     interval = setInterval(() => {
       el.style.visibility = isShow ? 'hidden' : 'visible';
       isShow = !isShow;
@@ -22,7 +24,7 @@ export default {
     }
   },
 
-  unmounted(el) {
+  unmounted(el: HTMLElement) {
     if (interval) {
       clearInterval(interval);
     }

@@ -4,7 +4,7 @@
 
 <!-- COMPOSITION API -->
 
-<script setup>
+<script setup lang="ts">
 import vBlink from '../directives/VBlink.js';
 </script>
 

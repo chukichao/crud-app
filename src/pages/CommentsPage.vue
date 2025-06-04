@@ -28,10 +28,10 @@
 
 <!-- COMPOSITION API -->
 
-<script setup>
-import { useCommentsStore } from '../store/CommentsStore';
-import { useUIStore } from '../store/UIStore';
-import { usePostsStore } from '../store/PostsStore';
+<script setup lang="ts">
+import { useCommentsStore } from '../store/CommentsStore.js';
+import { useUIStore } from '../store/UIStore.js';
+import { usePostsStore } from '../store/PostsStore.js';
 
 import { onMounted } from 'vue';
 
@@ -43,8 +43,12 @@ const postsStore = usePostsStore();
 
 const route = useRoute();
 
-const scrollToUp = async () => {
-  await document.getElementById('heading').scrollIntoView();
+const scrollToUp = () => {
+  const heading = document.getElementById('heading');
+
+  if (heading) {
+    heading.scrollIntoView();
+  }
 };
 
 onMounted(() => {
@@ -63,8 +67,8 @@ import { usePostsStore } from '../store/PostsStore';
 
 export default {
   methods: {
-    async scrollToUp() {
-      await document.getElementById('heading').scrollIntoView();
+    scrollToUp() {
+      document.getElementById('heading').scrollIntoView();
     },
   },
 

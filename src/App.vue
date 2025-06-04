@@ -12,7 +12,7 @@
 
 <!-- COMPOSITION API -->
 
-<script setup>
+<script setup lang="ts">
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
 import CookieAlert from './components/CookieAlert.vue';
@@ -22,12 +22,13 @@ import { useUIStore } from './store/UIStore.js';
 
 import { onMounted } from 'vue';
 
+import { hasDataLocalStorage } from './utils/auth.js';
+
 const userStore = useUserStore();
 const uiStore = useUIStore();
 
 onMounted(() => {
-  const database = localStorage.getItem('database');
-  if (!database) {
+  if (!hasDataLocalStorage('database')) {
     localStorage.setItem(
       'database',
       JSON.stringify({
@@ -35,6 +36,8 @@ onMounted(() => {
           {
             username: 'admin',
             password: 'admin',
+            age: 0,
+            isAgreeWithRules: true,
             id: String(Math.random()).slice(2),
           },
         ],
@@ -42,13 +45,12 @@ onMounted(() => {
     );
   }
 
-  const user = localStorage.getItem('auth');
-  if (user) {
+  if (hasDataLocalStorage('auth')) {
+    const user = localStorage.getItem('auth') as string;
     userStore.login(JSON.parse(user));
   }
 
-  const cookie = localStorage.getItem('cookie');
-  if (cookie) {
+  if (hasDataLocalStorage('cookie')) {
     uiStore.closeCookieAlert();
   }
 });

@@ -8,7 +8,7 @@
         <InputUI
           v-model.trim="user.username"
           autocomplete="username"
-          :class="{ required }"
+          :class="required"
         ></InputUI>
       </label>
 
@@ -17,7 +17,7 @@
         <InputUI
           v-model.number="user.age"
           type="number"
-          :class="{ required }"
+          :class="required"
         ></InputUI>
       </label>
 
@@ -27,7 +27,7 @@
           v-model.trim="user.password"
           type="password"
           autocomplete="new-password"
-          :class="{ required, confirm }"
+          :class="(required, confirm)"
         ></InputUI>
       </label>
 
@@ -37,13 +37,17 @@
           v-model.trim="confirmPassword"
           type="password"
           autocomplete="new-password"
-          :class="{ required, confirm }"
+          :class="(required, confirm)"
         ></InputUI>
       </label>
 
       <div class="form-rules">
         <label
-          ><input :class="{ required }" v-model="user.agree" type="checkbox" />
+          ><input
+            :class="required"
+            v-model="user.isAgreeWithRules"
+            type="checkbox"
+          />
           I have read the privacy policy (required)</label
         >
       </div>
@@ -117,7 +121,7 @@
 
 <!-- COMPOSITION API -->
 
-<script setup>
+<script setup lang="ts">
 import { useUserStore } from '../store/UserStore.js';
 
 import { ref, reactive, computed, watch } from 'vue';
@@ -136,7 +140,7 @@ const user = reactive({
   birthday: null,
   gender: 'male',
   skills: [],
-  agree: false,
+  isAgreeWithRules: false,
 });
 
 const confirmPassword = ref(null);
@@ -146,7 +150,7 @@ const errors = reactive({
   confirmError: false,
 });
 
-const errorFeedback = ref(null);
+const errorFeedback = ref('');
 
 const countryOptions = reactive([
   { title: 'Russia', value: 'russia' },
@@ -172,7 +176,7 @@ const registerAccount = () => {
 };
 
 const validate = () => {
-  if (!user.username || !user.password || !user.age || !user.agree) {
+  if (!user.username || !user.password || !user.age || !user.isAgreeWithRules) {
     errors.requiredError = true;
     errorFeedback.value = 'required field';
     return false;
@@ -186,20 +190,24 @@ const validate = () => {
   }
   errors.confirmError = false;
 
-  errorFeedback.value = null;
+  errorFeedback.value = '';
 
   return true;
 };
 
-const scrollToUp = async () => {
-  await document.getElementById('heading').scrollIntoView();
+const scrollToUp = () => {
+  const heading = document.getElementById('heading');
+
+  if (heading) {
+    heading.scrollIntoView();
+  }
 };
 
-const required = computed(() => {
+const required = computed<string>(() => {
   return errors.requiredError ? 'error-outline-required' : '';
 });
 
-const confirm = computed(() => {
+const confirm = computed<string>(() => {
   return errors.confirmError ? 'error-outline-confirm' : '';
 });
 
@@ -225,14 +233,14 @@ export default {
         birthday: null,
         gender: 'male',
         skills: [],
-        agree: false,
+        isAgreeWithRules: false,
       },
       confirmPassword: null,
       errors: {
         requiredError: false,
         confirmError: false,
       },
-      errorFeedback: null,
+      errorFeedback: '',
       countryOptions: [
         { title: 'Russia', value: 'russia' },
         { title: 'Belarus', value: 'belarus' },
@@ -263,7 +271,7 @@ export default {
         !this.user.username ||
         !this.user.password ||
         !this.user.age ||
-        !this.user.agree
+        !this.user.isAgreeWithRules
       ) {
         this.errors.requiredError = true;
         this.errorFeedback = 'required field';
@@ -278,12 +286,12 @@ export default {
       }
       this.errors.confirmError = false;
 
-      this.errorFeedback = null;
+      this.errorFeedback = '';
 
       return true;
     },
-    async scrollToUp() {
-      await document.getElementById('heading').scrollIntoView();
+    scrollToUp() {
+      document.getElementById('heading').scrollIntoView();
     },
   },
 

@@ -1,12 +1,30 @@
 <template>
   <input
     :value="modelValue"
-    @input="$emit('update:modelValue', $event.target.value)"
+    @input="
+      $emit('update:modelValue', ($event.target as HTMLInputElement).value)
+    "
     ref="input"
   />
 </template>
 
-<script>
+<script lang="ts">
+export default {
+  name: 'InputUI',
+};
+</script>
+
+<!-- COMPOSITION API -->
+
+<script setup lang="ts">
+defineProps<{
+  modelValue: string | number | null;
+}>();
+</script>
+
+<!-- OPTIONS API -->
+
+<!-- <script>
 export default {
   name: 'InputUI',
 
@@ -20,7 +38,7 @@ export default {
     },
   },
 };
-</script>
+</script> -->
 
 <style scoped lang="scss">
 input {

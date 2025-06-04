@@ -18,18 +18,18 @@
 
 <!-- COMPOSITION API -->
 
-<script setup>
+<script setup lang="ts">
 import PostItem from './PostItem.vue';
 
 import { usePostsStore } from '../store/PostsStore.js';
 import { useUIStore } from '../store/UIStore.js';
 
+import type { IPost } from '../types/post.js';
+
 const postsStore = usePostsStore();
 const uiStore = useUIStore();
 
-const props = defineProps({
-  posts: Array,
-});
+defineProps<{ posts: IPost[] }>();
 </script>
 
 <!-- OPTIONS API -->

@@ -11,7 +11,7 @@
 
 <!-- COMPOSITION API -->
 
-<script setup>
+<script setup lang="ts">
 import { useUIStore } from '../store/UIStore.js';
 
 const uiStore = useUIStore();

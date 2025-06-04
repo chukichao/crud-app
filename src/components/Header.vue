@@ -53,7 +53,7 @@
 
 <!-- COMPOSITION API -->
 
-<script setup>
+<script setup lang="ts">
 import Logo from './Logo.vue';
 import FormLogin from './FormLogin.vue';
 

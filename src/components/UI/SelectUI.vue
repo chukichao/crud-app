@@ -1,7 +1,9 @@
 <template>
   <select
     :value="modelValue"
-    @change="this.$emit('update:modelValue', $event.target.value)"
+    @change="
+      $emit('update:modelValue', ($event.target as HTMLSelectElement).value)
+    "
   >
     <option value="" disabled>{{ title }}</option>
     <option v-for="option in options" :key="option.value" :value="option.value">
@@ -10,7 +12,30 @@
   </select>
 </template>
 
-<script>
+<script lang="ts">
+export default {
+  name: 'SelectUI',
+};
+</script>
+
+<!-- COMPOSITION API -->
+
+<script setup lang="ts">
+interface IOption {
+  title: string;
+  value: string;
+}
+
+defineProps<{
+  modelValue: string | number | null;
+  options: IOption[];
+  title?: string;
+}>();
+</script>
+
+<!-- OPTIONS API -->
+
+<!-- <script>
 export default {
   name: 'SelectUI',
 
@@ -26,4 +51,4 @@ export default {
     },
   },
 };
-</script>
+</script> -->

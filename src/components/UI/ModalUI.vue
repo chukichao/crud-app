@@ -6,7 +6,23 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+export default {
+  name: 'ModalUI',
+};
+</script>
+
+<!-- COMPOSITION API -->
+
+<script setup lang="ts">
+import { useUIStore } from '../../store/UIStore.js';
+
+const uiStore = useUIStore();
+</script>
+
+<!-- OPTIONS API -->
+
+<!-- <script>
 import { mapStores } from 'pinia';
 import { useUIStore } from '../../store/UIStore.js';
 
@@ -17,7 +33,7 @@ export default {
     ...mapStores(useUIStore),
   },
 };
-</script>
+</script> -->
 
 <style scoped lang="scss">
 .modal {

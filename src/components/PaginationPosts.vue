@@ -20,7 +20,7 @@
 
 <!-- COMPOSITION API -->
 
-<script setup>
+<script setup lang="ts">
 import { usePostsStore } from '../store/PostsStore.js';
 
 import { useRouter } from 'vue-router';
@@ -38,7 +38,7 @@ const updateQuery = () => {
   });
 };
 
-const setPage = (currentPage) => {
+const setPage = (currentPage: number) => {
   postsStore.setPage(currentPage);
 
   updateQuery();

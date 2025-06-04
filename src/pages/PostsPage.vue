@@ -36,7 +36,7 @@
 
 <!-- COMPOSITION API -->
 
-<script setup>
+<script setup lang="ts">
 import PostsList from '../components/PostsList.vue';
 import FormAddPost from '../components/FormAddPost.vue';
 import PaginationPosts from '../components/PaginationPosts.vue';
@@ -49,6 +49,8 @@ import { useRoute } from 'vue-router';
 
 import vObserver from '../directives/VIntersection.js';
 import vFocus from '../directives/VFocus.js';
+
+import type { IPost } from '../types/post.js';
 
 import { computed, onMounted, ref, reactive, watch } from 'vue';
 
@@ -64,11 +66,15 @@ const sortOptions = reactive([
   { title: 'by body', value: 'body' },
 ]);
 
-const scrollToUp = async () => {
-  await document.getElementById('heading').scrollIntoView();
+const scrollToUp = () => {
+  const heading = document.getElementById('heading');
+
+  if (heading) {
+    heading.scrollIntoView();
+  }
 };
 
-const sortedAndSearchedPosts = computed(() => {
+const sortedAndSearchedPosts = computed<IPost[]>(() => {
   const sortedPosts = [...postsStore.posts].sort((post1, post2) =>
     post1[selectedSort.value]?.localeCompare(post2[selectedSort.value]),
   );
@@ -123,8 +129,8 @@ export default {
   },
 
   methods: {
-    async scrollToUp() {
-      await document.getElementById('heading').scrollIntoView();
+    scrollToUp() {
+      document.getElementById('heading').scrollIntoView();
     },
   },
 

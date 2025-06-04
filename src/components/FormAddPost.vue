@@ -9,7 +9,7 @@
 
 <!-- COMPOSITION API -->
 
-<script setup>
+<script setup lang="ts">
 import { usePostsStore } from '../store/PostsStore.js';
 import { useUIStore } from '../store/UIStore.js';
 
@@ -18,7 +18,7 @@ import { reactive, useTemplateRef, onMounted } from 'vue';
 const postsStore = usePostsStore();
 const uiStore = useUIStore();
 
-const textarea = useTemplateRef('textarea');
+const textarea = useTemplateRef<HTMLTextAreaElement>('textarea');
 
 let post = reactive({
   title: '',
@@ -40,7 +40,7 @@ const createPost = () => {
 };
 
 onMounted(() => {
-  textarea.value.focus();
+  textarea.value?.focus();
 });
 </script>
 

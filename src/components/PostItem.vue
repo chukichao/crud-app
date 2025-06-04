@@ -29,18 +29,20 @@
 
 <!-- COMPOSITION API -->
 
-<script setup>
+<script setup lang="ts">
 import FormUpdatePost from './FormUpdatePost.vue';
 
-import { usePostsStore } from '../store/PostsStore';
+import { usePostsStore } from '../store/PostsStore.js';
 import { useUIStore } from '../store/UIStore.js';
+
+import type { IPost } from '../types/post.js';
 
 const postsStore = usePostsStore();
 const uiStore = useUIStore();
 
-const props = defineProps({
-  post: Object,
-});
+defineProps<{
+  post: IPost;
+}>();
 </script>
 
 <!-- OPTIONS API -->

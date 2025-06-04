@@ -28,31 +28,31 @@
 
 <!-- COMPOSITION API -->
 
-<script setup>
+<script setup lang="ts">
 import { useUIStore } from '../store/UIStore.js';
 import { useUserStore } from '../store/UserStore.js';
 
-import { reactive, ref, computed, useTemplateRef, onMounted } from 'vue';
+import { reactive, ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
+
+import type { IUser } from '../types/user.js';
 
 const uiStore = useUIStore();
 const userStore = useUserStore();
 
 const router = useRouter();
 
-const input = useTemplateRef('input');
-
 let user = reactive({
   username: '',
   password: '',
 });
 
-const errorLogin = ref(null);
+const errorLogin = ref(false);
 
 const login = () => {
-  const database = JSON.parse(localStorage.getItem('database'));
+  const database = JSON.parse(localStorage.getItem('database') as string);
   const _user = database.users.find(
-    (_user) => _user.username === user.username,
+    (_user: IUser) => _user.username === user.username,
   );
 
   if (!_user || _user.password !== user.password) {
@@ -84,10 +84,6 @@ const disabledButton = computed(() => {
 
   return true;
 });
-
-onMounted(() => {
-  input.value.getInputRef().focus();
-});
 </script>
 
 <!-- OPTIONS API -->
@@ -105,7 +101,7 @@ export default {
         username: '',
         password: '',
       },
-      errorLogin: null,
+      errorLogin: false,
     };
   },
 

@@ -9,7 +9,7 @@
 
 <!-- COMPOSITION API -->
 
-<script setup>
+<script setup lang="ts">
 import { usePostsStore } from '../store/PostsStore.js';
 
 import { ref, reactive } from 'vue';
@@ -37,8 +37,8 @@ const updateQuery = () => {
   });
 };
 
-const setLimit = (event) => {
-  postsStore.setLimit(event.target.value);
+const setLimit = (event: Event) => {
+  postsStore.setLimit((event.target as HTMLSelectElement).value);
 
   updateQuery();
 };

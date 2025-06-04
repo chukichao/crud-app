@@ -10,7 +10,7 @@ export const useUserStore = defineStore('user', {
       localStorage.setItem('auth', JSON.stringify(this.auth));
 
       if (!newUser) {
-        return false;
+        return;
       }
 
       const database = JSON.parse(localStorage.getItem('database'));
@@ -19,6 +19,7 @@ export const useUserStore = defineStore('user', {
     },
     logout() {
       this.auth = null;
+      this.userData = null;
       localStorage.removeItem('auth');
     },
   },

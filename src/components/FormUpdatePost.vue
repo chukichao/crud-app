@@ -18,38 +18,34 @@
 
 <!-- COMPOSITION API -->
 
-<script setup>
-import { usePostsStore } from '../store/PostsStore';
+<script setup lang="ts">
+import { usePostsStore } from '../store/PostsStore.js';
 import { useUIStore } from '../store/UIStore.js';
 
 import vFocus from '../directives/VFocus.js';
 
-import { ref, onMounted } from 'vue';
+import { reactive, onMounted } from 'vue';
 
 const postsStore = usePostsStore();
 const uiStore = useUIStore();
 
-const props = defineProps({
-  title: String,
-  body: String,
-  id: Number,
-});
+const props = defineProps<{ title: string; body: string; id: number }>();
 
-let post = ref({ title: '', body: '' });
+const post = reactive({ title: '', body: '' });
 
 const updatePost = () => {
-  if (!post.value.title || !post.value.body) {
+  if (!post.title || !post.body) {
     return;
   }
 
-  postsStore.updatePost(props.id, post.value);
+  postsStore.updatePost(props.id, post);
 
   uiStore.closeModal();
 };
 
 onMounted(() => {
-  post.value.title = props.title;
-  post.value.body = props.body;
+  post.title = props.title;
+  post.body = props.body;
 });
 </script>
 
