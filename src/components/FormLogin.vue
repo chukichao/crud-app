@@ -51,11 +51,11 @@ const errorLogin = ref(false);
 
 const login = () => {
   const database = JSON.parse(localStorage.getItem('database') as string);
-  const _user = database.users.find(
+  const userData = database.users.find(
     (_user: IUser) => _user.username === user.username,
   );
 
-  if (!_user || _user.password !== user.password) {
+  if (!userData || userData.password !== user.password) {
     errorLogin.value = true;
     return;
   }
@@ -66,7 +66,7 @@ const login = () => {
     username: user.username,
     token: String(Math.random()).slice(2),
   };
-  userStore.login(authData);
+  userStore.login(authData, userData);
 
   user = {
     username: '',
@@ -108,11 +108,11 @@ export default {
   methods: {
     login() {
       const database = JSON.parse(localStorage.getItem('database'));
-      const user = database.users.find(
+      const userData = database.users.find(
         (user) => user.username === this.user.username,
       );
 
-      if (!user || user.password !== this.user.password) {
+      if (!userData || userData.password !== this.user.password) {
         this.errorLogin = true;
         return;
       }
@@ -123,7 +123,7 @@ export default {
         username: this.user.username,
         token: String(Math.random()).slice(2),
       };
-      this.userStore.login(authData);
+      this.userStore.login(authData, userData);
 
       this.user = {
         username: '',

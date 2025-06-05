@@ -24,6 +24,8 @@ import { onMounted } from 'vue';
 
 import { hasDataLocalStorage } from './utils/auth.js';
 
+import type { IUser } from './types/user.js';
+
 const userStore = useUserStore();
 const uiStore = useUIStore();
 
@@ -46,8 +48,14 @@ onMounted(() => {
   }
 
   if (hasDataLocalStorage('auth')) {
-    const user = localStorage.getItem('auth') as string;
-    userStore.login(JSON.parse(user));
+    const user = JSON.parse(localStorage.getItem('auth') as string);
+    const database = JSON.parse(localStorage.getItem('database') as string);
+
+    const userData = database.users.find(
+      (_user: IUser) => _user.username === user.username,
+    );
+
+    userStore.login(user, userData);
   }
 
   if (hasDataLocalStorage('cookie')) {
@@ -67,14 +75,15 @@ import { mapStores } from 'pinia';
 import { useUserStore } from './store/UserStore.js';
 import { useUIStore } from './store/UIStore.js';
 
+import { hasDataLocalStorage } from './utils/auth.js';
+
 export default {
   computed: {
     ...mapStores(useUserStore, useUIStore),
   },
 
   mounted() {
-    const database = localStorage.getItem('database');
-    if (!database) {
+    if (!hasDataLocalStorage('database')) {
       localStorage.setItem(
         'database',
         JSON.stringify({
@@ -82,6 +91,8 @@ export default {
             {
               username: 'admin',
               password: 'admin',
+              age: 0,
+              isAgreeWithRules: true,
               id: String(Math.random()).slice(2),
             },
           ],
@@ -89,13 +100,18 @@ export default {
       );
     }
 
-    const user = localStorage.getItem('auth');
-    if (user) {
-      this.userStore.login(JSON.parse(user));
+    if (hasDataLocalStorage('auth')) {
+      const user = JSON.parse(localStorage.getItem('auth'));
+      const database = JSON.parse(localStorage.getItem('database'));
+
+      const userData = database.users.find(
+        (_user) => _user.username === user.username,
+      );
+
+      this.userStore.login(user, userData);
     }
 
-    const cookie = localStorage.getItem('cookie');
-    if (cookie) {
+    if (hasDataLocalStorage('cookie')) {
       this.uiStore.closeCookieAlert();
     }
   },

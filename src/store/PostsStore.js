@@ -1,6 +1,9 @@
 import { defineStore } from 'pinia';
 import { useUIStore } from './UIStore';
+import { useUserStore } from './UserStore';
 import axios from 'axios';
+
+import type { IPost } from '../types/post';
 
 export const usePostsStore = defineStore('posts', {
   state: () => ({
@@ -46,9 +49,12 @@ export const usePostsStore = defineStore('posts', {
       }
     },
     createPost(createdPost) {
+      const userStore = useUserStore();
+
       const newPost = {
         ...createdPost,
         id: ++this.postId,
+        userId: userStore.userData.id,
       };
 
       this.posts.unshift(newPost);
