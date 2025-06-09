@@ -1,66 +1,66 @@
 <template>
-  <Header />
+	<Header />
 
-  <main>
-    <RouterView />
-  </main>
+	<main>
+		<RouterView />
+	</main>
 
-  <Footer />
+	<Footer />
 
-  <CookieAlert v-show="uiStore.cookieAlert" />
+	<CookieAlert v-show="uiStore.cookieAlert" />
 </template>
 
 <!-- COMPOSITION API -->
 
 <script setup lang="ts">
-import Header from './components/Header.vue';
-import Footer from './components/Footer.vue';
-import CookieAlert from './components/CookieAlert.vue';
+import Header from "./components/Header.vue";
+import Footer from "./components/Footer.vue";
+import CookieAlert from "./components/CookieAlert.vue";
 
-import { useUserStore } from './store/UserStore.js';
-import { useUIStore } from './store/UIStore.js';
+import { useUserStore } from "./store/UserStore.js";
+import { useUIStore } from "./store/UIStore.js";
 
-import { onMounted } from 'vue';
+import { onMounted } from "vue";
 
-import { hasDataLocalStorage } from './utils/auth.js';
+import { hasDataLocalStorage } from "./utils/auth.js";
 
-import type { IUser } from './types/user.js';
+import type { IUser } from "./types/user.js";
 
 const userStore = useUserStore();
 const uiStore = useUIStore();
 
 onMounted(() => {
-  if (!hasDataLocalStorage('database')) {
-    localStorage.setItem(
-      'database',
-      JSON.stringify({
-        users: [
-          {
-            username: 'admin',
-            password: 'admin',
-            age: 0,
-            isAgreeWithRules: true,
-            id: String(Math.random()).slice(2),
-          },
-        ],
-      }),
-    );
-  }
+	if (!hasDataLocalStorage("database")) {
+		localStorage.setItem(
+			"database",
+			JSON.stringify({
+				users: [
+					{
+						username: "admin",
+						password: "admin",
+						age: 0,
+						isAgreeWithRules: true,
+						id: String(Math.random()).slice(2),
+					},
+				],
+			}),
+		);
+	}
 
-  if (hasDataLocalStorage('auth')) {
-    const user = JSON.parse(localStorage.getItem('auth') as string);
-    const database = JSON.parse(localStorage.getItem('database') as string);
+	if (hasDataLocalStorage("auth")) {
+		const user = JSON.parse(localStorage.getItem("auth") as string);
+		const database = JSON.parse(localStorage.getItem("database") as string);
 
-    const userData = database.users.find(
-      (_user: IUser) => _user.username === user.username,
-    );
+		const userData = database.users.find(
+			(_user: IUser) => _user.username === user.username,
+		);
 
-    userStore.login(user, userData);
-  }
+		userStore.login(user, userData);
+	}
 
-  if (hasDataLocalStorage('cookie')) {
-    uiStore.closeCookieAlert();
-  }
+	if (hasDataLocalStorage("cookie")) {
+		uiStore.closeCookieAlert();
+	}
 });
 </script>
 
@@ -126,26 +126,26 @@ export default {
 
 <style lang="scss">
 main {
-  display: flex;
-  flex-direction: column;
+	display: flex;
+	flex-direction: column;
 
-  max-width: 700px;
+	max-width: 700px;
 
-  margin: 0 auto;
-  padding: 2rem;
+	margin: 0 auto;
+	padding: 2rem;
 
-  h1 {
-    margin: 5rem auto;
+	h1 {
+		margin: 5rem auto;
 
-    font-size: 2rem;
+		font-size: 2rem;
 
-    text-align: center;
-  }
+		text-align: center;
+	}
 }
 
 @media screen and (max-width: 600px) {
-  main {
-    min-width: 250px;
-  }
+	main {
+		min-width: 250px;
+	}
 }
 </style>

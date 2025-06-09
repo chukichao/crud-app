@@ -1,136 +1,136 @@
 <template>
-  <ul>
-    <li @click="prevPage">{{ '<' }}</li>
-    <li
-      v-for="currentPage in postsStore.totalPages"
-      :key="currentPage"
-      @click="setPage(currentPage)"
-      :class="{
-        active: postsStore.page === currentPage,
-        visible:
-          postsStore.page < currentPage - 2 ||
-          postsStore.page > currentPage + 2,
-      }"
-    >
-      {{ currentPage }}
-    </li>
-    <li @click="nextPage">{{ '>' }}</li>
-  </ul>
+	<ul>
+		<li @click="prevPage">{{ "<" }}</li>
+		<li
+			v-for="currentPage in postsStore.totalPages"
+			:key="currentPage"
+			@click="setPage(currentPage)"
+			:class="{
+				active: postsStore.page === currentPage,
+				visible:
+					postsStore.page < currentPage - 2 ||
+					postsStore.page > currentPage + 2,
+			}"
+		>
+			{{ currentPage }}
+		</li>
+		<li @click="nextPage">{{ ">" }}</li>
+	</ul>
 </template>
 
 <!-- COMPOSITION API -->
 
 <script setup lang="ts">
-import { usePostsStore } from '../store/PostsStore.js';
+import { usePostsStore } from "../store/PostsStore.js";
 
-import { useRouter } from 'vue-router';
+import { useRouter } from "vue-router";
 
 const postsStore = usePostsStore();
 
 const router = useRouter();
 
 const updateQuery = () => {
-  router.replace({
-    query: {
-      page: postsStore.page,
-      limit: postsStore.limit,
-    },
-  });
+	router.replace({
+		query: {
+			page: postsStore.page,
+			limit: postsStore.limit,
+		},
+	});
 };
 
 const setPage = (currentPage: number) => {
-  postsStore.setPage(currentPage);
+	postsStore.setPage(currentPage);
 
-  updateQuery();
+	updateQuery();
 };
 
 const prevPage = () => {
-  postsStore.prevPage();
+	postsStore.prevPage();
 
-  updateQuery();
+	updateQuery();
 };
 
 const nextPage = () => {
-  postsStore.nextPage();
+	postsStore.nextPage();
 
-  updateQuery();
+	updateQuery();
 };
 </script>
 
 <!-- OPTIONS API -->
 
 <!-- <script>
-import { mapStores } from 'pinia';
-import { usePostsStore } from '../store/PostsStore.js';
+import { mapStores } from "pinia";
+import { usePostsStore } from "../store/PostsStore.js";
 
 export default {
-  methods: {
-    updateQuery() {
-      this.$router.replace({
-        query: {
-          page: this.postsStore.page,
-          limit: this.postsStore.limit,
-        },
-      });
-    },
-    setPage(currentPage) {
-      this.postsStore.setPage(currentPage);
-      this.updateQuery();
-    },
-    prevPage() {
-      this.postsStore.prevPage();
-      this.updateQuery();
-    },
-    nextPage() {
-      this.postsStore.nextPage();
-      this.updateQuery();
-    },
-  },
+	methods: {
+		updateQuery() {
+			this.$router.replace({
+				query: {
+					page: this.postsStore.page,
+					limit: this.postsStore.limit,
+				},
+			});
+		},
+		setPage(currentPage) {
+			this.postsStore.setPage(currentPage);
+			this.updateQuery();
+		},
+		prevPage() {
+			this.postsStore.prevPage();
+			this.updateQuery();
+		},
+		nextPage() {
+			this.postsStore.nextPage();
+			this.updateQuery();
+		},
+	},
 
-  computed: {
-    ...mapStores(usePostsStore),
-  },
+	computed: {
+		...mapStores(usePostsStore),
+	},
 };
 </script> -->
 
 <style scoped lang="scss">
 ul {
-  display: flex;
-  flex-wrap: wrap;
+	display: flex;
+	flex-wrap: wrap;
 
-  margin: 3rem auto;
+	margin: 3rem auto;
 
-  list-style: none;
+	list-style: none;
 
-  li {
-    padding: 1.5rem;
+	li {
+		padding: 1.5rem;
 
-    border: 1px solid #333;
+		border: 1px solid #333;
 
-    &:hover {
-      color: white;
+		&:hover {
+			color: white;
 
-      background-color: black;
-      cursor: pointer;
-    }
-  }
+			background-color: black;
+			cursor: pointer;
+		}
+	}
 
-  .active {
-    color: white;
+	.active {
+		color: white;
 
-    background-color: black;
-  }
+		background-color: black;
+	}
 
-  .visible {
-    display: none;
-  }
+	.visible {
+		display: none;
+	}
 }
 
 @media screen and (max-width: 600px) {
-  ul {
-    li {
-      padding: 0.5rem;
-    }
-  }
+	ul {
+		li {
+			padding: 0.5rem;
+		}
+	}
 }
 </style>

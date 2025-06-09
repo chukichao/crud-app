@@ -1,123 +1,123 @@
 <template>
-  <h2>Create post</h2>
-  <form class="form" @submit.prevent="createPost">
-    <textarea v-model.trim="post.title" placeholder="title" ref="textarea" />
-    <textarea v-model.trim="post.body" placeholder="description" />
-    <ButtonUI>Сonfirm</ButtonUI>
-  </form>
+	<h2>Create post</h2>
+	<form class="form" @submit.prevent="createPost">
+		<textarea v-model.trim="post.title" placeholder="title" ref="textarea" />
+		<textarea v-model.trim="post.body" placeholder="description" />
+		<ButtonUI>Сonfirm</ButtonUI>
+	</form>
 </template>
 
 <!-- COMPOSITION API -->
 
 <script setup lang="ts">
-import { usePostsStore } from '../store/PostsStore.js';
-import { useUIStore } from '../store/UIStore.js';
+import { usePostsStore } from "../store/PostsStore.js";
+import { useUIStore } from "../store/UIStore.js";
 
-import { reactive, useTemplateRef, onMounted } from 'vue';
+import { reactive, useTemplateRef, onMounted } from "vue";
 
 const postsStore = usePostsStore();
 const uiStore = useUIStore();
 
-const textarea = useTemplateRef<HTMLTextAreaElement>('textarea');
+const textarea = useTemplateRef<HTMLTextAreaElement>("textarea");
 
 let post = reactive({
-  title: '',
-  body: '',
+	title: "",
+	body: "",
 });
 
 const createPost = () => {
-  if (!post.title || !post.body) {
-    return;
-  }
+	if (!post.title || !post.body) {
+		return;
+	}
 
-  postsStore.createPost(post);
-  uiStore.closeModal();
+	postsStore.createPost(post);
+	uiStore.closeModal();
 
-  post = {
-    title: '',
-    body: '',
-  };
+	post = {
+		title: "",
+		body: "",
+	};
 };
 
 onMounted(() => {
-  textarea.value?.focus();
+	textarea.value?.focus();
 });
 </script>
 
 <!-- OPTIONS API -->
 
 <!-- <script>
-import { mapStores } from 'pinia';
-import { usePostsStore } from '../store/PostsStore.js';
-import { useUIStore } from '../store/UIStore.js';
+import { mapStores } from "pinia";
+import { usePostsStore } from "../store/PostsStore.js";
+import { useUIStore } from "../store/UIStore.js";
 
 export default {
-  data() {
-    return {
-      post: {
-        title: '',
-        body: '',
-      },
-    };
-  },
+	data() {
+		return {
+			post: {
+				title: "",
+				body: "",
+			},
+		};
+	},
 
-  methods: {
-    createPost() {
-      if (!this.post.title || !this.post.body) {
-        return;
-      }
+	methods: {
+		createPost() {
+			if (!this.post.title || !this.post.body) {
+				return;
+			}
 
-      this.postsStore.createPost(this.post);
-      this.uiStore.closeModal();
+			this.postsStore.createPost(this.post);
+			this.uiStore.closeModal();
 
-      this.post = {
-        title: '',
-        body: '',
-      };
-    },
-  },
+			this.post = {
+				title: "",
+				body: "",
+			};
+		},
+	},
 
-  computed: {
-    ...mapStores(usePostsStore, useUIStore),
-  },
+	computed: {
+		...mapStores(usePostsStore, useUIStore),
+	},
 
-  mounted() {
-    this.$refs.textarea.focus();
-  },
+	mounted() {
+		this.$refs.textarea.focus();
+	},
 };
 </script> -->
 
 <style scoped lang="scss">
 h2 {
-  margin: 1rem 0;
+	margin: 1rem 0;
 
-  font-size: 30px;
+	font-size: 30px;
 }
 
 .form {
-  display: flex;
-  flex-direction: column;
+	display: flex;
+	flex-direction: column;
 
-  textarea {
-    width: 100%;
-    height: 200px;
-    margin: 0.5rem auto;
+	textarea {
+		width: 100%;
+		height: 200px;
+		margin: 0.5rem auto;
 
-    font-size: 1rem;
+		font-size: 1rem;
 
-    &:focus {
-      outline: 1px solid #333;
-    }
-  }
+		&:focus {
+			outline: 1px solid #333;
+		}
+	}
 
-  button {
-    align-self: flex-end;
+	button {
+		align-self: flex-end;
 
-    margin-top: 1rem;
+		margin-top: 1rem;
 
-    &:hover {
-      background: bisque;
-    }
-  }
+		&:hover {
+			background: bisque;
+		}
+	}
 }
 </style>

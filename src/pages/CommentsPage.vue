@@ -1,41 +1,41 @@
 <template>
-  <h1 id="heading">Comments Page</h1>
+	<h1 id="heading">Comments Page</h1>
 
-  <div class="comments-list">
-    <div v-if="commentsStore.comments.length" class="comments-item">
-      <ul>
-        <li v-for="comment in commentsStore.comments" :key="comment.id">
-          <h3>{{ comment.id }}. {{ comment.name }}</h3>
-          <p>{{ comment.body }}</p>
-          <p>{{ comment.email }}</p>
-        </li>
-      </ul>
-    </div>
+	<div class="comments-list">
+		<div v-if="commentsStore.comments.length" class="comments-item">
+			<ul>
+				<li v-for="comment in commentsStore.comments" :key="comment.id">
+					<h3>{{ comment.id }}. {{ comment.name }}</h3>
+					<p>{{ comment.body }}</p>
+					<p>{{ comment.email }}</p>
+				</li>
+			</ul>
+		</div>
 
-    <div v-else>
-      <LoaderUI v-if="uiStore.isLoading" />
-      <h2 v-else>No comments yet</h2>
-    </div>
+		<div v-else>
+			<LoaderUI v-if="uiStore.isLoading" />
+			<h2 v-else>No comments yet</h2>
+		</div>
 
-    <ButtonUI
-      @click="
-        $router.push(`/posts?page=${postsStore.page}&limit=${postsStore.limit}`)
-      "
-      >Back</ButtonUI
-    >
-  </div>
+		<ButtonUI
+			@click="
+				$router.push(`/posts?page=${postsStore.page}&limit=${postsStore.limit}`)
+			"
+			>Back</ButtonUI
+		>
+	</div>
 </template>
 
 <!-- COMPOSITION API -->
 
 <script setup lang="ts">
-import { useCommentsStore } from '../store/CommentsStore.js';
-import { useUIStore } from '../store/UIStore.js';
-import { usePostsStore } from '../store/PostsStore.js';
+import { useCommentsStore } from "../store/CommentsStore.js";
+import { useUIStore } from "../store/UIStore.js";
+import { usePostsStore } from "../store/PostsStore.js";
 
-import { onMounted } from 'vue';
+import { onMounted } from "vue";
 
-import { useRoute } from 'vue-router';
+import { useRoute } from "vue-router";
 
 const commentsStore = useCommentsStore();
 const uiStore = useUIStore();
@@ -44,81 +44,81 @@ const postsStore = usePostsStore();
 const route = useRoute();
 
 const scrollToUp = () => {
-  const heading = document.getElementById('heading');
+	const heading = document.getElementById("heading");
 
-  if (heading) {
-    heading.scrollIntoView();
-  }
+	if (heading) {
+		heading.scrollIntoView();
+	}
 };
 
 onMounted(() => {
-  commentsStore.fetchComments(route.params.id as string);
-  scrollToUp();
+	commentsStore.fetchComments(route.params.id as string);
+	scrollToUp();
 });
 </script>
 
 <!-- OPTIONS API -->
 
 <!-- <script>
-import { mapStores } from 'pinia';
-import { useCommentsStore } from '../store/CommentsStore';
-import { useUIStore } from '../store/UIStore';
-import { usePostsStore } from '../store/PostsStore';
+import { mapStores } from "pinia";
+import { useCommentsStore } from "../store/CommentsStore";
+import { useUIStore } from "../store/UIStore";
+import { usePostsStore } from "../store/PostsStore";
 
 export default {
-  methods: {
-    scrollToUp() {
-      document.getElementById('heading').scrollIntoView();
-    },
-  },
+	methods: {
+		scrollToUp() {
+			document.getElementById("heading").scrollIntoView();
+		},
+	},
 
-  computed: {
-    ...mapStores(useCommentsStore, useUIStore, usePostsStore),
-  },
+	computed: {
+		...mapStores(useCommentsStore, useUIStore, usePostsStore),
+	},
 
-  mounted() {
-    this.commentsStore.fetchComments(this.$route.params.id);
-    this.scrollToUp();
-  },
+	mounted() {
+		this.commentsStore.fetchComments(this.$route.params.id);
+		this.scrollToUp();
+	},
 };
 </script> -->
 
 <style scoped lang="scss">
 .comments-list {
-  text-align: center;
+	text-align: center;
 
-  h2 {
-    padding: 1.5rem;
+	h2 {
+		padding: 1.5rem;
 
-    font-size: 30px;
-  }
+		font-size: 30px;
+	}
 }
 
 .comments-item {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 
-  ul {
-    list-style: none;
+	ul {
+		list-style: none;
 
-    li {
-      margin: 2rem 0;
-    }
+		li {
+			margin: 2rem 0;
+		}
 
-    p {
-      padding: 1rem;
-    }
-  }
+		p {
+			padding: 1rem;
+		}
+	}
 
-  button {
-    align-self: flex-end;
+	button {
+		align-self: flex-end;
 
-    margin: 1rem;
+		margin: 1rem;
 
-    &:hover {
-      background: bisque;
-    }
-  }
+		&:hover {
+			background: bisque;
+		}
+	}
 }
 </style>

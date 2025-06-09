@@ -1,22 +1,22 @@
 <template>
-  <div class="status">
-    <h2>This page was not found</h2>
-    <RouterLink to="/">Go home page</RouterLink>
-  </div>
+	<div class="status">
+		<h2>This page was not found</h2>
+		<RouterLink to="/">Go home page</RouterLink>
+	</div>
 </template>
 
 <style scoped lang="scss">
 .status {
-  text-align: center;
+	text-align: center;
 
-  h2 {
-    margin: 2rem;
-  }
+	h2 {
+		margin: 2rem;
+	}
 
-  a {
-    color: inherit;
-    font-size: 30px;
-    text-decoration: none;
-  }
+	a {
+		color: inherit;
+		font-size: 30px;
+		text-decoration: none;
+	}
 }
 </style>

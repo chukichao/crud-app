@@ -1,16 +1,16 @@
 <template>
-  <input
-    :value="modelValue"
-    @input="
-      $emit('update:modelValue', ($event.target as HTMLInputElement).value)
-    "
-    ref="input"
-  />
+	<input
+		:value="modelValue"
+		@input="
+			$emit('update:modelValue', ($event.target as HTMLInputElement).value)
+		"
+		ref="input"
+	/>
 </template>
 
 <script lang="ts">
 export default {
-  name: 'InputUI',
+	name: "InputUI",
 };
 </script>
 
@@ -18,7 +18,7 @@ export default {
 
 <script setup lang="ts">
 defineProps<{
-  modelValue: string | number | null;
+	modelValue: string | number | null;
 }>();
 </script>
 
@@ -42,11 +42,11 @@ export default {
 
 <style scoped lang="scss">
 input {
-  margin: 0.5rem 0;
-  padding: 0.5rem;
+	margin: 0.5rem 0;
+	padding: 0.5rem;
 
-  outline: none;
+	outline: none;
 
-  cursor: pointer;
+	cursor: pointer;
 }
 </style>

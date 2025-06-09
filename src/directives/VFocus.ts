@@ -1,5 +1,5 @@
 export default {
-  mounted(el: HTMLElement) {
-    el.focus();
-  },
+	mounted(el: HTMLElement) {
+		el.focus();
+	},
 };

@@ -1,21 +1,21 @@
 <template>
-  <button>
-    <slot />
-  </button>
+	<button>
+		<slot />
+	</button>
 </template>
 
 <script lang="ts">
 export default {
-  name: 'ButtonUI',
+	name: "ButtonUI",
 };
 </script>
 
 <style scoped lang="scss">
 button {
-  padding: 0.5rem 1rem;
+	padding: 0.5rem 1rem;
 
-  background: none;
+	background: none;
 
-  cursor: pointer;
+	cursor: pointer;
 }
 </style>
