@@ -52,7 +52,7 @@ const scrollToUp = () => {
 };
 
 onMounted(() => {
-  commentsStore.fetchComments(route.params.id);
+  commentsStore.fetchComments(route.params.id as string);
   scrollToUp();
 });
 </script>

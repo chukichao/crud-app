@@ -1,13 +1,15 @@
 import { defineStore } from 'pinia';
-import { useUIStore } from './UIStore';
+import { useUIStore } from './UIStore.ts';
 import axios from 'axios';
+
+import type { IComment } from '../types/comment.ts';
 
 export const useCommentsStore = defineStore('comments', {
   state: () => ({
-    comments: [],
+    comments: [] as IComment[],
   }),
   actions: {
-    async fetchComments(id) {
+    async fetchComments(id: string) {
       const uiStore = useUIStore();
       try {
         uiStore.isLoading = true;

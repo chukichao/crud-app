@@ -50,8 +50,6 @@ import { useRoute } from 'vue-router';
 import vObserver from '../directives/VIntersection.js';
 import vFocus from '../directives/VFocus.js';
 
-import type { IPost } from '../types/post.js';
-
 import { computed, onMounted, ref, reactive, watch } from 'vue';
 
 const postsStore = usePostsStore();
@@ -74,9 +72,11 @@ const scrollToUp = () => {
   }
 };
 
-const sortedAndSearchedPosts = computed<IPost[]>(() => {
+const sortedAndSearchedPosts = computed(() => {
   const sortedPosts = [...postsStore.posts].sort((post1, post2) =>
-    post1[selectedSort.value]?.localeCompare(post2[selectedSort.value]),
+    post1[selectedSort.value as 'title' | 'body'].localeCompare(
+      post2[selectedSort.value as 'title' | 'body'],
+    ),
   );
 
   return sortedPosts.filter((post) =>

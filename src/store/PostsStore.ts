@@ -1,20 +1,20 @@
 import { defineStore } from 'pinia';
-import { useUIStore } from './UIStore';
-import { useUserStore } from './UserStore';
+import { useUIStore } from './UIStore.ts';
+import { useUserStore } from './UserStore.ts';
 import axios from 'axios';
 
 import type { IPost } from '../types/post';
 
 export const usePostsStore = defineStore('posts', {
   state: () => ({
-    posts: [],
+    posts: [] as IPost[],
     page: 1,
     limit: 10,
     totalPages: 0,
     postId: 100,
   }),
   getters: {
-    totalCountPosts() {
+    totalCountPosts(): number {
       return this.posts.length;
     },
   },
@@ -48,38 +48,39 @@ export const usePostsStore = defineStore('posts', {
         uiStore.isLoading = false;
       }
     },
-    createPost(createdPost) {
+    createPost(createdPost: { title: string; body: string }) {
       const userStore = useUserStore();
 
       const newPost = {
         ...createdPost,
         id: ++this.postId,
-        userId: userStore.userData.id,
+        userId: userStore.userData?.id,
       };
 
       this.posts.unshift(newPost);
     },
-    removePost(id) {
+    removePost(id: number) {
       this.posts = this.posts.filter((post) => post.id !== id);
     },
-    updatePost(id, updatedPost) {
+    updatePost(id: number, updatedPost: { title: string; body: string }) {
       const post = this.posts.find((post) => post.id === id);
 
-      const newPost = {
+      const newPost: IPost = {
         ...post,
+        id: id,
         ...updatedPost,
       };
 
       this.posts = this.posts.filter((post) => post.id !== id);
       this.posts.unshift(newPost);
     },
-    setLimit(limit, page = 1) {
-      this.limit = Number(limit);
-      this.page = Number(page);
+    setLimit(limit: number, page = 1) {
+      this.limit = limit;
+      this.page = page;
       this.fetchPosts();
     },
-    setPage(page) {
-      this.page = Number(page);
+    setPage(page: number) {
+      this.page = page;
       this.fetchPosts();
     },
     prevPage() {

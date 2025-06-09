@@ -4,14 +4,14 @@ export const useUIStore = defineStore('ui', {
   state: () => ({
     modal: {
       isOpen: false,
-      type: null,
-      extra: null,
+      type: '',
+      extra: 0,
     },
     isLoading: false,
     cookieAlert: true,
   }),
   actions: {
-    openModal(type, extra = null) {
+    openModal(type: string, extra = 0) {
       this.modal = {
         isOpen: true,
         type: type,
@@ -21,8 +21,8 @@ export const useUIStore = defineStore('ui', {
     closeModal() {
       this.modal = {
         isOpen: false,
-        type: null,
-        extra: null,
+        type: '',
+        extra: 0,
       };
     },
     closeCookieAlert() {

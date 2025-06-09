@@ -133,11 +133,11 @@ const userStore = useUserStore();
 const router = useRouter();
 
 const user = reactive({
-  username: null,
-  age: null,
-  password: null,
-  country: null,
-  birthday: null,
+  username: '',
+  age: 0,
+  password: '',
+  country: '',
+  birthday: '',
   gender: 'male',
   skills: [],
   isAgreeWithRules: false,
@@ -167,7 +167,7 @@ const registerAccount = () => {
 
     const newUser = {
       ...user,
-      id: String(Math.random()).slice(2),
+      id: Number(String(Math.random()).slice(2)),
     };
 
     userStore.login(authData, newUser);
@@ -203,11 +203,11 @@ const scrollToUp = () => {
   }
 };
 
-const required = computed<string>(() => {
+const required = computed(() => {
   return errors.requiredError ? 'error-outline-required' : '';
 });
 
-const confirm = computed<string>(() => {
+const confirm = computed(() => {
   return errors.confirmError ? 'error-outline-confirm' : '';
 });
 
@@ -226,11 +226,11 @@ export default {
   data() {
     return {
       user: {
-        username: null,
-        age: null,
-        password: null,
-        country: null,
-        birthday: null,
+        username: '',
+        age: 0,
+        password: '',
+        country: '',
+        birthday: '',
         gender: 'male',
         skills: [],
         isAgreeWithRules: false,
@@ -259,7 +259,7 @@ export default {
 
         const newUser = {
           ...this.user,
-          id: String(Math.random()).slice(2),
+          id: Number(String(Math.random()).slice(2)),
         };
 
         this.userStore.login(authData, newUser);

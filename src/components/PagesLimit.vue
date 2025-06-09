@@ -38,7 +38,7 @@ const updateQuery = () => {
 };
 
 const setLimit = (event: Event) => {
-  postsStore.setLimit((event.target as HTMLSelectElement).value);
+  postsStore.setLimit(Number((event.target as HTMLSelectElement).value));
 
   updateQuery();
 };
@@ -73,7 +73,7 @@ export default {
       });
     },
     setLimit(event) {
-      this.postsStore.setLimit(event.target.value);
+      this.postsStore.setLimit(Number(event.target.value));
 
       this.updateQuery();
     },
