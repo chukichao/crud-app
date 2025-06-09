@@ -4,13 +4,13 @@
 		<li
 			v-for="currentPage in postsStore.totalPages"
 			:key="currentPage"
-			@click="setPage(currentPage)"
 			:class="{
 				active: postsStore.page === currentPage,
 				visible:
 					postsStore.page < currentPage - 2 ||
 					postsStore.page > currentPage + 2,
 			}"
+			@click="setPage(currentPage)"
 		>
 			{{ currentPage }}
 		</li>
@@ -21,7 +21,7 @@
 <!-- COMPOSITION API -->
 
 <script setup lang="ts">
-import { usePostsStore } from "../store/PostsStore.js";
+import { usePostsStore } from "../store/PostsStore.ts";
 
 import { useRouter } from "vue-router";
 
@@ -61,7 +61,7 @@ const nextPage = () => {
 
 <!-- <script>
 import { mapStores } from "pinia";
-import { usePostsStore } from "../store/PostsStore.js";
+import { usePostsStore } from "../store/PostsStore.ts";
 
 export default {
 	methods: {

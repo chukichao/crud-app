@@ -17,14 +17,14 @@ import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
 import CookieAlert from "./components/CookieAlert.vue";
 
-import { useUserStore } from "./store/UserStore.js";
-import { useUIStore } from "./store/UIStore.js";
+import { useUserStore } from "./store/UserStore.ts";
+import { useUIStore } from "./store/UIStore.ts";
 
 import { onMounted } from "vue";
 
-import { hasDataLocalStorage } from "./utils/auth.js";
+import { hasDataLocalStorage } from "./utils/auth.ts";
 
-import type { IUser } from "./types/user.js";
+import type { IUser } from "./types/user.ts";
 
 const userStore = useUserStore();
 const uiStore = useUIStore();
@@ -72,10 +72,10 @@ import Footer from './components/Footer.vue';
 import CookieAlert from './components/CookieAlert.vue';
 
 import { mapStores } from 'pinia';
-import { useUserStore } from './store/UserStore.js';
-import { useUIStore } from './store/UIStore.js';
+import { useUserStore } from './store/UserStore.ts';
+import { useUIStore } from './store/UIStore.ts';
 
-import { hasDataLocalStorage } from './utils/auth.js';
+import { hasDataLocalStorage } from './utils/auth.ts';
 
 export default {
   computed: {

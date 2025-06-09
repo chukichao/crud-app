@@ -5,13 +5,13 @@
 <!-- COMPOSITION API -->
 
 <script setup lang="ts">
-import vBlink from "../directives/VBlink.js";
+import vBlink from "../directives/VBlink.ts";
 </script>
 
 <!-- OPTIONS API -->
 
 <!-- <script>
-import VBlink from "../directives/VBlink.js";
+import VBlink from "../directives/VBlink.ts";
 
 export default {
 	directives: {

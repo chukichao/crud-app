@@ -2,8 +2,8 @@
 	<li>
 		<div class="post-item" @click="$router.push(`/posts/${post.id}`)">
 			<ButtonUI
-				@click.stop="postsStore.removePost(post.id)"
 				class="post-item-delete"
+				@click.stop="postsStore.removePost(post.id)"
 			>
 				&times;
 			</ButtonUI>
@@ -22,7 +22,7 @@
 		</div>
 
 		<ModalUI v-if="uiStore.modal.extra === post.id">
-			<FormUpdatePost :title="post.title" :body="post.body" :id="post.id" />
+			<FormUpdatePost :id="post.id" :title="post.title" :body="post.body" />
 		</ModalUI>
 	</li>
 </template>
@@ -32,10 +32,10 @@
 <script setup lang="ts">
 import FormUpdatePost from "./FormUpdatePost.vue";
 
-import { usePostsStore } from "../store/PostsStore.js";
-import { useUIStore } from "../store/UIStore.js";
+import { usePostsStore } from "../store/PostsStore.ts";
+import { useUIStore } from "../store/UIStore.ts";
 
-import type { IPost } from "../types/post.js";
+import type { IPost } from "../types/post.ts";
 
 const postsStore = usePostsStore();
 const uiStore = useUIStore();
@@ -51,8 +51,8 @@ defineProps<{
 import FormUpdatePost from "./FormUpdatePost.vue";
 
 import { mapStores } from "pinia";
-import { usePostsStore } from "../store/PostsStore";
-import { useUIStore } from "../store/UIStore.js";
+import { usePostsStore } from "../store/PostsStore.ts";
+import { useUIStore } from "../store/UIStore.ts";
 
 export default {
 	props: {

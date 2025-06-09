@@ -1,10 +1,10 @@
 <template>
 	<input
+		ref="input"
 		:value="modelValue"
 		@input="
 			$emit('update:modelValue', ($event.target as HTMLInputElement).value)
 		"
-		ref="input"
 	/>
 </template>
 
@@ -17,6 +17,8 @@ export default {
 <!-- COMPOSITION API -->
 
 <script setup lang="ts">
+defineEmits(["update:modelValue"]);
+
 defineProps<{
 	modelValue: string | number | null;
 }>();

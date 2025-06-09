@@ -57,9 +57,9 @@
 import Logo from "./Logo.vue";
 import FormLogin from "./FormLogin.vue";
 
-import { useUIStore } from "../store/UIStore.js";
-import { useUserStore } from "../store/UserStore.js";
-import { usePostsStore } from "../store/PostsStore.js";
+import { useUIStore } from "../store/UIStore.ts";
+import { useUserStore } from "../store/UserStore.ts";
+import { usePostsStore } from "../store/PostsStore.ts";
 
 import { useRouter } from "vue-router";
 
@@ -83,9 +83,9 @@ import Logo from "./Logo.vue";
 import FormLogin from "./FormLogin.vue";
 
 import { mapStores } from "pinia";
-import { useUIStore } from "../store/UIStore.js";
-import { useUserStore } from "../store/UserStore.js";
-import { usePostsStore } from "../store/PostsStore.js";
+import { useUIStore } from "../store/UIStore.ts";
+import { useUserStore } from "../store/UserStore.ts";
+import { usePostsStore } from "../store/PostsStore.ts";
 
 export default {
 	methods: {

@@ -1,7 +1,7 @@
 <template>
 	<h2>Create post</h2>
 	<form class="form" @submit.prevent="createPost">
-		<textarea v-model.trim="post.title" placeholder="title" ref="textarea" />
+		<textarea ref="textarea" v-model.trim="post.title" placeholder="title" />
 		<textarea v-model.trim="post.body" placeholder="description" />
 		<ButtonUI>Сonfirm</ButtonUI>
 	</form>
@@ -10,8 +10,8 @@
 <!-- COMPOSITION API -->
 
 <script setup lang="ts">
-import { usePostsStore } from "../store/PostsStore.js";
-import { useUIStore } from "../store/UIStore.js";
+import { usePostsStore } from "../store/PostsStore.ts";
+import { useUIStore } from "../store/UIStore.ts";
 
 import { reactive, useTemplateRef, onMounted } from "vue";
 
@@ -48,8 +48,8 @@ onMounted(() => {
 
 <!-- <script>
 import { mapStores } from "pinia";
-import { usePostsStore } from "../store/PostsStore.js";
-import { useUIStore } from "../store/UIStore.js";
+import { usePostsStore } from "../store/PostsStore.ts";
+import { useUIStore } from "../store/UIStore.ts";
 
 export default {
 	data() {

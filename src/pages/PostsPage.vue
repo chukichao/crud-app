@@ -2,10 +2,10 @@
 	<h1 id="heading">Posts Page</h1>
 
 	<InputUI
-		type="search"
-		class="search"
 		v-model.trim="searchQuery"
 		v-focus
+		type="search"
+		class="search"
 		placeholder="search"
 	/>
 
@@ -20,11 +20,11 @@
 
 	<div class="filter">
 		<PagesLimit />
-		<SelectUI :options="sortOptions" v-model="selectedSort" title="sort" />
+		<SelectUI v-model="selectedSort" :options="sortOptions" title="sort" />
 	</div>
 
 	<div class="add">
-		<ButtonUI @click="uiStore.openModal('addPost')" title="Add new post"
+		<ButtonUI title="Add new post" @click="uiStore.openModal('addPost')"
 			>+
 		</ButtonUI>
 	</div>
@@ -42,13 +42,13 @@ import FormAddPost from "../components/FormAddPost.vue";
 import PaginationPosts from "../components/PaginationPosts.vue";
 import PagesLimit from "../components/PagesLimit.vue";
 
-import { usePostsStore } from "../store/PostsStore.js";
-import { useUIStore } from "../store/UIStore.js";
+import { usePostsStore } from "../store/PostsStore.ts";
+import { useUIStore } from "../store/UIStore.ts";
 
 import { useRoute } from "vue-router";
 
-import vObserver from "../directives/VIntersection.js";
-import vFocus from "../directives/VFocus.js";
+import vObserver from "../directives/VIntersection.ts";
+import vFocus from "../directives/VFocus.ts";
 
 import { computed, onMounted, ref, reactive, watch } from "vue";
 
@@ -110,11 +110,11 @@ import PaginationPosts from "../components/PaginationPosts.vue";
 import PagesLimit from "../components/PagesLimit.vue";
 
 import { mapStores } from "pinia";
-import { usePostsStore } from "../store/PostsStore.js";
-import { useUIStore } from "../store/UIStore.js";
+import { usePostsStore } from "../store/PostsStore.ts";
+import { useUIStore } from "../store/UIStore.ts";
 
-import VIntersection from "../directives/VIntersection.js";
-import VFocus from "../directives/VFocus.js";
+import VIntersection from "../directives/VIntersection.ts";
+import VFocus from "../directives/VFocus.ts";
 
 export default {
 	data() {

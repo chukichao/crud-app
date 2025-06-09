@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-import { routes } from "../routes/index.js";
+import { routes } from "../routes/index.ts";
 
-import { hasDataLocalStorage } from "../utils/auth.js";
+import { hasDataLocalStorage } from "../utils/auth.ts";
 
 const router = createRouter({
 	history: createWebHistory(),

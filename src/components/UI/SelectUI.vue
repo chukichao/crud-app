@@ -21,6 +21,8 @@ export default {
 <!-- COMPOSITION API -->
 
 <script setup lang="ts">
+defineEmits(["update:modelValue"]);
+
 interface IOption {
 	title: string;
 	value: string;

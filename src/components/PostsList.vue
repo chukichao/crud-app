@@ -21,10 +21,10 @@
 <script setup lang="ts">
 import PostItem from "./PostItem.vue";
 
-import { usePostsStore } from "../store/PostsStore.js";
-import { useUIStore } from "../store/UIStore.js";
+import { usePostsStore } from "../store/PostsStore.ts";
+import { useUIStore } from "../store/UIStore.ts";
 
-import type { IPost } from "../types/post.js";
+import type { IPost } from "../types/post.ts";
 
 const postsStore = usePostsStore();
 const uiStore = useUIStore();
@@ -38,8 +38,8 @@ defineProps<{ posts: IPost[] }>();
 import PostItem from "./PostItem.vue";
 
 import { mapStores } from "pinia";
-import { usePostsStore } from "../store/PostsStore.js";
-import { useUIStore } from "../store/UIStore.js";
+import { usePostsStore } from "../store/PostsStore.ts";
+import { useUIStore } from "../store/UIStore.ts";
 
 export default {
 	props: {

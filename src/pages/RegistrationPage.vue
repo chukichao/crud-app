@@ -44,15 +44,15 @@
 			<div class="form-rules">
 				<label
 					><input
-						:class="required"
 						v-model="user.isAgreeWithRules"
+						:class="required"
 						type="checkbox"
 					/>
 					I have read the privacy policy (required)</label
 				>
 			</div>
 
-			<small class="error-feedback" v-if="errorFeedback">{{
+			<small v-if="errorFeedback" class="error-feedback">{{
 				errorFeedback
 			}}</small>
 		</div>
@@ -63,9 +63,9 @@
 			<label for="country">Country:</label>
 			<div>
 				<SelectUI
-					:options="countryOptions"
 					id="country"
 					v-model="user.country"
+					:options="countryOptions"
 				></SelectUI>
 			</div>
 		</div>
@@ -122,7 +122,7 @@
 <!-- COMPOSITION API -->
 
 <script setup lang="ts">
-import { useUserStore } from "../store/UserStore.js";
+import { useUserStore } from "../store/UserStore.ts";
 
 import { ref, reactive, computed, watch } from "vue";
 
@@ -220,7 +220,7 @@ watch(errors, () => {
 
 <!-- <script>
 import { mapStores } from "pinia";
-import { useUserStore } from "../store/UserStore.js";
+import { useUserStore } from "../store/UserStore.ts";
 
 export default {
 	data() {

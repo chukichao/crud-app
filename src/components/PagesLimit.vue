@@ -10,7 +10,7 @@
 <!-- COMPOSITION API -->
 
 <script setup lang="ts">
-import { usePostsStore } from "../store/PostsStore.js";
+import { usePostsStore } from "../store/PostsStore.ts";
 
 import { ref, reactive } from "vue";
 
@@ -48,7 +48,7 @@ const setLimit = (event: Event) => {
 
 <!-- <script>
 import { mapStores } from "pinia";
-import { usePostsStore } from "../store/PostsStore.js";
+import { usePostsStore } from "../store/PostsStore.ts";
 
 export default {
 	data() {

@@ -3,22 +3,22 @@
 
 	<form class="form" @submit.prevent="login">
 		<InputUI
-			:class="{ ['error-outline']: errorLogin }"
+			ref="input"
 			v-model.trim="user.username"
+			:class="{ ['error-outline']: errorLogin }"
 			autocomplete="username"
 			placeholder="username"
-			ref="input"
 		/>
 
 		<InputUI
+			v-model.trim="user.password"
 			:class="{ ['error-outline']: errorLogin }"
 			type="password"
-			v-model.trim="user.password"
 			autocomplete="current-password"
 			placeholder="password"
 		/>
 
-		<div class="error-feedback" v-show="errorLogin">
+		<div v-show="errorLogin" class="error-feedback">
 			Incorrect username or password
 		</div>
 
@@ -29,13 +29,13 @@
 <!-- COMPOSITION API -->
 
 <script setup lang="ts">
-import { useUIStore } from "../store/UIStore.js";
-import { useUserStore } from "../store/UserStore.js";
+import { useUIStore } from "../store/UIStore.ts";
+import { useUserStore } from "../store/UserStore.ts";
 
 import { reactive, ref, computed } from "vue";
 import { useRouter } from "vue-router";
 
-import type { IUser } from "../types/user.js";
+import type { IUser } from "../types/user.ts";
 
 const uiStore = useUIStore();
 const userStore = useUserStore();
@@ -91,8 +91,8 @@ const disabledButton = computed(() => {
 <!-- <script>
 import { mapStores } from "pinia";
 
-import { useUIStore } from "../store/UIStore.js";
-import { useUserStore } from "../store/UserStore.js";
+import { useUIStore } from "../store/UIStore.ts";
+import { useUserStore } from "../store/UserStore.ts";
 
 export default {
 	data() {

@@ -7,6 +7,7 @@ export default {
 			threshold: 1.0,
 		};
 
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const callback = (entries: any) => {
 			if (entries[0].isIntersecting) {
 				binding.value({ scroll: true });

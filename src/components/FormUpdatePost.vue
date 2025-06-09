@@ -19,10 +19,10 @@
 <!-- COMPOSITION API -->
 
 <script setup lang="ts">
-import { usePostsStore } from "../store/PostsStore.js";
-import { useUIStore } from "../store/UIStore.js";
+import { usePostsStore } from "../store/PostsStore.ts";
+import { useUIStore } from "../store/UIStore.ts";
 
-import vFocus from "../directives/VFocus.js";
+import vFocus from "../directives/VFocus.ts";
 
 import { reactive, onMounted } from "vue";
 
@@ -53,10 +53,10 @@ onMounted(() => {
 
 <!-- <script>
 import { mapStores } from "pinia";
-import { usePostsStore } from "../store/PostsStore";
-import { useUIStore } from "../store/UIStore.js";
+import { usePostsStore } from "../store/PostsStore.ts";
+import { useUIStore } from "../store/UIStore.ts";
 
-import VFocus from "../directives/VFocus.js";
+import VFocus from "../directives/VFocus.ts";
 
 export default {
 	props: {
