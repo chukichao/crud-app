@@ -1,122 +1,125 @@
 <template>
-	<h1 id="heading">Registration Page</h1>
+	<main>
+		<h1 id="heading">Registration Page</h1>
 
-	<form class="form" @submit.prevent="registerAccount">
-		<div class="form-main">
-			<label
-				>Name:
-				<InputUI
-					v-model.trim="user.username"
-					autocomplete="username"
-					:class="required"
-				></InputUI>
-			</label>
-
-			<label
-				>Age:
-				<InputUI
-					v-model.number="user.age"
-					type="number"
-					:class="required"
-				></InputUI>
-			</label>
-
-			<label
-				>Password:
-				<InputUI
-					v-model.trim="user.password"
-					type="password"
-					autocomplete="new-password"
-					:class="(required, confirm)"
-				></InputUI>
-			</label>
-
-			<label
-				>Confirm Password:
-				<InputUI
-					v-model.trim="confirmPassword"
-					type="password"
-					autocomplete="new-password"
-					:class="(required, confirm)"
-				></InputUI>
-			</label>
-
-			<div class="form-rules">
+		<form class="form" @submit.prevent="registerAccount">
+			<div class="form-main">
 				<label
-					><input
-						v-model="user.isAgreeWithRules"
+					>Name:
+					<InputUI
+						v-model.trim="user.username"
+						autocomplete="username"
 						:class="required"
-						type="checkbox"
-					/>
-					I have read the privacy policy (required)</label
-				>
-			</div>
+					></InputUI>
+				</label>
 
-			<small v-if="errorFeedback" class="error-feedback">{{
-				errorFeedback
-			}}</small>
-		</div>
-
-		<hr style="border-color: bisque" />
-
-		<div class="form-country">
-			<label for="country">Country:</label>
-			<div>
-				<SelectUI
-					id="country"
-					v-model="user.country"
-					:options="countryOptions"
-				></SelectUI>
-			</div>
-		</div>
-
-		<label
-			>Date of birth:
-			<InputUI v-model="user.birthday" type="date"></InputUI>
-		</label>
-
-		<div class="form-gender">
-			Gender:
-			<div>
-				<label>
-					<input v-model="user.gender" type="radio" value="male" />
-					Male</label
-				>
-			</div>
-
-			<div>
 				<label
-					><input v-model="user.gender" type="radio" value="female" />
-					Female</label
-				>
-			</div>
-		</div>
+					>Age:
+					<InputUI
+						v-model.number="user.age"
+						type="number"
+						:class="required"
+					></InputUI>
+				</label>
 
-		<div class="form-skills">
-			Skills:
-			<div>
 				<label
-					><input v-model="user.skills" type="checkbox" value="html" />
-					HTML</label
-				>
-			</div>
+					>Password:
+					<InputUI
+						v-model.trim="user.password"
+						type="password"
+						autocomplete="new-password"
+						:class="(required, confirm)"
+					></InputUI>
+				</label>
 
-			<div>
 				<label
-					><input v-model="user.skills" type="checkbox" value="css" />
-					CSS</label
-				>
+					>Confirm Password:
+					<InputUI
+						v-model.trim="confirmPassword"
+						type="password"
+						autocomplete="new-password"
+						:class="(required, confirm)"
+					></InputUI>
+				</label>
+
+				<div class="form-rules">
+					<label
+						><input
+							v-model="user.isAgreeWithRules"
+							:class="required"
+							type="checkbox"
+						/>
+						I have read the privacy policy (required)</label
+					>
+				</div>
+
+				<small v-if="errorFeedback" class="error-feedback">{{
+					errorFeedback
+				}}</small>
 			</div>
 
-			<div>
-				<label
-					><input v-model="user.skills" type="checkbox" value="js" /> JS</label
-				>
-			</div>
-		</div>
+			<hr style="border-color: bisque" />
 
-		<ButtonUI>Sign up</ButtonUI>
-	</form>
+			<div class="form-country">
+				<label for="country">Country:</label>
+				<div>
+					<SelectUI
+						id="country"
+						v-model="user.country"
+						:options="countryOptions"
+					></SelectUI>
+				</div>
+			</div>
+
+			<label
+				>Date of birth:
+				<InputUI v-model="user.birthday" type="date"></InputUI>
+			</label>
+
+			<div class="form-gender">
+				Gender:
+				<div>
+					<label>
+						<input v-model="user.gender" type="radio" value="male" />
+						Male</label
+					>
+				</div>
+
+				<div>
+					<label
+						><input v-model="user.gender" type="radio" value="female" />
+						Female</label
+					>
+				</div>
+			</div>
+
+			<div class="form-skills">
+				Skills:
+				<div>
+					<label
+						><input v-model="user.skills" type="checkbox" value="html" />
+						HTML</label
+					>
+				</div>
+
+				<div>
+					<label
+						><input v-model="user.skills" type="checkbox" value="css" />
+						CSS</label
+					>
+				</div>
+
+				<div>
+					<label
+						><input v-model="user.skills" type="checkbox" value="js" />
+						JS</label
+					>
+				</div>
+			</div>
+
+			<ButtonUI>Sign up</ButtonUI>
+		</form>
+	</main>
 </template>
 
 <!-- COMPOSITION API -->

@@ -1,29 +1,33 @@
 <template>
-	<h1 id="heading">Comments Page</h1>
+	<main>
+		<h1 id="heading">Comments Page</h1>
 
-	<div class="comments-list">
-		<div v-if="commentsStore.comments.length" class="comments-item">
-			<ul>
-				<li v-for="comment in commentsStore.comments" :key="comment.id">
-					<h3>{{ comment.id }}. {{ comment.name }}</h3>
-					<p>{{ comment.body }}</p>
-					<p>{{ comment.email }}</p>
-				</li>
-			</ul>
+		<div class="comments-list">
+			<div v-if="commentsStore.comments.length" class="comments-item">
+				<ul>
+					<li v-for="comment in commentsStore.comments" :key="comment.id">
+						<h3>{{ comment.id }}. {{ comment.name }}</h3>
+						<p>{{ comment.body }}</p>
+						<p>{{ comment.email }}</p>
+					</li>
+				</ul>
+			</div>
+
+			<div v-else>
+				<LoaderUI v-if="uiStore.isLoading" />
+				<h2 v-else>No comments yet</h2>
+			</div>
+
+			<ButtonUI
+				@click="
+					$router.push(
+						`/posts?page=${postsStore.page}&limit=${postsStore.limit}`,
+					)
+				"
+				>Back</ButtonUI
+			>
 		</div>
-
-		<div v-else>
-			<LoaderUI v-if="uiStore.isLoading" />
-			<h2 v-else>No comments yet</h2>
-		</div>
-
-		<ButtonUI
-			@click="
-				$router.push(`/posts?page=${postsStore.page}&limit=${postsStore.limit}`)
-			"
-			>Back</ButtonUI
-		>
-	</div>
+	</main>
 </template>
 
 <!-- COMPOSITION API -->

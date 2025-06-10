@@ -1,8 +1,10 @@
 <template>
-	<div class="status">
-		<h2>This page was not found</h2>
-		<RouterLink to="/">Go home page</RouterLink>
-	</div>
+	<main>
+		<div class="status">
+			<h1>This page was not found</h1>
+			<RouterLink to="/">Go home page</RouterLink>
+		</div>
+	</main>
 </template>
 
 <style scoped lang="scss">

@@ -1,19 +1,21 @@
 <template>
-	<h2>Update post</h2>
+	<div>
+		<h2>Update post</h2>
 
-	<form class="form" @submit.prevent="updatePost">
-		<div>
-			<h3>Title:</h3>
-			<textarea v-model.trim="post.title" v-focus placeholder="title" />
-		</div>
+		<form class="form" @submit.prevent="updatePost">
+			<div>
+				<h3>Title:</h3>
+				<textarea v-model.trim="post.title" v-focus placeholder="title" />
+			</div>
 
-		<div>
-			<h3>Body:</h3>
-			<textarea v-model.trim="post.body" placeholder="description" />
-		</div>
+			<div>
+				<h3>Body:</h3>
+				<textarea v-model.trim="post.body" placeholder="description" />
+			</div>
 
-		<ButtonUI>Сonfirm</ButtonUI>
-	</form>
+			<ButtonUI>Сonfirm</ButtonUI>
+		</form>
+	</div>
 </template>
 
 <!-- COMPOSITION API -->

@@ -1,37 +1,39 @@
 <template>
-	<h1 id="heading">Posts Page</h1>
+	<main>
+		<h1 id="heading">Posts Page</h1>
 
-	<InputUI
-		v-model.trim="searchQuery"
-		v-focus
-		type="search"
-		class="search"
-		placeholder="search"
-	/>
+		<InputUI
+			v-model.trim="searchQuery"
+			v-focus
+			type="search"
+			class="search"
+			placeholder="search"
+		/>
 
-	<PaginationPosts v-if="searchQuery.length === 0" />
+		<PaginationPosts v-if="searchQuery.length === 0" />
 
-	<PostsList :posts="sortedAndSearchedPosts" />
+		<PostsList :posts="sortedAndSearchedPosts" />
 
-	<div
-		v-if="sortedAndSearchedPosts.length"
-		v-observer="postsStore.fetchPosts"
-	></div>
+		<div
+			v-if="sortedAndSearchedPosts.length"
+			v-observer="postsStore.fetchPosts"
+		></div>
 
-	<div class="filter">
-		<PagesLimit />
-		<SelectUI v-model="selectedSort" :options="sortOptions" title="sort" />
-	</div>
+		<div class="filter">
+			<PagesLimit />
+			<SelectUI v-model="selectedSort" :options="sortOptions" title="sort" />
+		</div>
 
-	<div class="add">
-		<ButtonUI title="Add new post" @click="uiStore.openModal('addPost')"
-			>+
-		</ButtonUI>
-	</div>
+		<div class="add">
+			<ButtonUI title="Add new post" @click="uiStore.openModal('addPost')"
+				>+
+			</ButtonUI>
+		</div>
 
-	<ModalUI v-if="uiStore.modal.type === 'addPost'">
-		<FormAddPost />
-	</ModalUI>
+		<ModalUI v-if="uiStore.modal.type === 'addPost'">
+			<FormAddPost />
+		</ModalUI>
+	</main>
 </template>
 
 <!-- COMPOSITION API -->

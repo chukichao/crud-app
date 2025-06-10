@@ -1,10 +1,12 @@
 <template>
-	<h2>Create post</h2>
-	<form class="form" @submit.prevent="createPost">
-		<textarea ref="textarea" v-model.trim="post.title" placeholder="title" />
-		<textarea v-model.trim="post.body" placeholder="description" />
-		<ButtonUI>Сonfirm</ButtonUI>
-	</form>
+	<div>
+		<h2>Create post</h2>
+		<form class="form" @submit.prevent="createPost">
+			<textarea ref="textarea" v-model.trim="post.title" placeholder="title" />
+			<textarea v-model.trim="post.body" placeholder="description" />
+			<ButtonUI>Сonfirm</ButtonUI>
+		</form>
+	</div>
 </template>
 
 <!-- COMPOSITION API -->

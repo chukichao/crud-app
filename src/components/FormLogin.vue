@@ -1,29 +1,31 @@
 <template>
-	<h2>Login</h2>
+	<div>
+		<h2>Login</h2>
 
-	<form class="form" @submit.prevent="login">
-		<InputUI
-			ref="input"
-			v-model.trim="user.username"
-			:class="{ ['error-outline']: errorLogin }"
-			autocomplete="username"
-			placeholder="username"
-		/>
+		<form class="form" @submit.prevent="login">
+			<InputUI
+				ref="input"
+				v-model.trim="user.username"
+				:class="{ ['error-outline']: errorLogin }"
+				autocomplete="username"
+				placeholder="username"
+			/>
 
-		<InputUI
-			v-model.trim="user.password"
-			:class="{ ['error-outline']: errorLogin }"
-			type="password"
-			autocomplete="current-password"
-			placeholder="password"
-		/>
+			<InputUI
+				v-model.trim="user.password"
+				:class="{ ['error-outline']: errorLogin }"
+				type="password"
+				autocomplete="current-password"
+				placeholder="password"
+			/>
 
-		<div v-show="errorLogin" class="error-feedback">
-			Incorrect username or password
-		</div>
+			<div v-show="errorLogin" class="error-feedback">
+				Incorrect username or password
+			</div>
 
-		<ButtonUI :disabled="disabledButton">Sign in</ButtonUI>
-	</form>
+			<ButtonUI :disabled="disabledButton">Sign in</ButtonUI>
+		</form>
+	</div>
 </template>
 
 <!-- COMPOSITION API -->

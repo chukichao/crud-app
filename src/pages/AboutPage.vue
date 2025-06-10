@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<main>
 		<h1>About Page</h1>
 		<p>
 			Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo quisquam hic
@@ -14,5 +14,5 @@
 			consequatur ut omnis saepe soluta nulla doloribus atque! Officia nobis
 			repudiandae repellendus nam.
 		</p>
-	</div>
+	</main>
 </template>
