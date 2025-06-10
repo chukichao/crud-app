@@ -11,7 +11,7 @@
 					<RouterLink to="/about">About Us</RouterLink>
 				</li>
 
-				<li>
+				<li v-if="userStore.auth">
 					<RouterLink
 						:to="`/posts?page=${postsStore.page}&limit=${postsStore.limit}`"
 						>Posts</RouterLink
