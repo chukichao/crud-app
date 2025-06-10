@@ -15,8 +15,8 @@ import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
 import CookieAlert from "./components/CookieAlert.vue";
 
-import { useUserStore } from "./store/UserStore.ts";
-import { useUIStore } from "./store/UIStore.ts";
+import { useUserStore } from "./store/user.ts";
+import { useUIStore } from "./store/ui.ts";
 
 import { onMounted } from "vue";
 
@@ -70,8 +70,8 @@ import Footer from './components/Footer.vue';
 import CookieAlert from './components/CookieAlert.vue';
 
 import { mapStores } from 'pinia';
-import { useUserStore } from './store/UserStore.ts';
-import { useUIStore } from './store/UIStore.ts';
+import { useUserStore } from './store/user.ts';
+import { useUIStore } from './store/ui.ts';
 
 import { hasDataLocalStorage } from './utils/auth.ts';
 

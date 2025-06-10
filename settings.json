@@ -1,0 +1,6 @@
+{
+	"eslint.validate": ["javascript", "javascriptreact", "vue"],
+	"editor.codeActionsOnSave": {
+		"source.fixAll.stylelint": "explicit"
+	}
+}

@@ -31,8 +31,8 @@
 <!-- COMPOSITION API -->
 
 <script setup lang="ts">
-import { useUIStore } from "../store/UIStore.ts";
-import { useUserStore } from "../store/UserStore.ts";
+import { useUIStore } from "../store/ui.ts";
+import { useUserStore } from "../store/user.ts";
 
 import { reactive, ref, computed } from "vue";
 import { useRouter } from "vue-router";
@@ -93,8 +93,8 @@ const disabledButton = computed(() => {
 <!-- <script>
 import { mapStores } from "pinia";
 
-import { useUIStore } from "../store/UIStore.ts";
-import { useUserStore } from "../store/UserStore.ts";
+import { useUIStore } from "../store/ui.ts";
+import { useUserStore } from "../store/user.ts";
 
 export default {
 	data() {

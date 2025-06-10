@@ -21,8 +21,8 @@
 <!-- COMPOSITION API -->
 
 <script setup lang="ts">
-import { usePostsStore } from "../store/PostsStore.ts";
-import { useUIStore } from "../store/UIStore.ts";
+import { usePostsStore } from "../store/posts.ts";
+import { useUIStore } from "../store/ui.ts";
 
 import vFocus from "../directives/VFocus.ts";
 
@@ -55,8 +55,8 @@ onMounted(() => {
 
 <!-- <script>
 import { mapStores } from "pinia";
-import { usePostsStore } from "../store/PostsStore.ts";
-import { useUIStore } from "../store/UIStore.ts";
+import { usePostsStore } from "../store/posts.ts";
+import { useUIStore } from "../store/ui.ts";
 
 import VFocus from "../directives/VFocus.ts";
 

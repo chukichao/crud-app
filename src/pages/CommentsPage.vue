@@ -33,9 +33,9 @@
 <!-- COMPOSITION API -->
 
 <script setup lang="ts">
-import { useCommentsStore } from "../store/CommentsStore.ts";
-import { useUIStore } from "../store/UIStore.ts";
-import { usePostsStore } from "../store/PostsStore.ts";
+import { useCommentsStore } from "../store/сomments.ts";
+import { useUIStore } from "../store/ui.ts";
+import { usePostsStore } from "../store/posts.ts";
 
 import { onMounted } from "vue";
 
@@ -65,9 +65,9 @@ onMounted(() => {
 
 <!-- <script>
 import { mapStores } from "pinia";
-import { useCommentsStore } from "../store/CommentsStore.ts";
-import { useUIStore } from "../store/UIStore.ts";
-import { usePostsStore } from "../store/PostsStore.ts";
+import { useCommentsStore } from "../store/сomments.ts";
+import { useUIStore } from "../store/ui.ts";
+import { usePostsStore } from "../store/posts.ts";
 
 export default {
 	methods: {

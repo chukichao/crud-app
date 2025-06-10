@@ -44,8 +44,8 @@ import FormAddPost from "../components/FormAddPost.vue";
 import PaginationPosts from "../components/PaginationPosts.vue";
 import PagesLimit from "../components/PagesLimit.vue";
 
-import { usePostsStore } from "../store/PostsStore.ts";
-import { useUIStore } from "../store/UIStore.ts";
+import { usePostsStore } from "../store/posts.ts";
+import { useUIStore } from "../store/ui.ts";
 
 import { useRoute } from "vue-router";
 
@@ -116,8 +116,8 @@ import PaginationPosts from "../components/PaginationPosts.vue";
 import PagesLimit from "../components/PagesLimit.vue";
 
 import { mapStores } from "pinia";
-import { usePostsStore } from "../store/PostsStore.ts";
-import { useUIStore } from "../store/UIStore.ts";
+import { usePostsStore } from "../store/posts.ts";
+import { useUIStore } from "../store/ui.ts";
 
 import VIntersection from "../directives/VIntersection.ts";
 import VFocus from "../directives/VFocus.ts";

@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
-import { useUIStore } from "./UIStore.ts";
-import { useUserStore } from "./UserStore.ts";
+import { useUIStore } from "./ui.ts";
+import { useUserStore } from "./user.ts";
 import axios from "axios";
 
 import type { IPost } from "../types/post";

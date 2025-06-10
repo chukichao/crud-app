@@ -21,7 +21,7 @@
 <!-- COMPOSITION API -->
 
 <script setup lang="ts">
-import { usePostsStore } from "../store/PostsStore.ts";
+import { usePostsStore } from "../store/posts.ts";
 
 import { useRouter } from "vue-router";
 
@@ -61,7 +61,7 @@ const nextPage = () => {
 
 <!-- <script>
 import { mapStores } from "pinia";
-import { usePostsStore } from "../store/PostsStore.ts";
+import { usePostsStore } from "../store/posts.ts";
 
 export default {
 	methods: {

@@ -12,7 +12,7 @@
 <!-- COMPOSITION API -->
 
 <script setup lang="ts">
-import { useUIStore } from "../store/UIStore.ts";
+import { useUIStore } from "../store/ui.ts";
 
 const uiStore = useUIStore();
 </script>
@@ -21,7 +21,7 @@ const uiStore = useUIStore();
 
 <!-- <script>
 import { mapStores } from "pinia";
-import { useUIStore } from "../store/UIStore.ts";
+import { useUIStore } from "../store/ui.ts";
 
 export default {
 	computed: {

@@ -125,7 +125,7 @@
 <!-- COMPOSITION API -->
 
 <script setup lang="ts">
-import { useUserStore } from "../store/UserStore.ts";
+import { useUserStore } from "../store/user.ts";
 
 import { ref, reactive, computed, watch } from "vue";
 
@@ -156,9 +156,10 @@ const errors = reactive({
 const errorFeedback = ref("");
 
 const countryOptions = reactive([
-	{ title: "Russia", value: "russia" },
+	{ title: "Armenia", value: "armenia" },
 	{ title: "Belarus", value: "belarus" },
-	{ title: "Ukraine", value: "ukraine" },
+	{ title: "Kazakhstan", value: "kazakhstan" },
+	{ title: "Russia", value: "russia" },
 ]);
 
 const registerAccount = () => {
@@ -223,7 +224,7 @@ watch(errors, () => {
 
 <!-- <script>
 import { mapStores } from "pinia";
-import { useUserStore } from "../store/UserStore.ts";
+import { useUserStore } from "../store/user.ts";
 
 export default {
 	data() {
@@ -245,9 +246,10 @@ export default {
 			},
 			errorFeedback: "",
 			countryOptions: [
-				{ title: "Russia", value: "russia" },
+				{ title: "Armenia", value: "armenia" },
 				{ title: "Belarus", value: "belarus" },
-				{ title: "Ukraine", value: "ukraine" },
+				{ title: "Kazakhstan", value: "kazakhstan" },
+				{ title: "Russia", value: "russia" },
 			],
 		};
 	},
