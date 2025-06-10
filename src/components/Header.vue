@@ -13,18 +13,9 @@
 
 				<li>
 					<RouterLink
-						v-if="userStore.auth"
-						v-slot="{ navigate, href }"
 						:to="`/posts?page=${postsStore.page}&limit=${postsStore.limit}`"
-						custom
+						>Posts</RouterLink
 					>
-						<a
-							href="#"
-							:class="{ active: $route.path.indexOf(href) !== -1 }"
-							@click="navigate"
-							>Posts
-						</a>
-					</RouterLink>
 				</li>
 			</ul>
 		</nav>

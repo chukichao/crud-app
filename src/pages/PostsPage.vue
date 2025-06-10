@@ -73,11 +73,15 @@ const scrollToUp = () => {
 };
 
 const sortedAndSearchedPosts = computed(() => {
-	const sortedPosts = [...postsStore.posts].sort((post1, post2) =>
-		post1[selectedSort.value as "title" | "body"].localeCompare(
-			post2[selectedSort.value as "title" | "body"],
-		),
-	);
+	const sortedPosts = [...postsStore.posts];
+
+	if (selectedSort.value) {
+		sortedPosts.sort((post1, post2) =>
+			post1[selectedSort.value as "title" | "body"].localeCompare(
+				post2[selectedSort.value as "title" | "body"],
+			),
+		);
+	}
 
 	return sortedPosts.filter((post) =>
 		post.title.toLowerCase().includes(searchQuery.value.toLowerCase()),
