@@ -45,12 +45,12 @@
 <!-- COMPOSITION API -->
 
 <script setup lang="ts">
-import Logo from "./Logo.vue";
 import FormLogin from "./FormLogin.vue";
+import Logo from "./Logo.vue";
 
+import { usePostsStore } from "../store/posts.ts";
 import { useUIStore } from "../store/ui.ts";
 import { useUserStore } from "../store/user.ts";
-import { usePostsStore } from "../store/posts.ts";
 
 import { useRouter } from "vue-router";
 

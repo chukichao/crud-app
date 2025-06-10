@@ -65,60 +65,60 @@ onMounted(() => {
 <!-- OPTIONS API -->
 
 <!-- <script>
-import Header from './components/Header.vue';
-import Footer from './components/Footer.vue';
-import CookieAlert from './components/CookieAlert.vue';
+import Header from "./components/Header.vue";
+import Footer from "./components/Footer.vue";
+import CookieAlert from "./components/CookieAlert.vue";
 
-import { mapStores } from 'pinia';
-import { useUserStore } from './store/user.ts';
-import { useUIStore } from './store/ui.ts';
+import { mapStores } from "pinia";
+import { useUserStore } from "./store/user.ts";
+import { useUIStore } from "./store/ui.ts";
 
-import { hasDataLocalStorage } from './utils/auth.ts';
+import { hasDataLocalStorage } from "./utils/auth.ts";
 
 export default {
-  computed: {
-    ...mapStores(useUserStore, useUIStore),
-  },
+	computed: {
+		...mapStores(useUserStore, useUIStore),
+	},
 
-  mounted() {
-    if (!hasDataLocalStorage('database')) {
-      localStorage.setItem(
-        'database',
-        JSON.stringify({
-          users: [
-            {
-              username: 'admin',
-              password: 'admin',
-              age: 0,
-              isAgreeWithRules: true,
-              id: String(Math.random()).slice(2),
-            },
-          ],
-        }),
-      );
-    }
+	mounted() {
+		if (!hasDataLocalStorage("database")) {
+			localStorage.setItem(
+				"database",
+				JSON.stringify({
+					users: [
+						{
+							username: "admin",
+							password: "admin",
+							age: 0,
+							isAgreeWithRules: true,
+							id: String(Math.random()).slice(2),
+						},
+					],
+				}),
+			);
+		}
 
-    if (hasDataLocalStorage('auth')) {
-      const user = JSON.parse(localStorage.getItem('auth'));
-      const database = JSON.parse(localStorage.getItem('database'));
+		if (hasDataLocalStorage("auth")) {
+			const user = JSON.parse(localStorage.getItem("auth"));
+			const database = JSON.parse(localStorage.getItem("database"));
 
-      const userData = database.users.find(
-        (_user) => _user.username === user.username,
-      );
+			const userData = database.users.find(
+				(_user) => _user.username === user.username,
+			);
 
-      this.userStore.login(user, userData);
-    }
+			this.userStore.login(user, userData);
+		}
 
-    if (hasDataLocalStorage('cookie')) {
-      this.uiStore.closeCookieAlert();
-    }
-  },
+		if (hasDataLocalStorage("cookie")) {
+			this.uiStore.closeCookieAlert();
+		}
+	},
 
-  components: {
-    Header,
-    Footer,
-    CookieAlert,
-  },
+	components: {
+		Header,
+		Footer,
+		CookieAlert,
+	},
 };
 </script> -->
 

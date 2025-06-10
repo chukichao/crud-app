@@ -30,7 +30,7 @@ import { useUIStore } from "../store/ui.ts";
 
 import vFocus from "../directives/VFocus.ts";
 
-import { reactive, computed, onMounted } from "vue";
+import { computed, onMounted, reactive } from "vue";
 
 const postsStore = usePostsStore();
 const uiStore = useUIStore();

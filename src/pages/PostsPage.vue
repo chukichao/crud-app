@@ -39,20 +39,20 @@
 <!-- COMPOSITION API -->
 
 <script setup lang="ts">
-import PostsList from "../components/PostsList.vue";
 import FormAddPost from "../components/FormAddPost.vue";
-import PaginationPosts from "../components/PaginationPosts.vue";
 import PagesLimit from "../components/PagesLimit.vue";
+import PaginationPosts from "../components/PaginationPosts.vue";
+import PostsList from "../components/PostsList.vue";
 
 import { usePostsStore } from "../store/posts.ts";
 import { useUIStore } from "../store/ui.ts";
 
 import { useRoute } from "vue-router";
 
-import vObserver from "../directives/VIntersection.ts";
 import vFocus from "../directives/VFocus.ts";
+import vObserver from "../directives/VIntersection.ts";
 
-import { computed, onMounted, ref, reactive, watch } from "vue";
+import { computed, onMounted, reactive, ref, watch } from "vue";
 
 const postsStore = usePostsStore();
 const uiStore = useUIStore();

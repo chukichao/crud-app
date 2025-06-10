@@ -12,7 +12,7 @@
 <script setup lang="ts">
 import { usePostsStore } from "../store/posts.ts";
 
-import { ref, reactive } from "vue";
+import { reactive, ref } from "vue";
 
 import { useRouter } from "vue-router";
 

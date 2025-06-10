@@ -38,7 +38,7 @@
 import { useUIStore } from "../store/ui.ts";
 import { useUserStore } from "../store/user.ts";
 
-import { reactive, ref, computed } from "vue";
+import { computed, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 
 import type { IUser } from "../types/user.ts";

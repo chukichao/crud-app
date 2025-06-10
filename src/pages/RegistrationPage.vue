@@ -127,7 +127,7 @@
 <script setup lang="ts">
 import { useUserStore } from "../store/user.ts";
 
-import { ref, reactive, computed, watch } from "vue";
+import { computed, reactive, ref, watch } from "vue";
 
 import { useRouter } from "vue-router";
 

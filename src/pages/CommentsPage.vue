@@ -33,9 +33,9 @@
 <!-- COMPOSITION API -->
 
 <script setup lang="ts">
-import { useCommentsStore } from "../store/сomments.ts";
-import { useUIStore } from "../store/ui.ts";
 import { usePostsStore } from "../store/posts.ts";
+import { useUIStore } from "../store/ui.ts";
+import { useCommentsStore } from "../store/сomments.ts";
 
 import { onMounted } from "vue";
 

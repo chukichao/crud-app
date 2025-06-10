@@ -19,7 +19,7 @@
 import { usePostsStore } from "../store/posts.ts";
 import { useUIStore } from "../store/ui.ts";
 
-import { reactive, useTemplateRef, computed, onMounted } from "vue";
+import { computed, onMounted, reactive, useTemplateRef } from "vue";
 
 const postsStore = usePostsStore();
 const uiStore = useUIStore();
