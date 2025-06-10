@@ -28,17 +28,17 @@ defineProps<{
 
 <!-- <script>
 export default {
-  name: 'InputUI',
+	name: "InputUI",
 
-  props: {
-    modelValue: [String, Number],
-  },
+	props: {
+		modelValue: [String, Number],
+	},
 
-  methods: {
-    getInputRef() {
-      return this.$refs.input;
-    },
-  },
+	methods: {
+		getInputRef() {
+			return this.$refs.input;
+		},
+	},
 };
 </script> -->
 

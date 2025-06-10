@@ -23,6 +23,8 @@ export default typescriptEslint.config(
 		},
 		rules: {
 			"vue/multi-word-component-names": "off",
+			"vue/order-in-components": "off",
+			"vue/require-default-prop": "off",
 		},
 	},
 	eslintConfigPrettier,

@@ -13,7 +13,11 @@
 				<textarea v-model.trim="post.body" placeholder="description" />
 			</div>
 
-			<ButtonUI>Сonfirm</ButtonUI>
+			<ButtonUI
+				:disabled="disabledButton"
+				:class="{ ['active-button']: !disabledButton }"
+				>Сonfirm</ButtonUI
+			>
 		</form>
 	</div>
 </template>
@@ -26,7 +30,7 @@ import { useUIStore } from "../store/ui.ts";
 
 import vFocus from "../directives/VFocus.ts";
 
-import { reactive, onMounted } from "vue";
+import { reactive, computed, onMounted } from "vue";
 
 const postsStore = usePostsStore();
 const uiStore = useUIStore();
@@ -44,6 +48,14 @@ const updatePost = () => {
 
 	uiStore.closeModal();
 };
+
+const disabledButton = computed(() => {
+	if (post.title !== props.title || post.body !== props.body) {
+		return false;
+	}
+
+	return true;
+});
 
 onMounted(() => {
 	post.title = props.title;
@@ -95,6 +107,13 @@ export default {
 
 	computed: {
 		...mapStores(usePostsStore, useUIStore),
+		disabledButton() {
+			if (this.post.title !== this.title || this.post.body !== this.body) {
+				return false;
+			}
+
+			return true;
+		},
 	},
 
 	mounted() {
@@ -135,10 +154,12 @@ h2 {
 	button {
 		align-self: flex-end;
 		margin-top: 1rem;
+	}
+}
 
-		&:hover {
-			background: bisque;
-		}
+.active-button {
+	&:hover {
+		background: bisque;
 	}
 }
 </style>

@@ -4,7 +4,11 @@
 		<form class="form" @submit.prevent="createPost">
 			<textarea ref="textarea" v-model.trim="post.title" placeholder="title" />
 			<textarea v-model.trim="post.body" placeholder="description" />
-			<ButtonUI>Сonfirm</ButtonUI>
+			<ButtonUI
+				:disabled="disabledButton"
+				:class="{ ['active-button']: !disabledButton }"
+				>Сonfirm</ButtonUI
+			>
 		</form>
 	</div>
 </template>
@@ -15,7 +19,7 @@
 import { usePostsStore } from "../store/posts.ts";
 import { useUIStore } from "../store/ui.ts";
 
-import { reactive, useTemplateRef, onMounted } from "vue";
+import { reactive, useTemplateRef, computed, onMounted } from "vue";
 
 const postsStore = usePostsStore();
 const uiStore = useUIStore();
@@ -40,6 +44,14 @@ const createPost = () => {
 		body: "",
 	};
 };
+
+const disabledButton = computed(() => {
+	if (post.title.length >= 1 && post.body.length >= 1) {
+		return false;
+	}
+
+	return true;
+});
 
 onMounted(() => {
 	textarea.value?.focus();
@@ -81,6 +93,13 @@ export default {
 
 	computed: {
 		...mapStores(usePostsStore, useUIStore),
+		disabledButton() {
+			if (this.post.title.length >= 1 && this.post.body.length >= 1) {
+				return false;
+			}
+
+			return true;
+		},
 	},
 
 	mounted() {
@@ -116,10 +135,12 @@ h2 {
 		align-self: flex-end;
 
 		margin-top: 1rem;
+	}
+}
 
-		&:hover {
-			background: bisque;
-		}
+.active-button {
+	&:hover {
+		background: bisque;
 	}
 }
 </style>

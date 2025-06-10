@@ -23,7 +23,11 @@
 				Incorrect username or password
 			</div>
 
-			<ButtonUI :disabled="disabledButton">Sign in</ButtonUI>
+			<ButtonUI
+				:disabled="disabledButton"
+				:class="{ ['active-button']: !disabledButton }"
+				>Sign in</ButtonUI
+			>
 		</form>
 	</div>
 </template>
@@ -174,10 +178,12 @@ h2 {
 	button {
 		align-self: flex-end;
 		margin-top: 1rem;
+	}
+}
 
-		&:hover {
-			background: bisque;
-		}
+.active-button {
+	&:hover {
+		background: bisque;
 	}
 }
 

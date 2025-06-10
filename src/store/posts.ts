@@ -29,7 +29,7 @@ export const usePostsStore = defineStore("posts", {
 					this.page = this.page + 1;
 				}
 
-				const response = await axios.get(
+				const response = await axios.get<IPost[]>(
 					`https://jsonplaceholder.typicode.com/posts?_limit=${this.limit}&_page=${this.page}`,
 				);
 
