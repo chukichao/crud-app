@@ -28,7 +28,7 @@
 						v-model.trim="user.password"
 						type="password"
 						autocomplete="new-password"
-						:class="(required, confirm)"
+						:class="required || confirm"
 					></InputUI>
 				</label>
 
@@ -38,7 +38,7 @@
 						v-model.trim="confirmPassword"
 						type="password"
 						autocomplete="new-password"
-						:class="(required, confirm)"
+						:class="required || confirm"
 					></InputUI>
 				</label>
 

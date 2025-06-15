@@ -1,3 +1,3 @@
-declare module '*.vue';
-declare module '*.js';
-declare module '*.ts';
+declare module "*.vue";
+declare module "*.js";
+declare module "*.ts";

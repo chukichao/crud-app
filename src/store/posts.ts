@@ -1,7 +1,7 @@
+import axios from "axios";
 import { defineStore } from "pinia";
 import { useUIStore } from "./ui.ts";
 import { useUserStore } from "./user.ts";
-import axios from "axios";
 
 import type { IPost } from "../types/post";
 
@@ -29,7 +29,7 @@ export const usePostsStore = defineStore("posts", {
 					this.page = this.page + 1;
 				}
 
-				const response = await axios.get<IPost[]>(
+				const response = await axios.get(
 					`https://jsonplaceholder.typicode.com/posts?_limit=${this.limit}&_page=${this.page}`,
 				);
 

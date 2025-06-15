@@ -1,8 +1,11 @@
 eslint:
-	npx eslint src
+	npx eslint src/
+
+typescript:
+	npx vue-tsc -b
 
 prettier:
-	npx prettier --write src/**/*
+	npx prettier --write src/
 
 stylelint:
-	npx stylelint "src/**/*.{css,scss,vue}"
+	npx stylelint --fix "src/*.{css,scss,vue}"

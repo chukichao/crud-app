@@ -1,6 +1,6 @@
+import axios from "axios";
 import { defineStore } from "pinia";
 import { useUIStore } from "./ui.ts";
-import axios from "axios";
 
 import type { IComment } from "../types/comment.ts";
 

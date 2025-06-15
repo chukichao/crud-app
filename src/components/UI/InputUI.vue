@@ -33,12 +33,6 @@ export default {
 	props: {
 		modelValue: [String, Number],
 	},
-
-	methods: {
-		getInputRef() {
-			return this.$refs.input;
-		},
-	},
 };
 </script> -->
 

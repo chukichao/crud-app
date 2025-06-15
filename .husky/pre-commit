@@ -1,0 +1,2 @@
+npx eslint src/
+npx vue-tsc -b

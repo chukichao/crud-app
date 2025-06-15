@@ -6,6 +6,7 @@
 			<InputUI
 				ref="input"
 				v-model.trim="user.username"
+				v-focus
 				:class="{ ['error-outline']: errorLogin }"
 				autocomplete="username"
 				placeholder="username"
@@ -42,6 +43,8 @@ import { computed, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 
 import type { IUser } from "../types/user.ts";
+
+import vFocus from "../directives/VFocus.ts";
 
 const uiStore = useUIStore();
 const userStore = useUserStore();
@@ -100,6 +103,8 @@ import { mapStores } from "pinia";
 import { useUIStore } from "../store/ui.ts";
 import { useUserStore } from "../store/user.ts";
 
+import VFocus from "../directives/VFocus.ts";
+
 export default {
 	data() {
 		return {
@@ -152,9 +157,7 @@ export default {
 		},
 	},
 
-	mounted() {
-		this.$refs.input.getInputRef().focus();
-	},
+	directives: { focus: VFocus },
 };
 </script> -->
 

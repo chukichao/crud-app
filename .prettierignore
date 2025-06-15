@@ -1,0 +1,16 @@
+node_modules
+yarn-error.log
+yarn.lock
+internals/generators/
+internals/scripts/
+package-lock.json
+package.json
+build/
+lib/
+.eslintcache
+eslint.config.js
+coverage/
+dist/
+.nuxt
+.output
+CHANGELOG.md

@@ -21,6 +21,8 @@
 		</nav>
 
 		<div v-if="userStore.auth">
+			<IconsAccount />
+			<span class="account">{{ userStore.auth.username }}</span>
 			<ButtonUI @click="uiStore.openModal('logout')">Logout</ButtonUI>
 		</div>
 
@@ -46,6 +48,7 @@
 
 <script setup lang="ts">
 import FormLogin from "./FormLogin.vue";
+import IconsAccount from "./Icons/Account.vue";
 import Logo from "./Logo.vue";
 
 import { usePostsStore } from "../store/posts.ts";
@@ -70,13 +73,14 @@ const logout = () => {
 <!-- OPTIONS API -->
 
 <!-- <script>
-import Logo from "./Logo.vue";
 import FormLogin from "./FormLogin.vue";
+import IconsAccount from "./Icons/Account.vue";
+import Logo from "./Logo.vue";
 
 import { mapStores } from "pinia";
+import { usePostsStore } from "../store/posts.ts";
 import { useUIStore } from "../store/ui.ts";
 import { useUserStore } from "../store/user.ts";
-import { usePostsStore } from "../store/posts.ts";
 
 export default {
 	methods: {
@@ -94,6 +98,7 @@ export default {
 	components: {
 		Logo,
 		FormLogin,
+		IconsAccount,
 	},
 };
 </script> -->
@@ -146,6 +151,12 @@ export default {
 
 .active {
 	font-weight: bold;
+}
+
+.account {
+	padding: 0.5rem;
+
+	cursor: default;
 }
 
 @media screen and (max-width: 600px) {

@@ -24,11 +24,9 @@
 			<SelectUI v-model="selectedSort" :options="sortOptions" title="sort" />
 		</div>
 
-		<div class="add">
-			<ButtonUI title="Add new post" @click="uiStore.openModal('addPost')"
-				>+
-			</ButtonUI>
-		</div>
+		<ButtonUI title="Add new post" @click="uiStore.openModal('addPost')"
+			><IconsPlus class="add" />
+		</ButtonUI>
 
 		<ModalUI v-if="uiStore.modal.type === 'addPost'">
 			<FormAddPost />
@@ -40,6 +38,7 @@
 
 <script setup lang="ts">
 import FormAddPost from "../components/FormAddPost.vue";
+import IconsPlus from "../components/Icons/Plus.vue";
 import PagesLimit from "../components/PagesLimit.vue";
 import PaginationPosts from "../components/PaginationPosts.vue";
 import PostsList from "../components/PostsList.vue";
@@ -50,7 +49,7 @@ import { useUIStore } from "../store/ui.ts";
 import { useRoute } from "vue-router";
 
 import vFocus from "../directives/VFocus.ts";
-import vObserver from "../directives/VIntersection.ts";
+import vObserver from "../directives/VObserver.ts";
 
 import { computed, onMounted, reactive, ref, watch } from "vue";
 
@@ -110,17 +109,18 @@ onMounted(() => {
 <!-- OPTIONS API -->
 
 <!-- <script>
-import PostsList from "../components/PostsList.vue";
 import FormAddPost from "../components/FormAddPost.vue";
-import PaginationPosts from "../components/PaginationPosts.vue";
+import IconsPlus from "../components/Icons/Plus.vue";
 import PagesLimit from "../components/PagesLimit.vue";
+import PaginationPosts from "../components/PaginationPosts.vue";
+import PostsList from "../components/PostsList.vue";
 
 import { mapStores } from "pinia";
 import { usePostsStore } from "../store/posts.ts";
 import { useUIStore } from "../store/ui.ts";
 
-import VIntersection from "../directives/VIntersection.ts";
 import VFocus from "../directives/VFocus.ts";
+import VObserver from "../directives/VObserver.ts";
 
 export default {
 	data() {
@@ -182,10 +182,11 @@ export default {
 		FormAddPost,
 		PaginationPosts,
 		PagesLimit,
+		IconsPlus,
 	},
 
 	directives: {
-		observer: VIntersection,
+		observer: VObserver,
 		focus: VFocus,
 	},
 };
@@ -220,7 +221,9 @@ export default {
 	width: 50px;
 	height: 50px;
 
-	background-color: bisque;
+	color: #555;
+
+	background-color: white;
 	border: 1px solid #333;
 	border-radius: 50%;
 
@@ -244,6 +247,10 @@ export default {
 
 	select {
 		padding: 0.3rem;
+
+		color: white;
+
+		background-color: #555;
 	}
 }
 </style>
