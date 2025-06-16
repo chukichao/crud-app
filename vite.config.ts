@@ -5,8 +5,6 @@ import { defineConfig } from "vite";
 export default defineConfig({
 	plugins: [vue()],
 	server: {
-		host: true,
-		strictPort: true,
 		port: 8000,
 	},
 });
