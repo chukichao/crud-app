@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 
+import type { IAuth } from "../types/auth";
 import type { IUser } from "../types/user";
 
 export const useUserStore = defineStore("user", {
@@ -31,8 +32,3 @@ export const useUserStore = defineStore("user", {
 		},
 	},
 });
-
-interface IAuth {
-	username: string;
-	token: string;
-}

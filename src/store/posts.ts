@@ -87,7 +87,7 @@ export const usePostsStore = defineStore("posts", {
 			const prevPage = this.page - 1;
 
 			if (prevPage === 0) {
-				return false;
+				return;
 			}
 
 			this.page = prevPage;
@@ -97,7 +97,7 @@ export const usePostsStore = defineStore("posts", {
 			const nextPage = this.page + 1;
 
 			if (nextPage > this.totalPages) {
-				return false;
+				return;
 			}
 
 			this.page = nextPage;
