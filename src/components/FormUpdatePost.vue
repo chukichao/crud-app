@@ -9,7 +9,7 @@
 			</div>
 
 			<div>
-				<h3>Body:</h3>
+				<h3>Description:</h3>
 				<textarea v-model.trim="post.body" placeholder="description" />
 			</div>
 

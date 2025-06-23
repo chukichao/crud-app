@@ -21,7 +21,7 @@
 			/>
 
 			<div v-show="errorLogin" class="error-feedback">
-				Incorrect username or password
+				incorrect username or password
 			</div>
 
 			<ButtonUI
@@ -87,7 +87,7 @@ const login = () => {
 };
 
 const disabledButton = computed(() => {
-	if (user.username.length >= 1 && user.password.length >= 1) {
+	if (user.username.length >= 3 && user.password.length >= 3) {
 		return false;
 	}
 

@@ -46,7 +46,7 @@ const createPost = () => {
 };
 
 const disabledButton = computed(() => {
-	if (post.title.length >= 1 && post.body.length >= 1) {
+	if (post.title.length >= 3 && post.body.length >= 3) {
 		return false;
 	}
 
