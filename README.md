@@ -1,6 +1,7 @@
 # [CrudApp](https://crud-app-qeja.onrender.com)
 
 [![Maintainability](https://qlty.sh/badges/ac1f5a9c-0ae3-4aea-91bd-334448bdbbe4/maintainability.svg)](https://qlty.sh/gh/chukichao/projects/crud-app)
+[![Playwright Tests](https://github.com/chukichao/crud-app/actions/workflows/playwright.yml/badge.svg)](https://github.com/chukichao/crud-app/actions/workflows/playwright.yml)
 
 ### CRUD приложение для работы с постами с возможностью пагинации, поиска и фильтрации.
 
