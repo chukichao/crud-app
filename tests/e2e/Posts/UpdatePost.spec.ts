@@ -35,13 +35,6 @@ test.describe("Update Post", () => {
 		// submit
 		await page.getByRole("button", { name: "Сonfirm" }).click();
 
-		// await page
-		// 	.getByRole("listitem")
-		// 	.filter({ hasText: `newPost.title` })
-		// 	.getByRole("button")
-		// 	.nth(1)
-		// 	.click();
-
 		await page
 			.getByRole("listitem")
 			.filter({ hasText: "× 101. post titlepost" })
