@@ -34,17 +34,16 @@ test.describe("Remove Post", () => {
 
 		// submit
 		await page.getByRole("button", { name: "Сonfirm" }).click();
+
+		await page
+			.getByRole("listitem")
+			.filter({ hasText: newPost.title })
+			.getByRole("button")
+			.first()
+			.click();
 	});
 
 	test("remove post", async ({ page }) => {
-		const item = page
-			.getByRole("listitem")
-			.filter({ hasText: newPost.title })
-			.filter({ hasText: newPost.description });
-
-		// remove post
-		item.getByRole("button", { name: "×" }).click();
-
 		// check
 		await expect(
 			page

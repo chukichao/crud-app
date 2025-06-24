@@ -35,12 +35,12 @@ test.describe("Update Post", () => {
 		// submit
 		await page.getByRole("button", { name: "Сonfirm" }).click();
 
-		const item = page
+		await page
 			.getByRole("listitem")
 			.filter({ hasText: newPost.title })
-			.filter({ hasText: newPost.description });
-
-		item.getByRole("button").nth(1).click();
+			.getByRole("button")
+			.nth(1)
+			.click();
 	});
 
 	test("visibility of post update elements", async ({ page }) => {
@@ -74,7 +74,10 @@ test.describe("Update Post", () => {
 		};
 
 		// filling in the fields
+		await page.getByRole("textbox", { name: "title" }).fill("");
 		await page.getByRole("textbox", { name: "title" }).fill(updatedPost.title);
+
+		await page.getByRole("textbox", { name: "description" }).fill("");
 		await page
 			.getByRole("textbox", { name: "description" })
 			.fill(updatedPost.description);

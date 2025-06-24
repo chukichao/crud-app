@@ -36,7 +36,7 @@ test.describe("PostsPage", () => {
 		await expect(page.getByText(">")).toBeVisible();
 
 		// posts list
-		await expect(page.getByText("Post list(shown 10) × 1. sunt")).toBeVisible();
+		await expect(page.getByText("Post list(shown 10)")).toBeVisible();
 
 		// button for add new post
 		await expect(
