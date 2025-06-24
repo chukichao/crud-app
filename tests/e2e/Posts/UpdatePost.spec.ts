@@ -7,7 +7,7 @@ test.describe("Update Post", () => {
 	};
 
 	test.beforeEach(async ({ page }) => {
-		await page.goto("http://localhost:8000/");
+		await page.goto("https://crud-app-qeja.onrender.com/");
 		await page.getByRole("button", { name: "Sign in" }).click();
 
 		const user = {
@@ -35,9 +35,16 @@ test.describe("Update Post", () => {
 		// submit
 		await page.getByRole("button", { name: "Сonfirm" }).click();
 
+		// await page
+		// 	.getByRole("listitem")
+		// 	.filter({ hasText: `newPost.title` })
+		// 	.getByRole("button")
+		// 	.nth(1)
+		// 	.click();
+
 		await page
 			.getByRole("listitem")
-			.filter({ hasText: newPost.title })
+			.filter({ hasText: "× 101. post titlepost" })
 			.getByRole("button")
 			.nth(1)
 			.click();
@@ -74,10 +81,8 @@ test.describe("Update Post", () => {
 		};
 
 		// filling in the fields
-		await page.getByRole("textbox", { name: "title" }).fill("");
 		await page.getByRole("textbox", { name: "title" }).fill(updatedPost.title);
 
-		await page.getByRole("textbox", { name: "description" }).fill("");
 		await page
 			.getByRole("textbox", { name: "description" })
 			.fill(updatedPost.description);

@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 
 test.describe("SignUp: Process", () => {
 	test.beforeEach(async ({ page }) => {
-		await page.goto("http://localhost:8000/signup");
+		await page.goto("https://crud-app-qeja.onrender.com/signup");
 	});
 
 	test("error: required field", async ({ page }) => {

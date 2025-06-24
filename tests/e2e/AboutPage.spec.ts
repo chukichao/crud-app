@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 
 test.describe("About Page", () => {
 	test.beforeEach(async ({ page }) => {
-		await page.goto("http://localhost:8000/about");
+		await page.goto("https://crud-app-qeja.onrender.com/about");
 	});
 
 	test("visibility of text content", async ({ page }) => {

@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 
 test.describe("PostsPage", () => {
 	test.beforeEach(async ({ page }) => {
-		await page.goto("http://localhost:8000/");
+		await page.goto("https://crud-app-qeja.onrender.com/");
 		await page.getByRole("button", { name: "Sign in" }).click();
 
 		const user = {

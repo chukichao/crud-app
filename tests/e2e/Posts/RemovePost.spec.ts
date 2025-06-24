@@ -7,7 +7,7 @@ test.describe("Remove Post", () => {
 	};
 
 	test.beforeEach(async ({ page }) => {
-		await page.goto("http://localhost:8000/");
+		await page.goto("https://crud-app-qeja.onrender.com/");
 		await page.getByRole("button", { name: "Sign in" }).click();
 
 		const user = {
@@ -35,9 +35,16 @@ test.describe("Remove Post", () => {
 		// submit
 		await page.getByRole("button", { name: "Сonfirm" }).click();
 
+		// await page
+		// 	.getByRole("listitem")
+		// 	.filter({ hasText: newPost.title })
+		// 	.getByRole("button")
+		// 	.first()
+		// 	.click();
+
 		await page
 			.getByRole("listitem")
-			.filter({ hasText: newPost.title })
+			.filter({ hasText: "× 101. post titlepost" })
 			.getByRole("button")
 			.first()
 			.click();
