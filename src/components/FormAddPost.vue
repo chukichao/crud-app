@@ -136,6 +136,8 @@ h2 {
 
 		margin-top: 1rem;
 
+		box-shadow: 1px 1px 1px #333;
+
 		cursor: default;
 	}
 }

@@ -68,12 +68,12 @@ export default {
 .dark-theme {
 	color: white;
 
-	background-color: black;
+	background-color: #111;
 }
 
 .light-theme {
 	color: black;
 
-	background-color: white;
+	background-color: whitesmoke;
 }
 </style>

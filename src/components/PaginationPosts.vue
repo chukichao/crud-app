@@ -105,7 +105,7 @@ ul {
 	li {
 		padding: 1.5rem;
 
-		border: 1px solid #333;
+		border: 1px solid #999;
 
 		&:hover {
 			color: white;
@@ -116,9 +116,9 @@ ul {
 	}
 
 	.active {
-		color: white;
+		color: black;
 
-		background-color: black;
+		background-color: bisque;
 	}
 
 	.visible {

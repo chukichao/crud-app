@@ -169,13 +169,13 @@ main {
 .dark-theme {
 	color: white;
 
-	background-color: black;
+	background-color: #111;
 }
 
 .light-theme {
 	color: black;
 
-	background-color: white;
+	background-color: whitesmoke;
 }
 
 @media screen and (max-width: 600px) {

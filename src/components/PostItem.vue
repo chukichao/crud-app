@@ -78,12 +78,12 @@ export default {
 
 	padding: 0 0 2rem 2rem;
 
-	border: 2px solid #333;
+	border: 2px solid #555;
 
 	cursor: pointer;
 
 	&:hover {
-		box-shadow: 5px 5px 5px #333;
+		box-shadow: 5px 5px 5px #777;
 	}
 
 	&-delete {
@@ -116,6 +116,8 @@ export default {
 
 		&-edit {
 			margin: 1rem;
+
+			box-shadow: 1px 1px 1px #333;
 
 			button:hover {
 				color: black !important;
