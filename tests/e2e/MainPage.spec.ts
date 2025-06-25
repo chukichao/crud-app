@@ -5,48 +5,65 @@ test.describe("Main Page", () => {
 		await page.goto("https://crud-app-qeja.onrender.com/");
 	});
 
-	test("correct page title", async ({ page }) => {
-		await expect(page).toHaveTitle(/Vue 3/);
+	test("correct page language", async ({ page }) => {
+		await expect.soft(page.locator("html")).toHaveAttribute("lang", "en");
 	});
 
-	test("cookie notification visibility", async ({ page }) => {
-		await expect(page.getByRole("heading", { name: "Welcome!" })).toBeVisible();
-		await expect(page.getByText("Our platform uses cookies to")).toBeVisible();
-		await expect(page.getByRole("button", { name: "Accept" })).toBeVisible();
-
-		await page.getByRole("button", { name: "Accept" }).click();
-
-		await expect(
-			page.getByRole("button", { name: "Accept" }),
-		).not.toBeVisible();
+	test("correct page title", async ({ page }) => {
+		await expect.soft(page).toHaveTitle(/Vue 3/);
 	});
 
 	test("visibility of the main blocks of the page", async ({ page }) => {
 		// header
-		await expect(page.getByText("crudApp_HomeAbout UsSign")).toBeVisible();
+		await expect.soft(page.getByText("crudApp_HomeAbout UsSign")).toBeVisible();
 
 		// footer
-		await expect(page.getByRole("contentinfo")).toBeVisible();
+		await expect.soft(page.getByRole("contentinfo")).toBeVisible();
 	});
 
-	test("navigation links", async ({ page }) => {
+	test("check navigation links (header)", async ({ page }) => {
 		// home
-		await expect(page.getByRole("link", { name: "Home" })).toBeVisible();
-		await expect(page.getByRole("list")).toContainText("Home");
-		await expect(page.getByRole("link", { name: "Home" })).toHaveAttribute(
-			"href",
-			"/",
-		);
+		await expect.soft(page.getByRole("link", { name: "Home" })).toBeVisible();
+		await expect
+			.soft(page.getByRole("link", { name: "Home" }))
+			.toContainText("Home");
+		await expect
+			.soft(page.getByRole("link", { name: "Home" }))
+			.toHaveAttribute("href", "/");
 
 		// about
-		await expect(page.getByRole("link", { name: "About Us" })).toBeVisible();
-		await expect(page.getByRole("list")).toContainText("About Us");
-		await expect(page.getByRole("link", { name: "About Us" })).toHaveAttribute(
-			"href",
-			"/about",
-		);
+		await expect
+			.soft(page.getByRole("link", { name: "About Us" }))
+			.toBeVisible();
+		await expect
+			.soft(page.getByRole("link", { name: "About Us" }))
+			.toContainText("About Us");
+		await expect
+			.soft(page.getByRole("link", { name: "About Us" }))
+			.toHaveAttribute("href", "/about");
 
 		// posts (available to authorized users)
-		await expect(page.getByRole("link", { name: "Posts" })).not.toBeVisible();
+		await expect
+			.soft(page.getByRole("link", { name: "Posts" }))
+			.not.toBeVisible();
+	});
+
+	test("cookie notification visibility", async ({ page }) => {
+		// inner elements
+		await expect
+			.soft(page.getByRole("heading", { name: "Welcome!" }))
+			.toBeVisible();
+		await expect
+			.soft(page.getByText("Our platform uses cookies to"))
+			.toBeVisible();
+		await expect
+			.soft(page.getByRole("button", { name: "Accept" }))
+			.toBeVisible();
+
+		await page.getByRole("button", { name: "Accept" }).click();
+
+		await expect
+			.soft(page.getByText("Welcome! Our platform uses"))
+			.not.toBeVisible();
 	});
 });

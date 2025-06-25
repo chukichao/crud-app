@@ -5,13 +5,21 @@ test.describe("Home Page", () => {
 		await page.goto("https://crud-app-qeja.onrender.com/");
 	});
 
-	test("visibility of text content", async ({ page }) => {
-		// title
-		await expect(
-			page.getByRole("heading", { name: "Home Page" }),
-		).toBeVisible();
+	test("display active link", async ({ page }) => {
+		await expect
+			.soft(page.getByRole("link", { name: "Home" }))
+			.toHaveClass("active");
+	});
 
-		// content
-		await expect(page.getByText("Lorem ipsum dolor sit amet")).toBeVisible();
+	test("visibility of text content", async ({ page }) => {
+		// header
+		await expect
+			.soft(page.getByRole("heading", { name: "Home Page" }))
+			.toBeVisible();
+
+		// text content
+		await expect
+			.soft(page.getByText("Lorem ipsum dolor sit amet"))
+			.toBeVisible();
 	});
 });
