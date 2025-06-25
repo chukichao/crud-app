@@ -1,7 +1,13 @@
 <template>
 	<div class="modal" @click="uiStore.closeModal">
-		<div class="modal-body" @click.stop>
-			<slot />
+		<div
+			:class="{
+				['modal-body']: true,
+				[`${uiStore.theme}-theme`]: true,
+			}"
+			@click.stop
+		>
+			<slot :class="{ [`${uiStore.theme}-theme`]: true }" />
 		</div>
 	</div>
 </template>
@@ -57,5 +63,17 @@ export default {
 		border: 1px solid #333;
 		border-radius: 10px;
 	}
+}
+
+.dark-theme {
+	color: white;
+
+	background-color: black;
+}
+
+.light-theme {
+	color: black;
+
+	background-color: white;
 }
 </style>

@@ -6,7 +6,7 @@ import router from "./router/index.ts";
 
 import componentsUI from "./components/UI/index.ts";
 
-import "./assets/main.css";
+import "./assets/main.scss";
 
 const app = createApp(App);
 const pinia = createPinia();

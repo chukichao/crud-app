@@ -135,12 +135,18 @@ h2 {
 		align-self: flex-end;
 
 		margin-top: 1rem;
+
+		cursor: default;
 	}
 }
 
 .active-button {
 	&:hover {
-		background: bisque;
+		color: black;
+
+		background-color: bisque;
+
+		cursor: pointer;
 	}
 }
 </style>

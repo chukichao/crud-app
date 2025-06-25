@@ -9,6 +9,7 @@ export const useUIStore = defineStore("ui", {
 		},
 		isLoading: false,
 		cookieAlert: true,
+		theme: "light",
 	}),
 	actions: {
 		openModal(type: string, extra = 0) {
@@ -28,6 +29,19 @@ export const useUIStore = defineStore("ui", {
 		closeCookieAlert() {
 			localStorage.setItem("cookie", "true");
 			this.cookieAlert = false;
+		},
+		toggleTheme() {
+			if (this.theme === "light") {
+				this.theme = "dark";
+				localStorage.setItem("theme", "dark");
+				return;
+			}
+
+			this.theme = "light";
+			localStorage.setItem("theme", "light");
+		},
+		setTheme(theme: "light" | "dark") {
+			this.theme = theme;
 		},
 	},
 });

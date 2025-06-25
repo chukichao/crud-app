@@ -110,7 +110,7 @@ ul {
 		&:hover {
 			color: white;
 
-			background-color: black;
+			background-color: #333;
 			cursor: pointer;
 		}
 	}

@@ -338,8 +338,12 @@ export default {
 	button {
 		margin-top: 1rem;
 
+		background-color: #333;
+
 		&:hover {
-			background: bisque;
+			color: black;
+
+			background-color: bisque;
 		}
 	}
 

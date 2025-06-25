@@ -40,6 +40,8 @@ export default {
 
 	padding: 1rem 2rem;
 
+	color: black;
+
 	background: bisque;
 	border: 2px solid #333;
 	border-radius: 5px;
@@ -49,6 +51,8 @@ export default {
 	}
 
 	button {
+		color: black;
+
 		background-color: white;
 		border-radius: 5px;
 	}

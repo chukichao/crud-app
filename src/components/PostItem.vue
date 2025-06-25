@@ -73,6 +73,7 @@ export default {
 .post-item {
 	display: flex;
 	flex-direction: column;
+
 	margin-top: 1rem;
 
 	padding: 0 0 2rem 2rem;
@@ -117,6 +118,8 @@ export default {
 			margin: 1rem;
 
 			button:hover {
+				color: black !important;
+
 				background: bisque;
 			}
 		}

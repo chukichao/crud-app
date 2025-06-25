@@ -1,11 +1,13 @@
 <template>
-	<Header />
+	<div :class="{ app: true, [`${uiStore.theme}-theme`]: true }">
+		<Header />
 
-	<RouterView />
+		<RouterView />
 
-	<Footer />
+		<Footer />
 
-	<CookieAlert v-show="uiStore.cookieAlert" />
+		<CookieAlert v-show="uiStore.cookieAlert" />
+	</div>
 </template>
 
 <!-- COMPOSITION API -->
@@ -58,6 +60,12 @@ onMounted(() => {
 
 	if (hasDataLocalStorage("cookie")) {
 		uiStore.closeCookieAlert();
+	}
+
+	if (hasDataLocalStorage("theme")) {
+		const theme = localStorage.getItem("theme") as "light" | "dark";
+
+		uiStore.setTheme(theme);
 	}
 });
 </script>
@@ -112,6 +120,12 @@ export default {
 		if (hasDataLocalStorage("cookie")) {
 			this.uiStore.closeCookieAlert();
 		}
+
+		if (hasDataLocalStorage("theme")) {
+			const theme = localStorage.getItem("theme");
+
+			this.uiStore.setTheme(theme);
+		}
 	},
 
 	components: {
@@ -123,11 +137,22 @@ export default {
 </script> -->
 
 <style lang="scss">
+.app {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+
+	width: 100%;
+
+	font-family: Tahoma, Verdana, sans-serif;
+}
+
 main {
 	display: flex;
 	flex-direction: column;
 
 	max-width: 700px;
+	min-height: 100vh;
 
 	margin: 0 auto;
 	padding: 2rem;
@@ -139,6 +164,18 @@ main {
 
 		text-align: center;
 	}
+}
+
+.dark-theme {
+	color: white;
+
+	background-color: black;
+}
+
+.light-theme {
+	color: black;
+
+	background-color: white;
 }
 
 @media screen and (max-width: 600px) {

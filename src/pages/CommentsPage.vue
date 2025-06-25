@@ -96,6 +96,18 @@ export default {
 
 		font-size: 30px;
 	}
+
+	button {
+		align-self: flex-end;
+
+		margin: 1rem;
+
+		&:hover {
+			color: black !important;
+
+			background-color: bisque;
+		}
+	}
 }
 
 .comments-item {
@@ -112,16 +124,6 @@ export default {
 
 		p {
 			padding: 1rem;
-		}
-	}
-
-	button {
-		align-self: flex-end;
-
-		margin: 1rem;
-
-		&:hover {
-			background: bisque;
 		}
 	}
 }

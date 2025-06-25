@@ -21,15 +21,16 @@
 		</nav>
 
 		<div v-if="userStore.auth">
+			<Sun class="theme" @click="uiStore.toggleTheme()" />
 			<IconsAccount />
 			<span class="account">{{ userStore.auth.username }}</span>
-			<ButtonUI @click="uiStore.openModal('logout')">Logout</ButtonUI>
+			<buttonUI @click="uiStore.openModal('logout')">Logout</buttonUI>
 		</div>
 
 		<div v-else>
-			<ButtonUI><RouterLink to="/signup">Sign up</RouterLink></ButtonUI>
-
-			<ButtonUI @click="uiStore.openModal('login')">Sign in</ButtonUI>
+			<Sun class="theme" @click="uiStore.toggleTheme()" />
+			<buttonUI><RouterLink to="/signup">Sign up</RouterLink></buttonUI>
+			<buttonUI @click="uiStore.openModal('login')">Sign in</buttonUI>
 		</div>
 
 		<ModalUI v-if="uiStore.modal.type === 'login'">
@@ -50,6 +51,7 @@
 import FormLogin from "./FormLogin.vue";
 import IconsAccount from "./Icons/Account.vue";
 import Logo from "./Logo.vue";
+import Sun from "./Icons/Sun.vue";
 
 import { usePostsStore } from "../store/posts.ts";
 import { useUIStore } from "../store/ui.ts";
@@ -76,6 +78,7 @@ const logout = () => {
 import FormLogin from "./FormLogin.vue";
 import IconsAccount from "./Icons/Account.vue";
 import Logo from "./Logo.vue";
+import Sun from "./Icons/Sun.vue";
 
 import { mapStores } from "pinia";
 import { usePostsStore } from "../store/posts.ts";
@@ -99,6 +102,7 @@ export default {
 		Logo,
 		FormLogin,
 		IconsAccount,
+		Sun,
 	},
 };
 </script> -->
@@ -141,7 +145,7 @@ export default {
 
 		border: none;
 
-		transition: 2s linear;
+		transition: transform 2s linear;
 
 		&:hover {
 			transform: scale(1.1);
@@ -157,6 +161,19 @@ export default {
 	padding: 0.5rem;
 
 	cursor: default;
+}
+
+.theme {
+	position: relative;
+	top: 0.2rem;
+
+	margin-right: 3rem;
+
+	font-size: 2rem;
+
+	&:hover {
+		cursor: pointer;
+	}
 }
 
 @media screen and (max-width: 600px) {
