@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test.describe("PostsPage", () => {
+test.describe("PostsPage Tests", () => {
 	test.beforeEach(async ({ page }) => {
 		await page.goto("https://crud-app-qeja.onrender.com/");
 		await page.getByRole("button", { name: "Sign in" }).click();

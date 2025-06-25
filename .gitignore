@@ -31,3 +31,5 @@ testing
 /playwright/.cache/
 
 /allure-results/
+
+notes.txt

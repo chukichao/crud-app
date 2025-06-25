@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test.describe("Sign up Page", () => {
+test.describe("Sign up Page Tests", () => {
 	test.beforeEach(async ({ page }) => {
 		await page.goto("https://crud-app-qeja.onrender.com/signup");
 	});
