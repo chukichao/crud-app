@@ -6,7 +6,7 @@ test.describe("About Page Tests", () => {
 	});
 
 	test("display active link", async ({ page }) => {
-		test.step("check active link", async () => {
+		await test.step("check active link", async () => {
 			await expect
 				.soft(page.getByRole("link", { name: "About Us" }))
 				.toHaveClass("active");
@@ -14,13 +14,13 @@ test.describe("About Page Tests", () => {
 	});
 
 	test("visibility of text content", async ({ page }) => {
-		test.step("check header", async () => {
+		await test.step("check header", async () => {
 			await expect
 				.soft(page.getByRole("heading", { name: "About Page" }))
 				.toBeVisible();
 		});
 
-		test.step("check text content", async () => {
+		await test.step("check text content", async () => {
 			await expect
 				.soft(page.getByText("Lorem ipsum dolor sit amet"))
 				.toBeVisible();

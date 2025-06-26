@@ -1,102 +1,45 @@
-import { expect, test, Page, Locator } from "@playwright/test";
+import { expect, test } from "@playwright/test";
+import MainPage from "../models/MainPage";
 
-interface INavElement {
-	title: string;
-	locator: (page: Page) => Locator;
-	attribute: {
-		type: string;
-		value: string;
-	};
-}
+const screenshots = {
+	lightMode: "page-light-mode.png",
+	darkMode: "page-dark-mode.png",
+};
 
-const navElements: INavElement[] = [
-	{
-		title: "Home",
-		locator: (page: Page): Locator => page.getByRole("link", { name: "Home" }),
-		attribute: {
-			type: "href",
-			value: "/",
-		},
-	},
-	{
-		title: "About Us",
-		locator: (page: Page): Locator =>
-			page.getByRole("link", { name: "About Us" }),
-		attribute: {
-			type: "href",
-			value: "/about",
-		},
-	},
-];
-
-interface ICookieAlertElement {
-	title: string;
-	locator: (page: Page) => Locator;
-}
-
-const cookieAlertElements: ICookieAlertElement[] = [
-	{
-		title: "Heading",
-		locator: (page: Page): Locator =>
-			page.getByRole("heading", { name: "Welcome!" }),
-	},
-	{
-		title: "Text Content",
-		locator: (page: Page): Locator =>
-			page.getByText("Our platform uses cookies to"),
-	},
-	{
-		title: "Button",
-		locator: (page: Page): Locator =>
-			page.getByRole("button", { name: "Accept" }),
-	},
-];
+let mainPage: MainPage;
 
 test.describe("Main Page Tests", () => {
 	test.beforeEach(async ({ page }) => {
-		await page.goto("https://crud-app-qeja.onrender.com/");
+		mainPage = new MainPage(page);
+		await mainPage.openMainPage();
 	});
 
 	test("correct data page", async ({ page }) => {
-		test.step("check page title", async () => {
+		await test.step("check page title", async () => {
 			await expect.soft(page).toHaveTitle(/Vue 3/);
 		});
 
-		test.step("check page language", async () => {
+		await test.step("check page language", async () => {
 			await expect.soft(page.locator("html")).toHaveAttribute("lang", "en");
 		});
 	});
 
 	test("visibility of the main blocks of the page", async ({ page }) => {
-		test.step("check header", async () => {
+		await test.step("check header", async () => {
 			await expect
 				.soft(page.getByText("crudApp_HomeAbout UsSign"))
 				.toBeVisible();
 		});
 
-		test.step("check footer", async () => {
+		await test.step("check footer", async () => {
 			await expect.soft(page.getByRole("contentinfo")).toBeVisible();
 		});
 	});
 
 	test("navigation links (header)", async ({ page }) => {
-		navElements.forEach(({ title, locator, attribute }) => {
-			test.step(`${title}: check visibility`, async () => {
-				await expect.soft(locator(page)).toBeVisible();
-			});
+		await mainPage.checkNuvLinks();
 
-			test.step(`${title}: check text content`, async () => {
-				await expect.soft(locator(page)).toContainText(title);
-			});
-
-			test.step(`${title}: check href attribute`, async () => {
-				await expect
-					.soft(locator(page))
-					.toHaveAttribute(attribute.type, attribute.value);
-			});
-		});
-
-		test.step("check posts link (available to authorized users)", async () => {
+		await test.step("check posts link (available to authorized users)", async () => {
 			await expect
 				.soft(page.getByRole("link", { name: "Posts" }))
 				.not.toBeVisible();
@@ -104,26 +47,34 @@ test.describe("Main Page Tests", () => {
 	});
 
 	test("cookie notification", async ({ page }) => {
-		cookieAlertElements.forEach(({ title, locator }) => {
-			test.step(`${title}: check visibility`, async () => {
-				await expect.soft(locator(page)).toBeVisible();
-			});
+		await mainPage.checkCookieAlertElements();
+
+		await test.step(`accept cookie`, async () => {
+			await mainPage.clickAcceptCookie();
 		});
 
-		await page.getByRole("button", { name: "Accept" }).click();
-
-		test.step(`check hidden notification`, async () => {
+		await test.step(`check hidden notification`, async () => {
 			await expect
 				.soft(page.getByText("Welcome! Our platform uses"))
 				.not.toBeVisible();
 		});
 	});
 
-	test("theme page", async ({ page }) => {
-		await page.getByRole("img").click();
-		await expect(page).toHaveScreenshot(`page-dark-mode.png`);
+	test("theme page (default: light)", async () => {
+		await test.step(`switch dark mode`, async () => {
+			await mainPage.clickSwitchMode();
+		});
 
-		await page.getByRole("img").click();
-		await expect(page).toHaveScreenshot(`page-light-mode.png`);
+		await test.step(`check screenshot (dark mode)`, async () => {
+			await mainPage.checkScreenshot(screenshots.darkMode);
+		});
+
+		await test.step(`switch light mode`, async () => {
+			await mainPage.clickSwitchMode();
+		});
+
+		await test.step(`check screenshot (ligth mode)`, async () => {
+			await mainPage.checkScreenshot(screenshots.lightMode);
+		});
 	});
 });
