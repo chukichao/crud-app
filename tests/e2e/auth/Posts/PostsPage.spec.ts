@@ -2,22 +2,7 @@ import { expect, test } from "@playwright/test";
 
 test.describe("PostsPage Tests", () => {
 	test.beforeEach(async ({ page }) => {
-		await page.goto("https://crud-app-qeja.onrender.com/");
-		await page.getByRole("button", { name: "Sign in" }).click();
-
-		const user = {
-			username: "admin",
-			password: "admin",
-		};
-
-		// username
-		await page.getByRole("textbox", { name: "username" }).fill(user.username);
-		// password
-		await page.getByRole("textbox", { name: "password" }).fill(user.password);
-		// submit
-		await page.locator("form").getByRole("button", { name: "Sign in" }).click();
-
-		await page.getByRole("link", { name: "Posts" }).click();
+		await page.goto("https://crud-app-qeja.onrender.com/posts?page=1&limit=10");
 	});
 
 	test("visibility of elements", async ({ page }) => {

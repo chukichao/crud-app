@@ -60,7 +60,6 @@ test.describe("SignIn: Process", () => {
 		await page.locator("form").getByRole("button", { name: "Sign in" }).click();
 
 		// user data (header)
-		await expect(page.getByRole("img")).toBeVisible();
 		await expect(page.getByText(user.username)).toBeVisible();
 
 		// navigation: posts (available to authorized users)

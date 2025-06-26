@@ -1,0 +1,18 @@
+{
+  "cookies": [],
+  "origins": [
+    {
+      "origin": "https://crud-app-qeja.onrender.com",
+      "localStorage": [
+        {
+          "name": "database",
+          "value": "{\"users\":[{\"username\":\"admin\",\"password\":\"admin\",\"age\":0,\"isAgreeWithRules\":true,\"id\":\"9715084472376143\"}]}"
+        },
+        {
+          "name": "auth",
+          "value": "{\"username\":\"admin\",\"token\":\"6077592120017495\"}"
+        }
+      ]
+    }
+  ]
+}

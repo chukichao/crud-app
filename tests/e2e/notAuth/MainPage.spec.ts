@@ -1,20 +1,14 @@
-import { expect, test } from "@playwright/test";
-import MainPage from "../models/MainPage";
+import { test, expect } from "../../fixtures/mainPage";
 
 const screenshots = {
 	lightMode: "page-light-mode.png",
 	darkMode: "page-dark-mode.png",
 };
 
-let mainPage: MainPage;
-
 test.describe("Main Page Tests", () => {
-	test.beforeEach(async ({ page }) => {
-		mainPage = new MainPage(page);
-		await mainPage.openMainPage();
-	});
+	test("correct data page", async ({ page, mainPage }) => {
+		mainPage.openMainPage();
 
-	test("correct data page", async ({ page }) => {
 		await test.step("check page title", async () => {
 			await expect.soft(page).toHaveTitle(/Vue 3/);
 		});
@@ -24,7 +18,12 @@ test.describe("Main Page Tests", () => {
 		});
 	});
 
-	test("visibility of the main blocks of the page", async ({ page }) => {
+	test("visibility of the main blocks of the page", async ({
+		page,
+		mainPage,
+	}) => {
+		mainPage.openMainPage();
+
 		await test.step("check header", async () => {
 			await expect
 				.soft(page.getByText("crudApp_HomeAbout UsSign"))
@@ -36,7 +35,7 @@ test.describe("Main Page Tests", () => {
 		});
 	});
 
-	test("navigation links (header)", async ({ page }) => {
+	test("navigation links (header)", async ({ page, mainPage }) => {
 		await mainPage.checkNuvLinks();
 
 		await test.step("check posts link (available to authorized users)", async () => {
@@ -46,7 +45,7 @@ test.describe("Main Page Tests", () => {
 		});
 	});
 
-	test("cookie notification", async ({ page }) => {
+	test("cookie notification", async ({ page, mainPage }) => {
 		await mainPage.checkCookieAlertElements();
 
 		await test.step(`accept cookie`, async () => {
@@ -60,7 +59,7 @@ test.describe("Main Page Tests", () => {
 		});
 	});
 
-	test("theme page (default: light)", async () => {
+	test("theme page (default: light)", async ({ mainPage }) => {
 		await test.step(`switch dark mode`, async () => {
 			await mainPage.clickSwitchMode();
 		});
