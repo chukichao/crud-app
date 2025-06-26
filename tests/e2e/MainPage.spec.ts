@@ -118,4 +118,12 @@ test.describe("Main Page Tests", () => {
 				.not.toBeVisible();
 		});
 	});
+
+	test("theme page", async ({ page }) => {
+		await page.getByRole("img").click();
+		await expect(page).toHaveScreenshot(`page-dark-mode.png`);
+
+		await page.getByRole("img").click();
+		await expect(page).toHaveScreenshot(`page-light-mode.png`);
+	});
 });
