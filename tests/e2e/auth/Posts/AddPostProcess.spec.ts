@@ -1,17 +1,23 @@
-import { expect, test } from "../../../fixtures/postsPage";
+import { expect, test } from "../../../fixtures/formAddPost";
+import PostsPage from "../../../models/PostsPage";
 
 const newPost = {
 	title: "post title",
 	description: "post description",
 };
 
+let postsPage: PostsPage;
+
 test.describe("Add Post: Process", () => {
-	test.beforeEach(async ({ postsPage }) => {
-		await postsPage.clickAddPost();
+	test.beforeEach(async ({ page }) => {
+		postsPage = new PostsPage(page);
+
+		await postsPage.openPostsPage();
+		await postsPage.clickAddNewPost();
 	});
 
-	test("visibility of add form elements", async ({ postsPage }) => {
-		await postsPage.checkFormAddPostElements();
+	test("visibility of add form elements", async ({ formAddPost }) => {
+		await formAddPost.checkVisibilityElements();
 	});
 
 	test("checking the add button", async ({ page }) => {
@@ -33,16 +39,9 @@ test.describe("Add Post: Process", () => {
 		});
 	});
 
-	test("add new post", async ({ page }) => {
+	test("add new post", async ({ page, formAddPost }) => {
 		await test.step("filling in form fields", async () => {
-			await page.getByRole("textbox", { name: "title" }).fill(newPost.title);
-			await page
-				.getByRole("textbox", { name: "description" })
-				.fill(newPost.description);
-		});
-
-		await test.step("press confirm", async () => {
-			await page.getByRole("button", { name: "Сonfirm" }).click();
+			await formAddPost.addNewPost(newPost.title, newPost.description);
 		});
 
 		await test.step("operation check", async () => {

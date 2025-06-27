@@ -1,4 +1,6 @@
-import { expect, test } from "../../../fixtures/postsPage";
+import { expect, test } from "../../../fixtures/formUpdatePost";
+import PostsPage from "../../../models/PostsPage";
+import FormAddPost from "../../../models/FormAddPost";
 
 const newPost = {
 	title: "post title",
@@ -10,14 +12,25 @@ const updatedPost = {
 	description: "new post description",
 };
 
+let postsPage: PostsPage;
+let formAddPost: FormAddPost;
+
 test.describe("Update Post: Process", () => {
-	test.beforeEach(async ({ postsPage }) => {
-		await postsPage.addNewPost(newPost.title, newPost.description);
-		postsPage.clickEditPost();
+	test.beforeEach(async ({ page }) => {
+		postsPage = new PostsPage(page);
+		formAddPost = new FormAddPost(page);
+
+		await postsPage.openPostsPage();
+		await postsPage.clickAddNewPost();
+		await formAddPost.addNewPost(newPost.title, newPost.description);
+		await postsPage.clickEditPost();
 	});
 
-	test("visibility of post update elements", async ({ page, postsPage }) => {
-		await postsPage.checkFormUpdatePostElements();
+	test("visibility of post update elements", async ({
+		page,
+		formUpdatePost,
+	}) => {
+		await formUpdatePost.checkVisibilityElements();
 
 		await test.step("checking the value of form elements", async () => {
 			await expect
@@ -29,21 +42,9 @@ test.describe("Update Post: Process", () => {
 		});
 	});
 
-	test("update post", async ({ page }) => {
+	test("update post", async ({ page, formUpdatePost }) => {
 		await test.step("filling in form fields", async () => {
-			await page.getByRole("textbox", { name: "title" }).clear();
-			await page
-				.getByRole("textbox", { name: "title" })
-				.fill(updatedPost.title);
-
-			await page.getByRole("textbox", { name: "description" }).clear();
-			await page
-				.getByRole("textbox", { name: "description" })
-				.fill(updatedPost.description);
-		});
-
-		await test.step("press confirm", async () => {
-			await page.getByRole("button", { name: "Сonfirm" }).click();
+			formUpdatePost.updatePost(updatedPost.title, updatedPost.description);
 		});
 
 		await test.step("operation check", async () => {

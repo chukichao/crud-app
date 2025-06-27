@@ -6,14 +6,12 @@ interface IElement {
 }
 
 export default class PostsPage {
-	readonly postsPageElements: IElement[];
-	readonly formAddPostElements: IElement[];
-	readonly formUpdatePostElements: IElement[];
+	readonly elements: IElement[];
 
 	constructor(readonly page: Page) {
 		this.page = page;
 
-		this.postsPageElements = [
+		this.elements = [
 			{
 				title: "Heading",
 				locator: (page: Page): Locator =>
@@ -50,96 +48,9 @@ export default class PostsPage {
 				locator: (page: Page): Locator => page.getByRole("combobox").nth(1),
 			},
 		];
-
-		this.formAddPostElements = [
-			{
-				title: "Heading",
-				locator: (page: Page): Locator =>
-					page.getByRole("heading", { name: "Create post" }),
-			},
-			{
-				title: "Title field",
-				locator: (page: Page): Locator =>
-					page.getByRole("textbox", { name: "title" }),
-			},
-			{
-				title: "Description field",
-				locator: (page: Page): Locator =>
-					page.getByRole("textbox", { name: "description" }),
-			},
-			{
-				title: "Confirm button",
-				locator: (page: Page): Locator =>
-					page.getByRole("button", { name: "Сonfirm" }),
-			},
-		];
-
-		this.formUpdatePostElements = [
-			{
-				title: "Heading",
-				locator: (page: Page): Locator =>
-					page.getByRole("heading", { name: "Update post" }),
-			},
-			{
-				title: "Title field",
-				locator: (page: Page): Locator =>
-					page.getByRole("heading", { name: "Title:" }),
-			},
-			{
-				title: "Description field",
-				locator: (page: Page): Locator =>
-					page.getByRole("heading", { name: "Description:" }),
-			},
-			{
-				title: "Confirm button",
-				locator: (page: Page): Locator =>
-					page.getByRole("button", { name: "Сonfirm" }),
-			},
-		];
 	}
 
-	async openPostsPage() {
-		await this.page.goto(
-			"https://crud-app-qeja.onrender.com/posts?page=1&limit=10",
-		);
-	}
-
-	async checkPostsPageElements() {
-		for (const { title, locator } of this.postsPageElements) {
-			await test.step(`${title}: check visibility`, async () => {
-				await expect.soft(locator(this.page)).toBeVisible();
-			});
-		}
-	}
-
-	async checkFormAddPostElements() {
-		for (const { title, locator } of this.formAddPostElements) {
-			await test.step(`${title}: check visibility`, async () => {
-				await expect.soft(locator(this.page)).toBeVisible();
-			});
-		}
-	}
-
-	async checkFormUpdatePostElements() {
-		for (const { title, locator } of this.formUpdatePostElements) {
-			await test.step(`${title}: check visibility`, async () => {
-				await expect.soft(locator(this.page)).toBeVisible();
-			});
-		}
-	}
-
-	async addNewPost(title: string, description: string) {
-		await this.page.getByRole("button", { name: "Add new post" }).click();
-
-		await this.page.getByRole("textbox", { name: "title" }).fill(title);
-		await this.page
-			.getByRole("textbox", { name: "description" })
-			.fill(description);
-
-		await this.page.getByRole("button", { name: "Сonfirm" }).click();
-	}
-
-	async clickAddPost() {
+	async clickAddNewPost() {
 		await this.page.getByRole("button", { name: "Add new post" }).click();
 	}
 
@@ -159,5 +70,19 @@ export default class PostsPage {
 			.getByRole("button")
 			.first()
 			.click();
+	}
+
+	async openPostsPage() {
+		await this.page.goto(
+			"https://crud-app-qeja.onrender.com/posts?page=1&limit=10",
+		);
+	}
+
+	async checkVisibilityElements() {
+		for (const { title, locator } of this.elements) {
+			await test.step(`${title}: check visibility`, async () => {
+				await expect.soft(locator(this.page)).toBeVisible();
+			});
+		}
 	}
 }

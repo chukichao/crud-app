@@ -1,21 +1,20 @@
 import { test as base } from "@playwright/test";
-import PostsPage from "../models/PostsPage";
+import FormAddPost from "../models/FormAddPost";
 
 // Declare the types of your fixtures.
 type MyFixtures = {
-	postsPage: PostsPage;
+	formAddPost: FormAddPost;
 };
 
-// Extend base test by providing "postsPage".
+// Extend base test by providing "formAddPost".
 // This new "test" can be used in multiple test files, and each of them will get the fixtures.
 export const test = base.extend<MyFixtures>({
-	postsPage: async ({ page }, use) => {
+	formAddPost: async ({ page }, use) => {
 		// Set up the fixture.
-		const postsPage = new PostsPage(page);
-		await postsPage.openPostsPage();
+		const formAddPost = new FormAddPost(page);
 
 		// Use the fixture value in the test.
-		await use(postsPage);
+		await use(formAddPost);
 	},
 });
 export { expect } from "@playwright/test";
