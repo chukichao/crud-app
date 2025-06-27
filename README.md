@@ -11,7 +11,7 @@
 
 *может потребоваться 10-15 секунд для запуска сборки на стороне ресурса render.com
 
-![crudApp1](https://github.com/user-attachments/assets/98cc9394-cb8c-491b-8651-20e489fc9bf8)
+![crudApp1](https://github.com/user-attachments/assets/5eaf9b28-8528-4263-8529-920b0c9b5d12)
 ![crudApp2](https://github.com/user-attachments/assets/e610c7a9-2cce-46b8-85be-5bffef5f90e8)
 
 _Установка:_
