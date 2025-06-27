@@ -11,15 +11,9 @@ const updatedPost = {
 };
 
 test.describe("Update Post: Process", () => {
-	test.beforeEach(async ({ page, postsPage }) => {
+	test.beforeEach(async ({ postsPage }) => {
 		await postsPage.addNewPost(newPost.title, newPost.description);
-
-		await page
-			.getByRole("listitem")
-			.filter({ hasText: "× 101. post titlepost" })
-			.getByRole("button")
-			.nth(1)
-			.click();
+		postsPage.clickEditPost();
 	});
 
 	test("visibility of post update elements", async ({ page, postsPage }) => {

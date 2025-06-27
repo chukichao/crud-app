@@ -6,15 +6,9 @@ const newPost = {
 };
 
 test.describe("Remove Post: Process", () => {
-	test.beforeEach(async ({ page, postsPage }) => {
+	test.beforeEach(async ({ postsPage }) => {
 		await postsPage.addNewPost(newPost.title, newPost.description);
-
-		await page
-			.getByRole("listitem")
-			.filter({ hasText: "post title" })
-			.getByRole("button")
-			.first()
-			.click();
+		postsPage.clickRemovePost();
 	});
 
 	test("remove post", async ({ page }) => {

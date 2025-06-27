@@ -143,21 +143,21 @@ export default class PostsPage {
 		await this.page.getByRole("button", { name: "Add new post" }).click();
 	}
 
-	// async clickEditPost() {
-	// 	await this.page
-	// 		.getByRole("listitem")
-	// 		.filter({ hasText: "× 101. post titlepost" })
-	// 		.getByRole("button")
-	// 		.nth(1)
-	// 		.click();
-	// }
+	async clickEditPost() {
+		await this.page
+			.getByRole("listitem")
+			.filter({ hasText: "× 101. post titlepost" })
+			.getByRole("button")
+			.nth(1)
+			.click();
+	}
 
-	// async clickRemovePost() {
-	// 	await this.page
-	// 		.getByRole("listitem")
-	// 		.filter({ hasText: "post title" })
-	// 		.getByRole("button")
-	// 		.first()
-	// 		.click();
-	// }
+	async clickRemovePost() {
+		await this.page
+			.getByRole("listitem")
+			.filter({ hasText: "post title" })
+			.getByRole("button")
+			.first()
+			.click();
+	}
 }
