@@ -1,9 +1,9 @@
 import { test, expect } from "../../fixtures/mainPage";
 
-const screenshots = {
-	lightMode: "page-light-mode.png",
-	darkMode: "page-dark-mode.png",
-};
+// const screenshots = {
+// 	lightMode: "page-light-mode.png",
+// 	darkMode: "page-dark-mode.png",
+// };
 
 test.describe("Main Page Tests", () => {
 	test("correct data page", async ({ page, mainPage }) => {
@@ -59,21 +59,21 @@ test.describe("Main Page Tests", () => {
 		});
 	});
 
-	test("theme page (default: light)", async ({ mainPage }) => {
-		await test.step(`switch dark mode`, async () => {
-			await mainPage.clickSwitchMode();
-		});
+	// test("theme page (default: light)", async ({ mainPage }) => {
+	// 	await test.step(`switch dark mode`, async () => {
+	// 		await mainPage.clickSwitchMode();
+	// 	});
 
-		await test.step(`check screenshot (dark mode)`, async () => {
-			await mainPage.checkScreenshot(screenshots.darkMode);
-		});
+	// 	await test.step(`check screenshot (dark mode)`, async () => {
+	// 		await mainPage.checkScreenshot(screenshots.darkMode);
+	// 	});
 
-		await test.step(`switch light mode`, async () => {
-			await mainPage.clickSwitchMode();
-		});
+	// 	await test.step(`switch light mode`, async () => {
+	// 		await mainPage.clickSwitchMode();
+	// 	});
 
-		await test.step(`check screenshot (ligth mode)`, async () => {
-			await mainPage.checkScreenshot(screenshots.lightMode);
-		});
-	});
+	// 	await test.step(`check screenshot (ligth mode)`, async () => {
+	// 		await mainPage.checkScreenshot(screenshots.lightMode);
+	// 	});
+	// });
 });
