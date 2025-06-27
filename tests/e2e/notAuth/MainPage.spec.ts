@@ -7,7 +7,7 @@ const screenshots = {
 
 test.describe("Main Page Tests", () => {
 	test("correct data page", async ({ page, mainPage }) => {
-		mainPage.openMainPage();
+		await mainPage.openMainPage();
 
 		await test.step("check page title", async () => {
 			await expect.soft(page).toHaveTitle(/Vue 3/);
@@ -22,7 +22,7 @@ test.describe("Main Page Tests", () => {
 		page,
 		mainPage,
 	}) => {
-		mainPage.openMainPage();
+		await mainPage.openMainPage();
 
 		await test.step("check header", async () => {
 			await expect

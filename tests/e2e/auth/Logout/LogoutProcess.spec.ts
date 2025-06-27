@@ -7,20 +7,37 @@ test.describe("Logout: Process", () => {
 	});
 
 	test("visibility of logout elements", async ({ page }) => {
-		// question
-		await expect(
-			page.getByRole("heading", { name: "Are you sure?" }),
-		).toBeVisible();
+		await test.step("check heading", async () => {
+			await expect
+				.soft(page.getByRole("heading", { name: "Are you sure?" }))
+				.toBeVisible();
+		});
 
-		// answers
-		await expect(page.getByRole("button", { name: "Yes" })).toBeVisible();
-		await expect(page.getByRole("button", { name: "No" })).toBeVisible();
+		await test.step("check buttons", async () => {
+			await expect
+				.soft(page.getByRole("button", { name: "Yes" }))
+				.toBeVisible();
+			await expect.soft(page.getByRole("button", { name: "No" })).toBeVisible();
+		});
 	});
 
-	test("logout", async ({ page }) => {
-		await page.getByRole("button", { name: "Yes" }).click();
+	test("action cancel", async ({ page }) => {
+		await test.step("press no", async () => {
+			await page.getByRole("button", { name: "No" }).click();
+		});
 
-		await expect(page.getByText("crudApp_HomeAbout UsSign")).toBeVisible();
-		await expect(page.getByText("Home Page Lorem ipsum dolor")).toBeVisible();
+		await test.step("operation check", async () => {
+			await expect.soft(page.getByText("admin")).toBeVisible();
+		});
+	});
+
+	test("action confirm", async ({ page }) => {
+		await test.step("press yes", async () => {
+			await page.getByRole("button", { name: "Yes" }).click();
+		});
+
+		await test.step("operation check", async () => {
+			await expect.soft(page.getByText("admin")).not.toBeVisible();
+		});
 	});
 });

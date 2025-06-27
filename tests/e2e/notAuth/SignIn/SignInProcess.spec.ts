@@ -1,73 +1,76 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "../../../fixtures/loginForm";
+
+export const user = {
+	username: "admin",
+	password: "admin",
+};
 
 test.describe("SignIn: Process", () => {
-	test.beforeEach(async ({ page }) => {
-		await page.goto("https://crud-app-qeja.onrender.com/");
-
-		await page.getByRole("button", { name: "Sign in" }).click();
+	test("visibility of login form elements", async ({ loginForm }) => {
+		await loginForm.checkVisibilityElements();
 	});
 
-	test("visibility of login elements", async ({ page }) => {
-		// header
-		await expect(page.getByRole("heading", { name: "Login" })).toBeVisible();
+	test("checking the login button", async ({ page, loginForm }) => {
+		await test.step("check if login button is unavailable", async () => {
+			await expect
+				.soft(page.locator("form").getByRole("button", { name: "Sign in" }))
+				.toBeDisabled();
+		});
 
-		// username
-		await expect(page.getByRole("textbox", { name: "username" })).toBeVisible();
+		await test.step("filling in form fields", async () => {
+			await loginForm.fillInputFields("123", "123");
+		});
 
-		// password
-		await expect(page.getByRole("textbox", { name: "password" })).toBeVisible();
-
-		// submit button (length of fields < 3; disabled)
-		await expect(
-			page.locator("form").getByRole("button", { name: "Sign in" }),
-		).toBeDisabled();
-
-		// filling in the fields
-		await page.getByRole("textbox", { name: "username" }).fill("123");
-		await page.getByRole("textbox", { name: "password" }).fill("123");
-
-		// submit button
-		await expect(
-			page.locator("form").getByRole("button", { name: "Sign in" }),
-		).not.toBeDisabled();
+		await test.step("check availability of login button", async () => {
+			await expect
+				.soft(page.locator("form").getByRole("button", { name: "Sign in" }))
+				.not.toBeDisabled();
+		});
 	});
 
-	test("error: incorrect username or password", async ({ page }) => {
-		// filling in the fields (wrong)
-		await page.getByRole("textbox", { name: "username" }).fill("John");
-		await page.getByRole("textbox", { name: "password" }).fill("qwerty");
+	test("error: incorrect username or password", async ({ page, loginForm }) => {
+		await test.step("filling in form fields (wrong)", async () => {
+			await loginForm.fillInputFields("John", "qwerty");
+		});
 
-		// submit
-		await page.locator("form").getByRole("button", { name: "Sign in" }).click();
+		await test.step("press sign in", async () => {
+			await page
+				.locator("form")
+				.getByRole("button", { name: "Sign in" })
+				.click();
+		});
 
-		// received error
-		await expect(
-			page.getByText("incorrect username or password"),
-		).toBeVisible();
+		await test.step("operation check (error)", async () => {
+			await expect
+				.soft(page.getByText("incorrect username or password"))
+				.toBeVisible();
+		});
 	});
 
-	test("success: login", async ({ page }) => {
-		const user = {
-			username: "admin",
-			password: "admin",
-		};
+	test("success: login", async ({ page, loginForm }) => {
+		await test.step("filling in form fields", async () => {
+			await loginForm.fillInputFields(user.username, user.password);
+		});
 
-		// filling in the fields (correct)
-		await page.getByRole("textbox", { name: "username" }).fill(user.username);
-		await page.getByRole("textbox", { name: "password" }).fill(user.password);
+		await test.step("press sign in", async () => {
+			await page
+				.locator("form")
+				.getByRole("button", { name: "Sign in" })
+				.click();
+		});
 
-		// submit
-		await page.locator("form").getByRole("button", { name: "Sign in" }).click();
+		await test.step("operation check", async () => {
+			await expect.soft(page.getByText(user.username)).toBeVisible();
+		});
 
-		// user data (header)
-		await expect(page.getByText(user.username)).toBeVisible();
-
-		// navigation: posts (available to authorized users)
-		await expect(page.getByRole("link", { name: "Posts" })).toBeVisible();
-		await expect(page.getByRole("list")).toContainText("Posts");
-		await expect(page.getByRole("link", { name: "Posts" })).toHaveAttribute(
-			"href",
-			"/posts?page=1&limit=10",
-		);
+		await test.step("check private navigation links", async () => {
+			await expect
+				.soft(page.getByRole("link", { name: "Posts" }))
+				.toBeVisible();
+			await expect.soft(page.getByRole("list")).toContainText("Posts");
+			await expect
+				.soft(page.getByRole("link", { name: "Posts" }))
+				.toHaveAttribute("href", "/posts?page=1&limit=10");
+		});
 	});
 });

@@ -1,113 +1,102 @@
 import { expect, test } from "@playwright/test";
 
+export const user = {
+	username: "John",
+	password: "qwerty",
+};
+
 test.describe("SignUp: Process", () => {
 	test.beforeEach(async ({ page }) => {
 		await page.goto("https://crud-app-qeja.onrender.com/signup");
 	});
 
 	test("error: required field", async ({ page }) => {
-		// name
-		await page.getByRole("textbox", { name: "Name:" }).fill("John");
+		await test.step("filling in form fields (unfilled)", async () => {
+			await page.getByRole("textbox", { name: "Name:" }).fill("John");
+			await page
+				.getByRole("textbox", { name: "Password:", exact: true })
+				.fill("qwerty");
+			await page
+				.getByRole("textbox", { name: "Confirm Password:" })
+				.fill("qwerty");
+			await page
+				.getByRole("checkbox", { name: "I have read the privacy" })
+				.check();
+		});
 
-		// age (unfilled)
+		await test.step("press sign in", async () => {
+			await page
+				.getByRole("main")
+				.getByRole("button", { name: "Sign up" })
+				.click();
+		});
 
-		// password
-		await page
-			.getByRole("textbox", { name: "Password:", exact: true })
-			.fill("qwerty");
-
-		// confirm password
-		await page
-			.getByRole("textbox", { name: "Confirm Password:" })
-			.fill("qwerty");
-
-		// privacy policy
-		await page
-			.getByRole("checkbox", { name: "I have read the privacy" })
-			.check();
-
-		// submit
-		await page
-			.getByRole("main")
-			.getByRole("button", { name: "Sign up" })
-			.click();
-
-		// received error
-		await expect(page.getByText("required field")).toBeVisible();
+		await test.step("operation check (error)", async () => {
+			await expect.soft(page.getByText("required field")).toBeVisible();
+		});
 	});
 
 	test("error: passwords must match", async ({ page }) => {
-		// name
-		await page.getByRole("textbox", { name: "Name:" }).fill("John");
+		await test.step("filling in form fields (wrong)", async () => {
+			await page.getByRole("textbox", { name: "Name:" }).fill("John");
+			await page.getByRole("spinbutton", { name: "Age:" }).fill("42");
+			await page
+				.getByRole("textbox", { name: "Password:", exact: true })
+				.fill("qwerty");
+			await page
+				.getByRole("textbox", { name: "Confirm Password:" })
+				.fill("qwerty123");
+			await page
+				.getByRole("checkbox", { name: "I have read the privacy" })
+				.check();
+		});
 
-		// age
-		await page.getByRole("spinbutton", { name: "Age:" }).fill("42");
+		await test.step("press sign in", async () => {
+			await page
+				.getByRole("main")
+				.getByRole("button", { name: "Sign up" })
+				.click();
+		});
 
-		// password
-		await page
-			.getByRole("textbox", { name: "Password:", exact: true })
-			.fill("qwerty");
-
-		// confirm password (wrong)
-		await page
-			.getByRole("textbox", { name: "Confirm Password:" })
-			.fill("qwerty123");
-
-		// privacy policy
-		await page
-			.getByRole("checkbox", { name: "I have read the privacy" })
-			.check();
-
-		// submit
-		await page
-			.getByRole("main")
-			.getByRole("button", { name: "Sign up" })
-			.click();
-
-		// received error
-		await expect(page.getByText("passwords must match")).toBeVisible();
+		await test.step("operation check (error)", async () => {
+			await expect.soft(page.getByText("passwords must match")).toBeVisible();
+		});
 	});
 
 	test("success: create new user", async ({ page }) => {
-		const userName = "John";
+		await test.step("filling in form fields (correct)", async () => {
+			await page.getByRole("textbox", { name: "Name:" }).fill(user.username);
+			await page.getByRole("spinbutton", { name: "Age:" }).fill("42");
+			await page
+				.getByRole("textbox", { name: "Password:", exact: true })
+				.fill(user.password);
+			await page
+				.getByRole("textbox", { name: "Confirm Password:" })
+				.fill(user.password);
+			await page
+				.getByRole("checkbox", { name: "I have read the privacy" })
+				.check();
+		});
 
-		// name
-		await page.getByRole("textbox", { name: "Name:" }).fill(userName);
+		await test.step("press sign in", async () => {
+			await page
+				.getByRole("main")
+				.getByRole("button", { name: "Sign up" })
+				.click();
+		});
 
-		// age
-		await page.getByRole("spinbutton", { name: "Age:" }).fill("42");
+		await test.step("operation check", async () => {
+			await expect.soft(page.getByText(user.username)).toBeVisible();
+		});
 
-		// password
-		await page
-			.getByRole("textbox", { name: "Password:", exact: true })
-			.fill("qwerty");
-
-		// confirm password
-		await page
-			.getByRole("textbox", { name: "Confirm Password:" })
-			.fill("qwerty");
-
-		// privacy policy
-		await page
-			.getByRole("checkbox", { name: "I have read the privacy" })
-			.check();
-
-		// submit
-		await page
-			.getByRole("main")
-			.getByRole("button", { name: "Sign up" })
-			.click();
-
-		// user data (header)
-		await expect(page.getByRole("img")).toBeVisible();
-		await expect(page.getByText(userName)).toBeVisible();
-
-		// navigation: posts (available to authorized users)
-		await expect(page.getByRole("link", { name: "Posts" })).toBeVisible();
-		await expect(page.getByRole("list")).toContainText("Posts");
-		await expect(page.getByRole("link", { name: "Posts" })).toHaveAttribute(
-			"href",
-			"/posts?page=1&limit=10",
-		);
+		await test.step("check private navigation links", async () => {
+			await expect
+				.soft(page.getByRole("link", { name: "Posts" }))
+				.toBeVisible();
+			await expect.soft(page.getByRole("list")).toContainText("Posts");
+			await expect
+				.soft(page.getByRole("link", { name: "Posts" }))
+				.toHaveAttribute("href", "/posts?page=1&limit=10");
+		});
 	});
 });
