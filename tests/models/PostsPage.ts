@@ -9,8 +9,6 @@ export default class PostsPage {
 	readonly elements: IElement[];
 
 	constructor(readonly page: Page) {
-		this.page = page;
-
 		this.elements = [
 			{
 				title: "Heading",

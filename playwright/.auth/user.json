@@ -6,11 +6,11 @@
       "localStorage": [
         {
           "name": "database",
-          "value": "{\"users\":[{\"username\":\"admin\",\"password\":\"admin\",\"age\":0,\"isAgreeWithRules\":true,\"id\":\"11689409076110702\"}]}"
+          "value": "{\"users\":[{\"username\":\"admin\",\"password\":\"admin\",\"age\":0,\"isAgreeWithRules\":true,\"id\":\"8264711042846173\"}]}"
         },
         {
           "name": "auth",
-          "value": "{\"username\":\"admin\",\"token\":\"9272947232037161\"}"
+          "value": "{\"username\":\"admin\",\"token\":\"21852198360007546\"}"
         }
       ]
     }

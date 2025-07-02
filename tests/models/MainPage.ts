@@ -19,7 +19,6 @@ export default class MainPage {
 	readonly cookieAlertElements: ICookieAlertElement[];
 
 	constructor(readonly page: Page) {
-		this.page = page;
 		this.navElements = [
 			{
 				title: "Home",
