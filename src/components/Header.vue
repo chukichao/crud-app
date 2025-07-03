@@ -21,16 +21,16 @@
 		</nav>
 
 		<div v-if="userStore.auth">
-			<Sun class="theme" @click="uiStore.toggleTheme()" />
+			<IconsSun class="theme" @click="uiStore.toggleTheme()" />
 			<IconsAccount />
 			<span class="account">{{ userStore.auth.username }}</span>
-			<buttonUI @click="uiStore.openModal('logout')">Logout</buttonUI>
+			<ButtonUI @click="uiStore.openModal('logout')">Logout</ButtonUI>
 		</div>
 
 		<div v-else>
 			<Sun class="theme" @click="uiStore.toggleTheme()" />
-			<buttonUI><RouterLink to="/signup">Sign up</RouterLink></buttonUI>
-			<buttonUI @click="uiStore.openModal('login')">Sign in</buttonUI>
+			<ButtonUI><RouterLink to="/signup">Sign up</RouterLink></ButtonUI>
+			<ButtonUI @click="uiStore.openModal('login')">Sign in</ButtonUI>
 		</div>
 
 		<ModalUI v-if="uiStore.modal.type === 'login'">
@@ -39,8 +39,8 @@
 
 		<ModalUI v-if="uiStore.modal.type === 'logout'">
 			<h2>Are you sure?</h2>
-			<buttonUI @click="logout">Yes</buttonUI>
-			<buttonUI @click="uiStore.closeModal">No</buttonUI>
+			<ButtonUI @click="logout">Yes</ButtonUI>
+			<ButtonUI @click="uiStore.closeModal">No</ButtonUI>
 		</ModalUI>
 	</header>
 </template>
@@ -51,7 +51,7 @@
 import FormLogin from "./FormLogin.vue";
 import IconsAccount from "./Icons/Account.vue";
 import Logo from "./Logo.vue";
-import Sun from "./Icons/Sun.vue";
+import IconsSun from "./Icons/Sun.vue";
 
 import { usePostsStore } from "../store/posts.ts";
 import { useUIStore } from "../store/ui.ts";
@@ -76,9 +76,9 @@ const logout = () => {
 
 <!-- <script>
 import FormLogin from "./FormLogin.vue";
-import IconsAccount from "./Icons/Account.vue";
 import Logo from "./Logo.vue";
-import Sun from "./Icons/Sun.vue";
+import IconsAccount from "./Icons/Account.vue";
+import IconsSun from "./Icons/Sun.vue";
 
 import { mapStores } from "pinia";
 import { usePostsStore } from "../store/posts.ts";
@@ -102,7 +102,7 @@ export default {
 		Logo,
 		FormLogin,
 		IconsAccount,
-		Sun,
+		IconsSun,
 	},
 };
 </script> -->
@@ -176,7 +176,7 @@ export default {
 	}
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 900px) {
 	.header {
 		ul {
 			flex-direction: column;

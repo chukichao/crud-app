@@ -3,11 +3,11 @@ import type { DirectiveBinding } from "vue";
 let interval: number;
 let isShow = true;
 
-const mouseover = (event: Event) => {
+const mouseover = (event: MouseEvent) => {
 	(event.target as HTMLElement).style.opacity = "0";
 };
 
-const mouseout = (event: Event) => {
+const mouseout = (event: MouseEvent) => {
 	(event.target as HTMLElement).style.opacity = "1";
 };
 

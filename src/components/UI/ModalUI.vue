@@ -7,7 +7,7 @@
 			}"
 			@click.stop
 		>
-			<slot :class="{ [`${uiStore.theme}-theme`]: true }" />
+			<slot />
 		</div>
 	</div>
 </template>
